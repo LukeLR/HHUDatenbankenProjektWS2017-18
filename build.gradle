@@ -39,4 +39,4 @@ group 'de.hhu.cs.dbs.internship.project'
 version '2018.1.0'
 description = 'Project for all semesters'
 sourceCompatibility = 1.8
-mainClassName = 'de.hhu.cs.dbs.internship.Project'
+mainClassName = 'de.hhu.cs.dbs.internship.project.Project'
