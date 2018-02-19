@@ -5,10 +5,10 @@
 
 Wir empfehlen IntelliJ oder Eclipse als IDE mit der Java-Version 1.8 (genauer 1.8.0\_152). Um den gesamten Ablauf, Integrität, Deployment etc. einfach zu halten, werden wir das Build-Management-Automatisierungs-Tool [Gradle](https://gradle.org) in unserer IDE verwenden. Gradle selbst muss nicht installiert werden, da der Gradle Wrapper benutzt wird, der dem Projekt beiliegt.
 Die Programmierung des Projekts basiert auf folgenden Frameworks bzw. Libraries:
-*  `com.github.Phlegethon90:ApplicationKit:v1.0.0` (auch im [uni-internen GitLab](https://git.hhu.de/althe100/ApplicationKit) zu finden)
+*  `com.github.Phlegethon90:ApplicationKit:v1.1.0` (auch im [uni-internen GitLab](https://git.hhu.de/althe100/ApplicationKit) zu finden)
 *  `org.xerial:sqlite-jdbc:3.16.1+` (bei [Bitbucket](https://bitbucket.org/xerial/sqlite-jdbc))
 
-Folglich wird immer die aktuellste ApplicationKit- und SQLite-JDBC-Version verwendet. Wenn eine bestimmte SQLite-JDBC-Version benutzt werden soll (mindestens 3.16.1), kann die Versionsnummer entsprechend der im MavenCentral [gelisteten Versionen](https://search.maven.org/\#search\%7Cgav\%7C1\%7Cg\%3A\%22org.xerial\%22\%20AND\%20a\%3A\%22sqlite-jdbc\%22) angepasst werden.
+Es muss immer die aktuellste ApplicationKit-Version verwendet werden. Wenn eine bestimmte SQLite-JDBC-Version benutzt werden soll (mindestens 3.16.1), kann die Versionsnummer entsprechend der im MavenCentral [gelisteten Versionen](https://search.maven.org/\#search\%7Cgav\%7C1\%7Cg\%3A\%22org.xerial\%22\%20AND\%20a\%3A\%22sqlite-jdbc\%22) angepasst werden.
 
 Das gesamte Projekt steht als [Git-Repository](https://git.hhu.de/cs/dbs/datenbanksysteme/programmierpraktikum/Project) zur Verfügung. In der IDE muss es als Gradle-Projekt importiert werden.
 
