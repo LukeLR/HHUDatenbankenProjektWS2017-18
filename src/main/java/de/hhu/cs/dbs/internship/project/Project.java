@@ -9,7 +9,8 @@ import de.hhu.cs.dbs.internship.project.gui.MasterViewController;
 import de.hhu.cs.dbs.internship.project.gui.RegistrationViewController;
 
 public class Project extends com.alexanderthelen.applicationkit.Application {
-    public static void main(String[] args) {
+    @SuppressWarnings("restriction")
+	public static void main(String[] args) {
         launch(args);
     }
 
