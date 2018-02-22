@@ -93,7 +93,7 @@ CREATE TABLE Kunde (
     );
 
 CREATE TABLE Premiumkunde (
-    Ablaufdatum DATE NOT NULL CONSTRAINT Ablaufdatum CHECK (
+    Ablaufdatum VARCHAR NOT NULL CONSTRAINT Ablaufdatum CHECK (
         Ablaufdatum LIKE '%%%%-%%-%%' AND
         CAST(SUBSTR(Ablaufdatum, 1, 4) AS INTEGER) == SUBSTR(Ablaufdatum, 1, 4) AND
         CAST(SUBSTR(Ablaufdatum, 6, 2) AS INTEGER) == SUBSTR(Ablaufdatum, 6, 2) AND
@@ -133,7 +133,7 @@ CREATE TABLE Lieferdienst(
     );
 
 CREATE TABLE Warenkorb (
-    Bestelldatum DATE CONSTRAINT Bestelldatum CHECK (
+    Bestelldatum VARCHAR CONSTRAINT Bestelldatum CHECK (
         Bestelldatum LIKE '%%%%-%%-%%' AND
         CAST(SUBSTR(Bestelldatum, 1, 4) AS INTEGER) == SUBSTR(Bestelldatum, 1, 4) AND
         CAST(SUBSTR(Bestelldatum, 6, 2) AS INTEGER) == SUBSTR(Bestelldatum, 6, 2) AND
@@ -147,7 +147,7 @@ CREATE TABLE Warenkorb (
     Warenkorb_ID INTEGER PRIMARY KEY NOT NULL,
     E_Mail_Adresse VARCHAR(320) NOT NULL,
     Lieferdienst_Bezeichnung VARCHAR(40) NOT NULL,
-    Lieferdatum DATE CONSTRAINT Lieferdatum CHECK (
+    Lieferdatum VARCHAR CONSTRAINT Lieferdatum CHECK (
         Lieferdatum LIKE '%%%%-%%-%%' AND
         CAST(SUBSTR(Lieferdatum, 1, 4) AS INTEGER) == SUBSTR(Lieferdatum, 1, 4) AND
         CAST(SUBSTR(Lieferdatum, 6, 2) AS INTEGER) == SUBSTR(Lieferdatum, 6, 2) AND
@@ -162,12 +162,12 @@ CREATE TABLE Lieferabo (
     Intervall INTEGER NOT NULL CONSTRAINT Intervall CHECK (
         TYPEOF(Intervall) == 'integer' AND
         Intervall > 0),
-    Beginn DATE NOT NULL CONSTRAINT Beginn_Datum CHECK (
+    Beginn VARCHAR NOT NULL CONSTRAINT Beginn_Datum CHECK (
         Beginn LIKE '%%%%-%%-%%' AND
         CAST(SUBSTR(Beginn, 1, 4) AS INTEGER) == SUBSTR(Beginn, 1, 4) AND
         CAST(SUBSTR(Beginn, 6, 2) AS INTEGER) == SUBSTR(Beginn, 6, 2) AND
         CAST(SUBSTR(Beginn, 9, 2) AS INTEGER) == SUBSTR(Beginn, 9, 2)),
-    Ende DATE NOT NULL CONSTRAINT Ende_Datum CHECK (
+    Ende VARCHAR NOT NULL CONSTRAINT Ende_Datum CHECK (
         Ende LIKE '%%%%-%%-%%' AND
         CAST(SUBSTR(Beginn, 1, 4) AS INTEGER) == SUBSTR(Beginn, 1, 4) AND
         CAST(SUBSTR(Beginn, 6, 2) AS INTEGER) == SUBSTR(Beginn, 6, 2) AND
@@ -183,7 +183,7 @@ CREATE TABLE Newsletter (
         LENGTH(CAST(Betreff AS VARCHAR)) > 0),
     Text TEXT NOT NULL CONSTRAINT Text CHECK (
         LENGTH(CAST(Text AS TEXT)) > 0),
-    Datum DATE NOT NULL
+    Datum VARCHAR NOT NULL
         DEFAULT CURRENT_DATE
         --ON UPDATE CURRENT_DATE
         CONSTRAINT Newsletter_Datum CHECK (
