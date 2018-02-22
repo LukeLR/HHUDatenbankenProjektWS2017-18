@@ -31,15 +31,15 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
     	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
     	logger.info("User tries to login: " + data.toString());
     	
-    	PreparedStatement loginQuery = Project.getInstance().getConnection().prepareStatement("SELECT E_Mail_Adresse, Passwort FROM Kunde WHERE E_Mail_Adresse = ?");
+    	PreparedStatement loginQuery = Project.getInstance().getConnection().prepareStatement(
+    			"SELECT E_Mail_Adresse, Passwort FROM Kunde WHERE E_Mail_Adresse = ?");
     	loginQuery.setString(1, data.get("email").toString());
         ResultSet loginResults = loginQuery.executeQuery();
         while (loginResults.next()) {
-        	String storedEmail = loginResults.getString("E_Mail_Adresse");
-        	String storedPassword = loginResults.getString("Passwort");
-        	String enteredPassword = data.get("password").toString();
-            logger.info("Found user with E-Mail: " + storedEmail + " and password: " + storedPassword + ", entered password was: " + enteredPassword);
-            if (storedPassword.equals(enteredPassword)) {
+            logger.info("Found user with E-Mail: " + loginResults.getString("E_Mail_Adresse") +
+            		" and password: " + loginResults.getString("Passwort") + ", entered password was: "
+            		+ data.get("password").toString());
+            if (loginResults.getString("Passwort").equals(data.get("password").toString())) {
             	 logger.info("User credentials correct. Done searching for users.");
             	 authenticated = true;
             }
