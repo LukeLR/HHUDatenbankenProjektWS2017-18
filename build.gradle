@@ -39,9 +39,7 @@ task deleteDatabase(type: Delete) {
 	group 'Database'
 	description 'Deletes the SQLite Database file'
 	
-	doLast {
-		delete 'database.sqlite'
-	}
+	delete 'database.sqlite'
 }
 
 task initDatabase {
