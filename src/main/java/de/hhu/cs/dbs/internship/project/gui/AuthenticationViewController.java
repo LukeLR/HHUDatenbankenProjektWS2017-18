@@ -1,5 +1,6 @@
 package de.hhu.cs.dbs.internship.project.gui;
 
+import com.alexanderthelen.applicationkit.database.Connection;
 import com.alexanderthelen.applicationkit.database.Data;
 
 import de.hhu.cs.dbs.internship.project.Project;
@@ -53,6 +54,30 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
     public void registerUser(Data data) throws SQLException {
     	Logger logger = Logger.getLogger(this.getClass().getName() + " Registration event");
     	logger.info("User tries to register: " + data.toString());
+    	
+    	if (!data.get("password1").equals(data.get("password2")))
+    		throw new SQLException("Passwords do not match!");
+    	
+    	Connection con = Project.getInstance().getConnection();
+    	con.getRawConnection().setAutoCommit(false);
+    	
+    	PreparedStatement addressInsertQuery = con.prepareStatement(
+    			"INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID) "
+    			+ "VALUES (?, ?, ?, ?, NULL)");
+    	addressInsertQuery.setString(1, data.get("street").toString());
+    	addressInsertQuery.setString(2, data.get("houseNumber").toString());
+    	addressInsertQuery.setString(3, data.get("zipCode").toString());
+    	addressInsertQuery.setString(4, data.get("city").toString());
+    	
+    	PreparedStatement customerInsertQuery = con.prepareStatement(
+    			"INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID) "
+    			+ "VALUES (?, ?, ?, ?, NULL)");
+    	customerInsertQuery.setString(1, data.get("eMail").toString());
+    	customerInsertQuery.setString(2, data.get("firstName").toString());
+    	customerInsertQuery.setString(3, data.get("lastName").toString());
+    	customerInsertQuery.setString(4, data.get("password1").toString());
+    	
+    	con.getRawConnection().setAutoCommit(true);
         throw new SQLException(getClass().getName() + ".registerUser(Data) nicht implementiert.");
     }
 }
