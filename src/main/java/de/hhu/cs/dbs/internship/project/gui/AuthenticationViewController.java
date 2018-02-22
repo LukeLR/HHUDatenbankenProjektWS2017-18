@@ -4,6 +4,7 @@ import com.alexanderthelen.applicationkit.database.Data;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class AuthenticationViewController extends com.alexanderthelen.applicationkit.gui.AuthenticationViewController {
     protected AuthenticationViewController(String name) {
@@ -18,7 +19,9 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 
     @Override
     public void loginUser(Data data) throws SQLException {
-        //throw new SQLException(getClass().getName() + ".loginUser(Data) nicht implementiert.");
+    	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
+    	logger.info("User tried to login: " + data.toString());
+        throw new SQLException(getClass().getName() + ".loginUser(Data) nicht implementiert.");
     }
 
     @Override

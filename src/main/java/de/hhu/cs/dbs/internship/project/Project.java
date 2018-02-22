@@ -2,6 +2,7 @@ package de.hhu.cs.dbs.internship.project;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Connection;
 import com.alexanderthelen.applicationkit.gui.MasterDetailViewController;
@@ -19,6 +20,7 @@ public class Project extends com.alexanderthelen.applicationkit.Application {
 
     @Override
     public void start() throws Exception {
+    	Logger logger = Logger.getLogger(this.getClass().getName());
         setConnection(new Connection("jdbc:sqlite:database.sqlite"));
         
         //Quick and dirty test if SQL connection works
@@ -26,7 +28,7 @@ public class Project extends com.alexanderthelen.applicationkit.Application {
         Statement statement = Project.getInstance().getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
         while (resultSet.next()) {
-            System.out.println("Vorname: " + resultSet.getString("Vorname") + ", Nachname: " + resultSet.getString("Nachname")); 
+            logger.info("Vorname: " + resultSet.getString("Vorname") + ", Nachname: " + resultSet.getString("Nachname")); 
         }
 
         WindowController mainWindowController = WindowController.createWithName("window");
