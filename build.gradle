@@ -48,6 +48,7 @@ task initDatabase {
 	
 	doLast {
 		def proc = "sqlite3 database.sqlite < database-init.sql".execute();
+		println proc
 		proc.waitFor();
 	}
 }
