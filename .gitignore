@@ -216,3 +216,4 @@ gradle.properties
 # End of https://www.gitignore.io/api/git,linux,macos,gradle,eclipse,windows,intellij
 
 *.sqlite
+*.sqlite*
