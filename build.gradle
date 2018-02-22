@@ -48,7 +48,9 @@ task initDatabase {
 	
 	doLast {
 		def proc = "sqlite3 database.sqlite < database-init.sql".execute();
-		println proc
+		println "return code: ${ proc.exitValue()}"
+		println "stderr: ${proc.err.text}"
+		println "stdout: ${proc.in.text}"
 		proc.waitFor();
 	}
 }
