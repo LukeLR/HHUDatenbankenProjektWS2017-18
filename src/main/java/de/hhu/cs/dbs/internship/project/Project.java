@@ -1,5 +1,8 @@
 package de.hhu.cs.dbs.internship.project;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 import com.alexanderthelen.applicationkit.database.Connection;
 import com.alexanderthelen.applicationkit.gui.MasterDetailViewController;
 import com.alexanderthelen.applicationkit.gui.WindowController;
@@ -16,7 +19,15 @@ public class Project extends com.alexanderthelen.applicationkit.Application {
 
     @Override
     public void start() throws Exception {
-        setConnection(new Connection("jdbc:sqlite:project.db"));
+        setConnection(new Connection("jdbc:sqlite:database.sqlite"));
+        
+        //Quick and dirty test if SQL connection works
+        String sql = "SELECT * FROM Kunde";
+        Statement statement = Project.getInstance().getConnection().createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        while (resultSet.next()) {
+            System.out.println("Vorname: " + resultSet.getString("Vorname") + ", Nachname: " + resultSet.getString("Nachname")); 
+        }
 
         WindowController mainWindowController = WindowController.createWithName("window");
         mainWindowController.setTitle("Projekt");
