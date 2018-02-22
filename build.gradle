@@ -40,6 +40,8 @@ task deleteDatabase(type: Delete) {
 	description 'Deletes the SQLite Database file'
 	
 	delete 'database.sqlite'
+	delete 'database.sqlite-shm'
+	delete 'database.sqlite-wal'
 }
 
 task initDatabase {
@@ -47,7 +49,7 @@ task initDatabase {
 	description 'Initializes the SQLite Database file'
 	
 	doLast {
-		def proc = "bash -c 'sqlite3 database.sqlite < database-init.sql'".execute();
+		def proc = './init-database.sh'.execute();
 		proc.waitFor();
 		println "return code: ${ proc.exitValue()}"
 		println "stderr: ${proc.err.text}"
