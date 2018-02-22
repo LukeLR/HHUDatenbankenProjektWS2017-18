@@ -28,14 +28,11 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
     	//TODO: Use finer log levels
     	//TODO: Password hashing, PLEASE!
     	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
-    	logger.info("Test");
     	logger.info("User tried to login: " + data.toString());
     	
     	PreparedStatement userAccountQuery = Project.getInstance().getConnection().prepareStatement("SELECT E_Mail_Adresse, Passwort FROM Kunde WHERE E_Mail_Adresse = ?");
-    	logger.info("SQL Statement for login information search: " + userAccountQuery.toString());
     	userAccountQuery.setString(1, data.get("email").toString());
         ResultSet userAccountResults = userAccountQuery.executeQuery();
-        logger.info("Found users:");
         while (userAccountResults.next()) {
         	String storedEmail = userAccountResults.getString("E_Mail_Adresse");
         	String storedPassword = userAccountResults.getString("Passwort");
@@ -54,6 +51,7 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 
     @Override
     public void registerUser(Data data) throws SQLException {
+    	Logger logger = Logger.getLogger(this.getClass().getName() + " Registration event");
         throw new SQLException(getClass().getName() + ".registerUser(Data) nicht implementiert.");
     }
 }
