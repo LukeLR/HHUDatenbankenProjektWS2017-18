@@ -48,10 +48,10 @@ task initDatabase {
 	
 	doLast {
 		def proc = "bash -c 'sqlite3 database.sqlite < database-init.sql'".execute();
+		proc.waitFor();
 		println "return code: ${ proc.exitValue()}"
 		println "stderr: ${proc.err.text}"
 		println "stdout: ${proc.in.text}"
-		proc.waitFor();
 	}
 }
 
