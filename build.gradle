@@ -49,7 +49,7 @@ task initDatabase {
 	description 'Initializes the SQLite Database file'
 	
 	doLast {
-		def proc = "sqlite3 database.sqlite < database-init.sql";
+		def proc = "sqlite3 database.sqlite < database-init.sql".execute();
 		proc.waitFor();
 	}
 }
