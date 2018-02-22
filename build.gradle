@@ -54,7 +54,10 @@ task initDatabase {
 	}
 }
 
-task recreateDatabase (dependsOn: ['deleteDatabase', 'initDatabase'])
+task recreateDatabase (dependsOn: ['deleteDatabase', 'initDatabase']) {
+	group 'Database'
+	description 'Recrates the SQLite Database file: Deletes it and inits it afterwards.
+}
 
 group 'de.hhu.cs.dbs.internship.project'
 version '2018.1.0'
