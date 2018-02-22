@@ -35,6 +35,26 @@ publishing {
     }
 }
 
+task deleteDatabase {
+	group 'Database'
+	description 'Deletes the SQLite Database file'
+	
+	doLast {
+		rm database.sqlite
+	}
+}
+
+task initDatabase {
+	group 'Database'
+	description 'Initializes the SQLite Database file'
+	
+	doLast {
+		sqlite3 database.sqlite < database-init.sql
+	}
+}
+
+task recreateDatabase (dependsOn: ['deleteDatabase', 'initDatabase'])
+
 group 'de.hhu.cs.dbs.internship.project'
 version '2018.1.0'
 description = 'Project for all semesters'
