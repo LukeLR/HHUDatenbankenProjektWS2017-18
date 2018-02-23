@@ -42,20 +42,20 @@ public class Account extends Table {
     public void updateRowWithData(Data data, Data data1) throws SQLException {
     	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
     	logger.info("Trying to change account data from " + data + " to " + data1 + ".");
-    	String updateQuery = "UPDATE Kunde SET "
-    			+ "E_Mail_Adresse = " + data1.get("E-Mail-Adresse") + ", "
-    			+ "Passwort = " + data1.get("Passwort") + ", "
-    			+ "Vorname = " + data1.get("Vorname") + ", "
-    			+ "Nachname = " + data1.get("Nachname") + " "
-    			+ "WHERE E_Mail_Adresse = " + data.get("E-Mail-Adresse") + "; ";
-    	updateQuery += "UPDATE Adresse SET "
-    			+ "Strasse = " + data1.get("Straße") + ", "
-    			+ "Hausnummer = " + data1.get("Hausnummer") + ", "
-    			+ "PLZ = " + data1.get("PLZ") + ", "
-    			+ "Ort = " + data1.get("Ort") + " "
+    	PreparedStatement updateKundeStatement = Project.getInstance().getConnection().prepareStatement(
+    			"UPDATE Kunde SET E_Mail_Adresse = ?, Passwort = ?, Vorname = ?, Nachname = ? "
+    			+ "WHERE E_Mail_Adresse = ?");
+    	updateKundeStatement.setString(1, data1.get("E-Mail-Adresse").toString());
+    	updateKundeStatement.setString(2, data1.get("Passwort").toString());
+    	updateKundeStatement.setString(3, data1.get("Vorname").toString());
+    	updateKundeStatement.setString(4, data1.get("Nachname").toString());
+    	
+    	//TODO: Update Adresse. Maybe delete old address?
+    	PreparedStatement updateAdresseStatement = Project.getInstance().getConnection().prepareStatement(
+    			"UPDATE Adresse SET Strasse = ?, Hausnummer = ?, PLZ = ?, Ort = ? "
     			+ "WHERE Adressen_ID IN (SELECT Adressen_ID FROM Kunde "
-    			+ "WHERE E_Mail_Adresse = " + data.get("E-Mail-Adresse") + ");";
-    	return updateQuery;
+    			+ "WHERE E_Mail_Adresse = ?)");
+    	
     }
 
     @Override
