@@ -35,7 +35,7 @@ public class Account extends Table {
 
     @Override
     public void insertRowWithData(Data data) throws SQLException {
-        throw new SQLException(getClass().getName() + ".insertRowWithData(Data) nicht implementiert.");
+        throw new SQLException("Es können keine weiteren Accounts für einen Kunden angelegt werden!");
     }
 
     @Override
