@@ -10,9 +10,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class LoginViewController extends com.alexanderthelen.applicationkit.gui.LoginViewController {
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     protected TextField emailTextField;
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     protected PasswordField passwordPasswordField;
 
     protected LoginViewController(String name) {
@@ -25,7 +27,8 @@ public class LoginViewController extends com.alexanderthelen.applicationkit.gui.
         return viewController;
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public ArrayList<Node> getInputNodes() {
         ArrayList<Node> inputNodes = new ArrayList<>();
         inputNodes.add(emailTextField);
@@ -33,7 +36,8 @@ public class LoginViewController extends com.alexanderthelen.applicationkit.gui.
         return inputNodes;
     }
 
-    @Override
+    @SuppressWarnings("restriction")
+	@Override
     public Data getInputData() {
         Data data = new Data();
         data.put("email", emailTextField.getText());
