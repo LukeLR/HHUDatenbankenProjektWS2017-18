@@ -77,7 +77,15 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
     	customerInsertQuery.setString(3, data.get("lastName").toString());
     	customerInsertQuery.setString(4, data.get("password1").toString());
     	
-    	con.getRawConnection().setAutoCommit(true);
-        throw new SQLException(getClass().getName() + ".registerUser(Data) nicht implementiert.");
+    	try {
+    		addressInsertQuery.executeUpdate();
+    		customerInsertQuery.executeUpdate();
+    		con.getRawConnection().commit();
+    		con.getRawConnection().setAutoCommit(true);
+    	} catch (SQLException ex) {
+    		con.getRawConnection().rollback();
+    		con.getRawConnection().setAutoCommit(true);
+    		throw ex;
+    	}
     }
 }
