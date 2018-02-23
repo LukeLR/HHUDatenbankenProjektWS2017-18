@@ -26,10 +26,10 @@ public class Account extends Table {
     public String getSelectQueryForRowWithData(Data data) throws SQLException {
     	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
     	logger.info("Showing " + this.getClass().getName() + " for Data " + data.toString());
-    	String selectQuery = "SELECT E_Mail_Adresse, Vorname, Nachname, "
+    	String selectQuery = "SELECT E_Mail_Adresse, Passwort, Vorname, Nachname, "
     			+ "Strasse, Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
     			+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '" 
-    			+ data.get("E_Mail_Adresse") + "'";
+    			+ data.get("Kunde.E_Mail_Adresse") + "'";
         return selectQuery;
     }
 
