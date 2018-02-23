@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class AuthenticationViewController extends com.alexanderthelen.applicationkit.gui.AuthenticationViewController {
@@ -71,7 +72,7 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
     	
     	PreparedStatement customerInsertQuery = con.prepareStatement(
     			"INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID) "
-    			+ "VALUES (?, ?, ?, ?, NULL)");
+    			+ "VALUES (?, ?, ?, ?, ?)");
     	customerInsertQuery.setString(1, data.get("eMail").toString());
     	customerInsertQuery.setString(2, data.get("firstName").toString());
     	customerInsertQuery.setString(3, data.get("lastName").toString());
@@ -79,12 +80,32 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
     	
     	try {
     		addressInsertQuery.executeUpdate();
+    		
+    		/* Getting the Adressen_ID of the just inserted address
+    		 * and inserting it into the customer that is about to be
+    		 * created.
+    		 */
+    		PreparedStatement addressRequestQuery = con.prepareStatement(
+    				"SELECT Adressen_ID FROM Adresse "
+    				+ "WHERE Strasse = ? AND Hausnummer = ? AND PLZ = ? AND Ort = ?");
+    		
+    		addressRequestQuery.setString(1, data.get("street").toString());
+    		addressRequestQuery.setString(2, data.get("houseNumber").toString());
+    		addressRequestQuery.setString(3, data.get("zipCode").toString());
+    		addressRequestQuery.setString(4, data.get("city").toString());
+    		
+    		ResultSet addressResults = addressRequestQuery.executeQuery();
+    		int addressID = addressResults.getInt("Adressen_ID");
+    		customerInsertQuery.setInt(5, addressID);
+    		
     		customerInsertQuery.executeUpdate();
     		con.getRawConnection().commit();
     		con.getRawConnection().setAutoCommit(true);
+    		logger.info("Registration successful! Addressen_ID was " + String.valueOf(addressID) + ".");
     	} catch (SQLException ex) {
     		con.getRawConnection().rollback();
     		con.getRawConnection().setAutoCommit(true);
+    		logger.log(Level.SEVERE, "User failed to register!", ex);
     		throw ex;
     	}
     }
