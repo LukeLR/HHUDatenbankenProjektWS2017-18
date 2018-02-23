@@ -3,11 +3,15 @@ package de.hhu.cs.dbs.internship.project.gui;
 import com.alexanderthelen.applicationkit.database.Table;
 import com.alexanderthelen.applicationkit.gui.TableViewController;
 import com.alexanderthelen.applicationkit.gui.ViewController;
+
+import de.hhu.cs.dbs.internship.project.table.account.Account;
+import de.hhu.cs.dbs.internship.project.table.account.Favorites;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+@SuppressWarnings("restriction")
 public class MasterViewController extends com.alexanderthelen.applicationkit.gui.MasterViewController {
     protected MasterViewController(String name) {
         super(name);
@@ -19,7 +23,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         return controller;
     }
 
-    @Override
+	@Override
     protected ArrayList<TreeItem<ViewController>> getTreeItems() {
         ArrayList<TreeItem<ViewController>> treeItems = new ArrayList<>();
         TreeItem<ViewController> treeItem;
@@ -27,7 +31,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         TableViewController tableViewController;
         Table table;
 
-        /*table = new Account();
+        table = new Account();
         table.setTitle("Account");
         try {
             tableViewController = TableViewController.createWithNameAndTable("account", table);
@@ -48,7 +52,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
             tableViewController = null;
         }
         subTreeItem = new TreeItem<>(tableViewController);
-        treeItem.getChildren().add(subTreeItem);*/
+        treeItem.getChildren().add(subTreeItem);
 
         return treeItems;
     }

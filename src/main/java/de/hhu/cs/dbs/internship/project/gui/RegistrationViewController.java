@@ -10,24 +10,34 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class RegistrationViewController extends com.alexanderthelen.applicationkit.gui.RegistrationViewController {
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     protected TextField firstNameTextField;
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     protected TextField lastNameTextField;
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     protected TextField eMailTextField;
-    @FXML
+    @SuppressWarnings("restriction")
+	@FXML
     protected PasswordField password1PasswordField;
+    @SuppressWarnings("restriction")
     @FXML
     protected PasswordField password2PasswordField;
+    @SuppressWarnings("restriction")
     @FXML
     protected TextField streetTextField;
+    @SuppressWarnings("restriction")
     @FXML
     protected TextField houseNumberTextField;
+    @SuppressWarnings("restriction")
     @FXML
     protected TextField zipCodeTextField;
+    @SuppressWarnings("restriction")
     @FXML
     protected TextField cityTextField;
+    
 
     protected RegistrationViewController(String name) {
         super(name, RegistrationViewController.class.getResource("RegistrationView.fxml"));
@@ -39,12 +49,14 @@ public class RegistrationViewController extends com.alexanderthelen.applicationk
         return viewController;
     }
 
+    @SuppressWarnings("restriction")
     @Override
     @FXML
     protected void initialize() {
 
     }
 
+    @SuppressWarnings("restriction")
     @Override
     public ArrayList<Node> getInputNodes() {
         ArrayList<Node> inputNodes = new ArrayList<>();
@@ -60,6 +72,7 @@ public class RegistrationViewController extends com.alexanderthelen.applicationk
         return inputNodes;
     }
 
+    @SuppressWarnings("restriction")
     @Override
     public Data getInputData() {
         Data data = new Data();

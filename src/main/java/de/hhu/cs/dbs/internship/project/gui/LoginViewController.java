@@ -9,11 +9,10 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.util.ArrayList;
 
+@SuppressWarnings("restriction")
 public class LoginViewController extends com.alexanderthelen.applicationkit.gui.LoginViewController {
-    @SuppressWarnings("restriction")
 	@FXML
     protected TextField emailTextField;
-    @SuppressWarnings("restriction")
 	@FXML
     protected PasswordField passwordPasswordField;
 
@@ -27,7 +26,6 @@ public class LoginViewController extends com.alexanderthelen.applicationkit.gui.
         return viewController;
     }
 
-    @SuppressWarnings("restriction")
 	@Override
     public ArrayList<Node> getInputNodes() {
         ArrayList<Node> inputNodes = new ArrayList<>();
@@ -35,8 +33,7 @@ public class LoginViewController extends com.alexanderthelen.applicationkit.gui.
         inputNodes.add(passwordPasswordField);
         return inputNodes;
     }
-
-    @SuppressWarnings("restriction")
+	
 	@Override
     public Data getInputData() {
         Data data = new Data();
