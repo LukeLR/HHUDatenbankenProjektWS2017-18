@@ -12,6 +12,9 @@ import java.util.logging.Logger;
 public class Account extends Table {
     @Override
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
+    	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
+    	logger.info("Showing " + this.getClass().getName() + " for E-Mail "
+    			+ Project.getInstance().getData().get("email") + ".");
     	String selectQuery = "SELECT E_Mail_Adresse, Vorname, Nachname, "
     			+ "Strasse, Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
     			+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '" 
@@ -21,6 +24,8 @@ public class Account extends Table {
 
     @Override
     public String getSelectQueryForRowWithData(Data data) throws SQLException {
+    	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
+    	logger.info("Showing " + this.getClass().getName() + " for Data " + data.toString());
     	String selectQuery = "SELECT E_Mail_Adresse, Vorname, Nachname, "
     			+ "Strasse, Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
     			+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '" 
