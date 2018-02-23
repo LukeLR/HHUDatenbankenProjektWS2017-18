@@ -51,7 +51,7 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
             			 "SELECT E_Mail_Adresse FROM Angestellter WHERE E_Mail_Adresse = ?");
             	 shopAssistantQuery.setString(1, data.get("email").toString());
             	 ResultSet shopAssistantResults = shopAssistantQuery.executeQuery();
-            	 if (shopAssistantResults.getString("E_Mail_Adresse").equals(data.get("email").toString())) {
+            	 if (!shopAssistantResults.isClosed() && shopAssistantResults.getString("E_Mail_Adresse").equals(data.get("email").toString())) {
             		 Project.getInstance().getData().put("permission", Permission.SHOP_ASSISTANT);
             	 } else {
             		 // Check if customer is premium customer
@@ -59,7 +59,7 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
             				 "SELECT E_Mail_Adresse FROM Premiumkunde WHERE E_Mail_Adresse = ?");
             		 premiumCustomerQuery.setString(1, data.get("email").toString());
             		 ResultSet premiumCustomerResults = premiumCustomerQuery.executeQuery();
-            		 if (premiumCustomerResults.getString("E_Mail_Adresse").equals(data.get("email").toString())) {
+            		 if (!premiumCustomerResults.isClosed() && premiumCustomerResults.getString("E_Mail_Adresse").equals(data.get("email").toString())) {
             			 Project.getInstance().getData().put("permission", Permission.PREMIUM_CUSTOMER);
             		 } else {
             			 Project.getInstance().getData().put("permission", Permission.CUSTOMER);
