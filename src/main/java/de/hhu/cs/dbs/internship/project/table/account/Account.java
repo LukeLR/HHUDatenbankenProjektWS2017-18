@@ -21,7 +21,11 @@ public class Account extends Table {
 
     @Override
     public String getSelectQueryForRowWithData(Data data) throws SQLException {
-        throw new SQLException(getClass().getName() + ".getSelectQueryForRowWithData(Data) nicht implementiert.");
+    	String selectQuery = "SELECT E_Mail_Adresse, Vorname, Nachname, "
+    			+ "Strasse, Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
+    			+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '" 
+    			+ data.get("E_Mail_Adresse") + "'";
+        return selectQuery;
     }
 
     @Override
