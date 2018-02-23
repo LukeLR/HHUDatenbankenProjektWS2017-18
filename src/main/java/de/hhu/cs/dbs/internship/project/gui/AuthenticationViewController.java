@@ -3,6 +3,7 @@ package de.hhu.cs.dbs.internship.project.gui;
 import com.alexanderthelen.applicationkit.database.Connection;
 import com.alexanderthelen.applicationkit.database.Data;
 
+import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
 
 import java.io.IOException;
@@ -41,6 +42,33 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
             		+ data.get("password").toString());
             if (loginResults.getString("Passwort").equals(data.get("password").toString())) {
             	 logger.info("User credentials correct. Done searching for users.");
+            	 
+            	 // Saving user account information application-wide
+            	 Project.getInstance().getData().put("email", data.get("email").toString());
+            	 
+            	 // Check if customer is shop assistant
+            	 PreparedStatement shopAssistantQuery = Project.getInstance().getConnection().prepareStatement(
+            			 "SELECT E_Mail_Adresse FROM Angestellter WHERE E_Mail_Adresse = ?");
+            	 shopAssistantQuery.setString(1, data.get("email").toString());
+            	 ResultSet shopAssistantResults = shopAssistantQuery.executeQuery();
+            	 if (shopAssistantResults.getString("E_Mail_Adresse").equals(data.get("email").toString())) {
+            		 Project.getInstance().getData().put("permission", Permission.SHOP_ASSISTANT);
+            	 } else {
+            		 // Check if customer is premium customer
+            		 PreparedStatement premiumCustomerQuery = Project.getInstance().getConnection().prepareStatement(
+            				 "SELECT E_Mail_Adresse FROM Premiumkunde WHERE E_Mail_Adresse = ?");
+            		 premiumCustomerQuery.setString(1, data.get("email").toString());
+            		 ResultSet premiumCustomerResults = premiumCustomerQuery.executeQuery();
+            		 if (premiumCustomerResults.getString("E_Mail_Adresse").equals(data.get("email").toString())) {
+            			 Project.getInstance().getData().put("permission", Permission.PREMIUM_CUSTOMER);
+            		 } else {
+            			 Project.getInstance().getData().put("permission", Permission.CUSTOMER);
+            		 }
+            	 }
+            	 
+            	 logger.info("User access level is: " + Permission.permissionLevelToString(Integer.valueOf(
+            			 Project.getInstance().getData().get("permission").toString())) + ".");
+            	 
             	 authenticated = true;
             }
         }
@@ -86,7 +114,7 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
     		 */
     		PreparedStatement addressRequestQuery = con.prepareStatement(
     				"SELECT Adressen_ID FROM Adresse "
-    				+ "WHERE Strasse = ? AND Hausnummer = ? AND PLZ = ? AND Ort = ?");
+    				+ "WHERE Strasse = ? AND Hausnummer = ? AND PLZ = ? AND Ort )= ?");
     		
     		addressRequestQuery.setString(1, data.get("street").toString());
     		addressRequestQuery.setString(2, data.get("houseNumber").toString());
