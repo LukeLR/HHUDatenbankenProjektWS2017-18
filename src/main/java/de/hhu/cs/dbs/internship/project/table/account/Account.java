@@ -12,12 +12,11 @@ import java.util.logging.Logger;
 public class Account extends Table {
     @Override
     public String getSelectQueryForTableWithFilter(String s) throws SQLException {
-    	PreparedStatement selectQuery = Project.getInstance().getConnection().prepareStatement(
-    			"SELECT * FROM Kunde WHERE E_Mail_Adresse = ?");
-    	selectQuery.setString(1, Project.getInstance().getData().get("email").toString());
-    	Logger logger = Logger.getLogger(this.getClass().getName());
-    	logger.info("Query: " + selectQuery.toString());
-        return selectQuery.toString();
+    	String selectQuery = "SELECT E_Mail_Adresse, Vorname, Nachname, "
+    			+ "Strasse, Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
+    			+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '" 
+    			+ Project.getInstance().getData().get("email") + "'";
+        return selectQuery;
     }
 
     @Override
