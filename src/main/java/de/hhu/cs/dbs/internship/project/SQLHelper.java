@@ -132,9 +132,10 @@ public class SQLHelper {
 	
 	public static void updateEMailAdressInTable(String tablename, String eMailOld, String eMailNew, Connection con) throws SQLException {
 		PreparedStatement updateEMailStatement = con.prepareStatement(
-    			"UPDATE Premiumkunde SET E_Mail_Adresse = ? WHERE E_Mail_Adresse = ?");
-    	updateEMailStatement.setString(1, eMailNew);
-    	updateEMailStatement.setString(2, eMailOld);
+    			"UPDATE ? SET E_Mail_Adresse = ? WHERE E_Mail_Adresse = ?");
+		updateEMailStatement.setString(1, tablename);
+    	updateEMailStatement.setString(2, eMailNew);
+    	updateEMailStatement.setString(3, eMailOld);
     	updateEMailStatement.executeUpdate();
 	}
 }
