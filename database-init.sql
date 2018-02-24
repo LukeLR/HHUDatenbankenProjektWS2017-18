@@ -60,7 +60,7 @@ CREATE TABLE Adresse (
 
 CREATE TABLE Kunde (
     E_Mail_Adresse VARCHAR(320) NOT NULL CONSTRAINT E_Mail_Adresse CHECK (
-        E_Mail_Adresse LIKE '%_@__%.__%'),
+        E_Mail_Adresse LIKE '%_@_%.__%'),
     Vorname VARCHAR(50) NOT NULL CONSTRAINT Vorname CHECK (
         INSTR(Vorname, '0') == 0 AND
         INSTR(Vorname, '1') == 0 AND
