@@ -74,11 +74,16 @@ public class Account extends Table {
         	String eMailOld = data.get("Kunde.E-Mail-Adresse").toString();
         	String eMailNew = data.get("Kunde.E-Mail-Adresse").toString();
         	
-        	SQLHelper.updateEMailAdressInTable("Premiumkunde", eMailOld, eMailNew, con);
-        	SQLHelper.updateEMailAdressInTable("Angestellter", eMailOld, eMailNew, con);
-        	SQLHelper.updateEMailAdressInTable("Warenkorb", eMailOld, eMailNew, con);
-        	SQLHelper.updateEMailAdressInTable("Newsletter", eMailOld, eMailNew, con);
+        	SQLHelper.updateEMailAdressInTable( "Premiumkunde", eMailOld, eMailNew, con);
+        	SQLHelper.updateEMailAdressInTable( "Angestellter", eMailOld, eMailNew, con);
+        	SQLHelper.updateEMailAdressInTable(    "Warenkorb", eMailOld, eMailNew, con);
+        	SQLHelper.updateEMailAdressInTable(   "Newsletter", eMailOld, eMailNew, con);
         	SQLHelper.updateEMailAdressInTable("Newsletterabo", eMailOld, eMailNew, con);
+        	
+        	PreparedStatement removeOldKundeStatement = con.prepareStatement(
+        			"DELETE FROM Kunde WHERE E_Mail_Adresse = ?");
+        	removeOldKundeStatement.setString(1, eMailOld);
+        	removeOldKundeStatement.executeUpdate();
     	} else {
     		logger.info("E-Mail-Address unchanged!");
     		updateKundeStatement = con.prepareStatement(
