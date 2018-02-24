@@ -7,10 +7,6 @@ import com.alexanderthelen.applicationkit.database.Table;
 
 public class Anbieter extends Table {
 
-	public Anbieter() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		// TODO Auto-generated method stub
