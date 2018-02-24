@@ -74,7 +74,7 @@ public class Account extends Table {
             	updateKundeStatement.executeUpdate();
             	
             	String eMailOld = data.get("Kunde.E-Mail-Adresse").toString();
-            	String eMailNew = data.get("Kunde.E-Mail-Adresse").toString();
+            	String eMailNew = data1.get("Kunde.E-Mail-Adresse").toString();
             	
             	for (String tablename:DatabaseInfo.TABLES_WITH_E_MAIL_ADDRESS_WITHOUT_KUNDE) {
             		SQLHelper.updateEMailAddressInTable(tablename, eMailOld, eMailNew, con);
@@ -106,7 +106,7 @@ public class Account extends Table {
     		throw ex;
     	}
     	
-		logger.info("Done changing account data for account " + data1.get("E-Mail-Adresse").toString() + ".");
+		logger.info("Done changing account data for account " + data1.get("Kunde.E-Mail-Adresse").toString() + ".");
     }
 
     @Override
