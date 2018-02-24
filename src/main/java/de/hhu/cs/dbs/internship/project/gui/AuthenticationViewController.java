@@ -5,6 +5,7 @@ import com.alexanderthelen.applicationkit.database.Data;
 
 import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
+import de.hhu.cs.dbs.internship.project.SQLHelper;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -112,17 +113,10 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
     		 * and inserting it into the customer that is about to be
     		 * created.
     		 */
-    		PreparedStatement addressRequestQuery = con.prepareStatement(
-    				"SELECT Adressen_ID FROM Adresse "
-    				+ "WHERE Strasse = ? AND Hausnummer = ? AND PLZ = ? AND Ort )= ?");
     		
-    		addressRequestQuery.setString(1, data.get("street").toString());
-    		addressRequestQuery.setString(2, data.get("houseNumber").toString());
-    		addressRequestQuery.setString(3, data.get("zipCode").toString());
-    		addressRequestQuery.setString(4, data.get("city").toString());
-    		
-    		ResultSet addressResults = addressRequestQuery.executeQuery();
-    		int addressID = addressResults.getInt("Adressen_ID");
+    		int addressID = SQLHelper.getAddressIDByAddress
+    				(data.get("street").toString(), data.get("houseNumber").toString(),
+    				 data.get("zipCode").toString(), data.get("city").toString(), con.getRawConnection());
     		customerInsertQuery.setInt(5, addressID);
     		
     		customerInsertQuery.executeUpdate();
