@@ -42,8 +42,7 @@ public class AlleAccounts extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		SQLHelper.deleteAccountByEMail(data.get("Kunde.E-Mail-Adresse").toString());
 	}
 
 }
