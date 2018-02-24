@@ -5,6 +5,7 @@ import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
 import de.hhu.cs.dbs.internship.project.Project;
+import de.hhu.cs.dbs.internship.project.SQLHelper;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -55,7 +56,12 @@ public class Account extends Table {
     	updateKundeStatement.setString(3, data1.get("Vorname").toString());
     	updateKundeStatement.setString(4, data1.get("Nachname").toString());
     	
+    	int addressID = SQLHelper.getAddressIDWithChangedAddress(data.get("street").toString(),
+    			data.get("houseNumber").toString(), data.get("zipCode").toString(), data.get("city").toString(),
+    			data1.get("street").toString(), data1.get("houseNumber").toString(),
+    			data1.get("zipCode").toString(), data1.get("city").toString(), con);
     	
+    	updateKundeStatement.setInt(5, addressID);
     	
     	con.getRawConnection().commit();
 		con.getRawConnection().setAutoCommit(true);
