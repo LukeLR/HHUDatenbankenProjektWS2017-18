@@ -116,7 +116,7 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
     		
     		int addressID = SQLHelper.getAddressIDByAddress
     				(data.get("street").toString(), data.get("houseNumber").toString(),
-    				 data.get("zipCode").toString(), data.get("city").toString(), con.getRawConnection());
+    				 data.get("zipCode").toString(), data.get("city").toString(), con);
     		customerInsertQuery.setInt(5, addressID);
     		
     		customerInsertQuery.executeUpdate();

@@ -1,9 +1,10 @@
 package de.hhu.cs.dbs.internship.project;
 
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import com.alexanderthelen.applicationkit.database.Connection;
 
 public class SQLHelper {
 	public static int getAddressIDByAddress
@@ -26,6 +27,6 @@ public class SQLHelper {
 	(String street, String houseNumber, String zipCode, String city) throws SQLException
 	{
 		return getAddressIDByAddress(street, houseNumber, zipCode, city,
-				Project.getInstance().getConnection().getRawConnection());
+				Project.getInstance().getConnection());
 	}
 }
