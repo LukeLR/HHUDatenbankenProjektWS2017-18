@@ -9,14 +9,22 @@ public class Premiumkunde extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String selectQuery = "SELECT * FROM (SELECT * FROM Premiumkunde JOIN Kunde "
+				+ "ON Premiumkunde.E_Mail_Adresse = Kunde.E_Mail_Adresse) "
+				+ "JOIN Adresse ON Kunde.AdressenID = Adresse.AdressenID";
+		if (filter != null && !filter.isEmpty()) {
+			selectQuery += " AND Kunde.E_Mail_Adresse LIKE '%" + filter + "'";
+		}
+		return selectQuery;
 	}
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String selectQuery = "SELECT * FROM (SELECT * FROM Premiumkunde JOIN Kunde "
+				+ "ON Premiumkunde.E_Mail_Adresse = Kunde.E_Mail_Adresse) "
+				+ "JOIN Adresse ON Kunde.AdressenID = Adresse.AdressenID "
+				+ "WHERE E_Mail_Adresse = '" + data.get("Kunde.E-Mail-Adresse") + "'";
+		return selectQuery;
 	}
 
 	@Override
