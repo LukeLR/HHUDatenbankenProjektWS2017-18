@@ -107,11 +107,10 @@ public class Account extends Table {
     	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
     	logger.info("Trying to delete account " + data.get("Kunde.E-Mail-Adresse").toString() + "...");
     	
-    	Connection con = Project.getInstance().getConnection();
-    	PreparedStatement removeKundeStatement = con.prepareStatement(
-    			"DELETE FROM Kunde WHERE E_Mail_Adresse = ?");
-    	removeKundeStatement.setString(1, data.get("Kunde.E-Mail-Adresse").toString());
-    	removeKundeStatement.executeUpdate();
+    	for (String tablename:DatabaseInfo.TABLES_WITH_E_MAIL_ADDRESS) {
+    		SQLHelper.deleteAllEntriesWithEMailAddressInTable(tablename,
+    				data.get("Kunde.E-Mail-Adresse").toString(), Project.getInstance().getConnection());
+    	}
     	
     	logger.info("Deletion of account " + data.get("Kunde.E-Mail-Adresse").toString() + " done!");
     }
