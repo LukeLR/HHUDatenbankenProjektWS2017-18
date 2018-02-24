@@ -222,4 +222,26 @@ public class SQLHelper {
     	
 		logger.info("Done changing account data for account " + data1.get("Kunde.E-Mail-Adresse").toString() + ".");
 	}
+	
+	public static void deleteAccountByEMail (String eMail) throws SQLException {
+		Logger logger = Logger.getLogger(SQLHelper.class.getName());
+    	logger.info("Trying to delete account " + eMail + "...");
+    	
+    	Connection con = Project.getInstance().getConnection();
+    	con.getRawConnection().setAutoCommit(false);
+    	
+    	try {
+    		for (String tablename:DatabaseInfo.TABLES_WITH_E_MAIL_ADDRESS) {
+        		SQLHelper.deleteAllEntriesWithEMailAddressInTable(tablename, eMail, con);
+        	}
+    		con.getRawConnection().commit();
+    		con.getRawConnection().setAutoCommit(true);
+    	} catch (Exception ex) {
+    		con.getRawConnection().rollback();
+    		con.getRawConnection().setAutoCommit(true);
+    		throw ex;
+    	}
+    	
+    	logger.info("Deletion of account " + eMail + " done!");
+	}
 }

@@ -48,25 +48,6 @@ public class Account extends Table {
 
     @Override
     public void deleteRowWithData(Data data) throws SQLException {
-    	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
-    	logger.info("Trying to delete account " + data.get("Kunde.E-Mail-Adresse").toString() + "...");
-    	
-    	Connection con = Project.getInstance().getConnection();
-    	con.getRawConnection().setAutoCommit(false);
-    	
-    	try {
-    		for (String tablename:DatabaseInfo.TABLES_WITH_E_MAIL_ADDRESS) {
-        		SQLHelper.deleteAllEntriesWithEMailAddressInTable(tablename,
-        				data.get("Kunde.E-Mail-Adresse").toString(), con);
-        	}
-    		con.getRawConnection().commit();
-    		con.getRawConnection().setAutoCommit(true);
-    	} catch (Exception ex) {
-    		con.getRawConnection().rollback();
-    		con.getRawConnection().setAutoCommit(true);
-    		throw ex;
-    	}
-    	
-    	logger.info("Deletion of account " + data.get("Kunde.E-Mail-Adresse").toString() + " done!");
+    	SQLHelper.deleteAccountByEMail(data.get("Kunde.E-Mail-Adresse").toString());
     }
 }
