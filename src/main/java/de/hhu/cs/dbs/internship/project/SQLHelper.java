@@ -79,7 +79,6 @@ public class SQLHelper {
 	{
 		Logger logger = Logger.getLogger(SQLHelper.class.getName());
 		
-		
 		//Check if address has changed
     	if (!streetOld.equals(streetNew) || !houseNumberOld.equals(houseNumberNew) || !zipCodeOld.equals(zipCodeNew)
     		|| !cityOld.equals(cityNew))

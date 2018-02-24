@@ -57,20 +57,23 @@ public class Account extends Table {
     			data1.get("Adresse.Hausnummer").toString(), data1.get("Adresse.PLZ").toString(),
     			data1.get("Adresse.Ort").toString(), con);
     	
+    	//TODO: Check if we really need this.
     	//Check if E-Mail-Address has changed:
+    	PreparedStatement updateKundeStatement;
     	if (!data.get("Kunde.E-Mail-Adresse").toString().equals(data1.get("Kunde.E-Mail-Adresse").toString())) {
-    		PreparedStatement updateKundeStatement = con.prepareStatement(
+    		logger.info("E-Mail-Address changed!");
+    		updateKundeStatement = con.prepareStatement(
         			"UPDATE Kunde SET E_Mail_Adresse = ?, Passwort = ?, Vorname = ?, Nachname = ?, "
         			+ "Adressen_ID = ? WHERE E_Mail_Adresse = ?");
-        	updateKundeStatement.setString(1, data1.get("Kunde.E-Mail-Adresse").toString());
-        	index++;
+        	updateKundeStatement.setString(index++, data1.get("Kunde.E-Mail-Adresse").toString());
     	} else {
-    		PreparedStatement updateKundeStatement = con.prepareStatement(
+    		logger.info("E-Mail-Address unchanged!");
+    		updateKundeStatement = con.prepareStatement(
         			"UPDATE Kunde SET Passwort = ?, Vorname = ?, Nachname = ?, Adressen_ID = ? "
         			+ "WHERE E_Mail_Adresse = ?");
     	}
     	
-    	updateKundeStatement.setString(index, data1.get("Kunde.Passwort").toString());
+    	updateKundeStatement.setString(index++, data1.get("Kunde.Passwort").toString());
     	updateKundeStatement.setString(index++, data1.get("Kunde.Vorname").toString());
     	updateKundeStatement.setString(index++, data1.get("Kunde.Nachname").toString());
     	updateKundeStatement.setInt(index++, addressID);
