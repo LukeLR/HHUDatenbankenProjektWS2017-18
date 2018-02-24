@@ -129,4 +129,12 @@ public class SQLHelper {
 		return getAddressIDWithChangedAddress (streetOld, houseNumberOld, zipCodeOld, cityOld,
 				streetNew, houseNumberNew, zipCodeNew, cityNew, Project.getInstance().getConnection());
 	}
+	
+	public static void updateEMailAdressInTable(String tablename, String eMailOld, String eMailNew, Connection con) throws SQLException {
+		PreparedStatement updateEMailStatement = con.prepareStatement(
+    			"UPDATE Premiumkunde SET E_Mail_Adresse = ? WHERE E_Mail_Adresse = ?");
+    	updateEMailStatement.setString(1, eMailNew);
+    	updateEMailStatement.setString(2, eMailOld);
+    	updateEMailStatement.executeUpdate();
+	}
 }
