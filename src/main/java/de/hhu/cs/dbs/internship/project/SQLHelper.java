@@ -31,7 +31,7 @@ public class SQLHelper {
 		
 		PreparedStatement addressRequestQuery = con.prepareStatement(
 				"SELECT Adressen_ID FROM Adresse "
-				+ "WHERE Strasse = ? AND Hausnummer = ? AND PLZ = ? AND Ort )= ?");
+				+ "WHERE Strasse = ? AND Hausnummer = ? AND PLZ = ? AND Ort = ?");
 		
 		addressRequestQuery.setString(1, street.toString());
 		addressRequestQuery.setString(2, houseNumber.toString());
