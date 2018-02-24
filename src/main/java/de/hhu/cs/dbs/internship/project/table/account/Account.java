@@ -63,13 +63,12 @@ public class Account extends Table {
     		logger.info("E-Mail-Address changed!");
     		updateKundeStatement = con.prepareStatement(
         			"INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)"
-        			+ "VALUES (?, ?, ?, ?, NULL)");
+        			+ "VALUES (?, ?, ?, ?, ?)");
         	updateKundeStatement.setString(1, data1.get("Kunde.E-Mail-Adresse").toString());
-        	updateKundeStatement.setString(2, data1.get("Kunde.Passwort").toString());
-        	updateKundeStatement.setString(3, data1.get("Kunde.Vorname").toString());
-        	updateKundeStatement.setString(4, data1.get("Kunde.Nachname").toString());
+        	updateKundeStatement.setString(2, data1.get("Kunde.Vorname").toString());
+        	updateKundeStatement.setString(3, data1.get("Kunde.Nachname").toString());
+        	updateKundeStatement.setString(4, data1.get("Kunde.Passwort").toString());
         	updateKundeStatement.setInt(5, addressID);
-        	updateKundeStatement.setString(6, data.get("Kunde.E-Mail-Adresse").toString());
         	updateKundeStatement.executeUpdate();
         	
         	String eMailOld = data.get("Kunde.E-Mail-Adresse").toString();
