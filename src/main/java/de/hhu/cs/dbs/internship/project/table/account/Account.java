@@ -43,70 +43,7 @@ public class Account extends Table {
 
     @Override
     public void updateRowWithData(Data data, Data data1) throws SQLException {
-    	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
-    	logger.info("Trying to change account data from " + data + " to " + data1 + ".");
-    	
-    	Connection con = Project.getInstance().getConnection();
-    	con.getRawConnection().setAutoCommit(false);
-    	
-    	try {
-    		//Check address and insert if neccessary.
-        	int addressID = SQLHelper.getAddressIDWithChangedAddress(data.get("Adresse.Straße").toString(),
-        			data.get("Adresse.Hausnummer").toString(), data.get("Adresse.PLZ").toString(),
-        			data.get("Adresse.Ort").toString(), data1.get("Adresse.Straße").toString(),
-        			data1.get("Adresse.Hausnummer").toString(), data1.get("Adresse.PLZ").toString(),
-        			data1.get("Adresse.Ort").toString(), con);
-        	
-        	/* Check if E-Mail-Address has changed. Re-Insert and delete customer if it did, to ensure
-        	 * foreign key constraints on occurrence of that customer in other tables during the update.
-        	 */
-        	PreparedStatement updateKundeStatement;
-        	if (!data.get("Kunde.E-Mail-Adresse").toString().equals(data1.get("Kunde.E-Mail-Adresse").toString())) {
-        		logger.info("E-Mail-Address changed!");
-        		updateKundeStatement = con.prepareStatement(
-            			"INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)"
-            			+ "VALUES (?, ?, ?, ?, ?)");
-            	updateKundeStatement.setString(1, data1.get("Kunde.E-Mail-Adresse").toString());
-            	updateKundeStatement.setString(2, data1.get("Kunde.Vorname").toString());
-            	updateKundeStatement.setString(3, data1.get("Kunde.Nachname").toString());
-            	updateKundeStatement.setString(4, data1.get("Kunde.Passwort").toString());
-            	updateKundeStatement.setInt(5, addressID);
-            	updateKundeStatement.executeUpdate();
-            	
-            	String eMailOld = data.get("Kunde.E-Mail-Adresse").toString();
-            	String eMailNew = data1.get("Kunde.E-Mail-Adresse").toString();
-            	
-            	for (String tablename:DatabaseInfo.TABLES_WITH_E_MAIL_ADDRESS_WITHOUT_KUNDE) {
-            		SQLHelper.updateEMailAddressInTable(tablename, eMailOld, eMailNew, con);
-            	}
-            	
-            	PreparedStatement removeOldKundeStatement = con.prepareStatement(
-            			"DELETE FROM Kunde WHERE E_Mail_Adresse = ?");
-            	removeOldKundeStatement.setString(1, eMailOld);
-            	removeOldKundeStatement.executeUpdate();
-            	Project.getInstance().getData().replace("email", data1.get("Kunde.E-Mail-Adresse").toString());
-        	} else {
-        		logger.info("E-Mail-Address unchanged!");
-        		updateKundeStatement = con.prepareStatement(
-            			"UPDATE Kunde SET Passwort = ?, Vorname = ?, Nachname = ?, Adressen_ID = ? "
-            			+ "WHERE E_Mail_Adresse = ?");
-        		updateKundeStatement.setString(1, data1.get("Kunde.Passwort").toString());
-            	updateKundeStatement.setString(2, data1.get("Kunde.Vorname").toString());
-            	updateKundeStatement.setString(3, data1.get("Kunde.Nachname").toString());
-            	updateKundeStatement.setInt(4, addressID);
-            	updateKundeStatement.setString(5, data.get("Kunde.E-Mail-Adresse").toString());
-            	updateKundeStatement.executeUpdate();
-        	}
-        	
-        	con.getRawConnection().commit();
-    		con.getRawConnection().setAutoCommit(true);
-    	} catch (Exception ex) {
-    		con.getRawConnection().rollback();
-    		con.getRawConnection().setAutoCommit(true);
-    		throw ex;
-    	}
-    	
-		logger.info("Done changing account data for account " + data1.get("Kunde.E-Mail-Adresse").toString() + ".");
+    	SQLHelper.changeAccountData(data, data1);
     }
 
     @Override
