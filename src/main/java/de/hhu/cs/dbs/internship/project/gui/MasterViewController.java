@@ -16,62 +16,62 @@ import java.util.logging.Logger;
 
 @SuppressWarnings("restriction")
 public class MasterViewController extends com.alexanderthelen.applicationkit.gui.MasterViewController {
-    protected MasterViewController(String name) {
-        super(name);
-    }
+	protected MasterViewController(String name) {
+		super(name);
+	}
 
-    public static MasterViewController createWithName(String name) throws IOException {
-        MasterViewController controller = new MasterViewController(name);
-        controller.loadView();
-        return controller;
-    }
+	public static MasterViewController createWithName(String name) throws IOException {
+		MasterViewController controller = new MasterViewController(name);
+		controller.loadView();
+		return controller;
+	}
 
 	@Override
-    protected ArrayList<TreeItem<ViewController>> getTreeItems() {
+	protected ArrayList<TreeItem<ViewController>> getTreeItems() {
 		Logger logger = Logger.getLogger(this.getClass().getName());
 		int permissionLevel = 0;
-		
+
 		try {
 			permissionLevel = Integer.valueOf(Project.getInstance().getData().get("permission").toString());
 		} catch (Exception ex) {
 			logger.log(Level.SEVERE, "User permission level not set!", ex);
 		}
-		
-        ArrayList<TreeItem<ViewController>> treeItems = new ArrayList<>();
-        TreeItem<ViewController> accountTreeItem;
-        //TreeItem<ViewController> subTreeItem;
-        TableViewController accountTableViewController;
-        Table accountTable;
 
-        accountTable = new Account();
-        accountTable.setTitle("Account");
-        try {
-            accountTableViewController = TableViewController.createWithNameAndTable("account", accountTable);
-            accountTableViewController.setTitle("Account");
-        } catch (IOException e) {
-            accountTableViewController = null;
-        }
-        accountTreeItem = new TreeItem<>(accountTableViewController);
-        accountTreeItem.setExpanded(true);
-        treeItems.add(accountTreeItem);
+		ArrayList<TreeItem<ViewController>> treeItems = new ArrayList<>();
+		TreeItem<ViewController> accountTreeItem;
+		//TreeItem<ViewController> subTreeItem;
+		TableViewController accountTableViewController;
+		Table accountTable;
 
-        /*table = new Favorites();
-        table.setTitle("Favoriten");
-        try {
-            tableViewController = TableViewController.createWithNameAndTable("favorites", table);
-            tableViewController.setTitle("Favoriten");
-        } catch (IOException e) {
-            tableViewController = null;
-        }
-        subTreeItem = new TreeItem<>(tableViewController);
-        treeItem.getChildren().add(subTreeItem);*/
-        
-        Table alleAccountsTable;
+		accountTable = new Account();
+		accountTable.setTitle("Account");
+		try {
+			accountTableViewController = TableViewController.createWithNameAndTable("account", accountTable);
+			accountTableViewController.setTitle("Account");
+		} catch (IOException e) {
+			accountTableViewController = null;
+		}
+		accountTreeItem = new TreeItem<>(accountTableViewController);
+		accountTreeItem.setExpanded(true);
+		treeItems.add(accountTreeItem);
+
+		/*table = new Favorites();
+		table.setTitle("Favoriten");
+		try {
+			tableViewController = TableViewController.createWithNameAndTable("favorites", table);
+			tableViewController.setTitle("Favoriten");
+		} catch (IOException e) {
+			tableViewController = null;
+		}
+		subTreeItem = new TreeItem<>(tableViewController);
+		treeItem.getChildren().add(subTreeItem);*/
+
+		Table alleAccountsTable;
 		if (permissionLevel >= 4) {
-			 alleAccountsTable = new AlleAccounts();
-		     alleAccountsTable.setTitle("Alle Accounts");
-		}        
-        
-        return treeItems;
-    }
+			alleAccountsTable = new AlleAccounts();
+			alleAccountsTable.setTitle("Alle Accounts");
+		}
+
+		return treeItems;
+	}
 }

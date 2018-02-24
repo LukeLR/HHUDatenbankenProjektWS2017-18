@@ -13,47 +13,47 @@ import de.hhu.cs.dbs.internship.project.gui.MasterViewController;
 import de.hhu.cs.dbs.internship.project.gui.RegistrationViewController;
 
 public class Project extends com.alexanderthelen.applicationkit.Application {
-    @SuppressWarnings("restriction")
+	@SuppressWarnings("restriction")
 	public static void main(String[] args) {
-        launch(args);
-    }
+		launch(args);
+	}
 
-    @Override
-    public void start() throws Exception {
-    	Logger logger = Logger.getLogger(this.getClass().getName());
-        setConnection(new Connection("jdbc:sqlite:database.sqlite"));
-        
-        //Quick and dirty test if SQL connection works
-        String sql = "SELECT * FROM Kunde";
-        Statement statement = Project.getInstance().getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery(sql);
-        while (resultSet.next()) {
-            logger.info("Vorname: " + resultSet.getString("Vorname") + ", Nachname: " + resultSet.getString("Nachname")); 
-        }
+	@Override
+	public void start() throws Exception {
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		setConnection(new Connection("jdbc:sqlite:database.sqlite"));
 
-        WindowController mainWindowController = WindowController.createWithName("window");
-        mainWindowController.setTitle("Projekt");
+		//Quick and dirty test if SQL connection works
+		String sql = "SELECT * FROM Kunde";
+		Statement statement = Project.getInstance().getConnection().createStatement();
+		ResultSet resultSet = statement.executeQuery(sql);
+		while (resultSet.next()) {
+			logger.info("Vorname: " + resultSet.getString("Vorname") + ", Nachname: " + resultSet.getString("Nachname")); 
+		}
 
-        AuthenticationViewController authenticationViewController = AuthenticationViewController
-                .createWithName("authentication");
-        authenticationViewController.setTitle("Authentifizierung");
+		WindowController mainWindowController = WindowController.createWithName("window");
+		mainWindowController.setTitle("Projekt");
 
-        LoginViewController loginViewController = LoginViewController.createWithName("login");
-        loginViewController.setTitle("Anmeldung");
-        authenticationViewController.setLoginViewController(loginViewController);
+		AuthenticationViewController authenticationViewController = AuthenticationViewController
+				.createWithName("authentication");
+		authenticationViewController.setTitle("Authentifizierung");
 
-        RegistrationViewController registrationViewController = RegistrationViewController
-                .createWithName("registration");
-        registrationViewController.setTitle("Registrierung");
-        authenticationViewController.setRegistrationViewController(registrationViewController);
+		LoginViewController loginViewController = LoginViewController.createWithName("login");
+		loginViewController.setTitle("Anmeldung");
+		authenticationViewController.setLoginViewController(loginViewController);
 
-        MasterDetailViewController mainViewController = MasterDetailViewController.createWithName("main");
-        mainViewController.setTitle("Projekt");
-        mainViewController.setMasterViewController(MasterViewController.createWithName("master"));
-        authenticationViewController.setMainViewController(mainViewController);
+		RegistrationViewController registrationViewController = RegistrationViewController
+				.createWithName("registration");
+		registrationViewController.setTitle("Registrierung");
+		authenticationViewController.setRegistrationViewController(registrationViewController);
 
-        mainWindowController.setViewController(authenticationViewController);
-        setWindowController(mainWindowController);
-        show();
-    }
+		MasterDetailViewController mainViewController = MasterDetailViewController.createWithName("main");
+		mainViewController.setTitle("Projekt");
+		mainViewController.setMasterViewController(MasterViewController.createWithName("master"));
+		authenticationViewController.setMainViewController(mainViewController);
+
+		mainWindowController.setViewController(authenticationViewController);
+		setWindowController(mainWindowController);
+		show();
+	}
 }

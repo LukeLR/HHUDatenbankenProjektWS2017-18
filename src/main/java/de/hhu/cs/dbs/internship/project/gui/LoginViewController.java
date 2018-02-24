@@ -12,33 +12,33 @@ import java.util.ArrayList;
 @SuppressWarnings("restriction")
 public class LoginViewController extends com.alexanderthelen.applicationkit.gui.LoginViewController {
 	@FXML
-    protected TextField emailTextField;
+	protected TextField emailTextField;
 	@FXML
-    protected PasswordField passwordPasswordField;
+	protected PasswordField passwordPasswordField;
 
-    protected LoginViewController(String name) {
-        super(name, LoginViewController.class.getResource("LoginView.fxml"));
-    }
+	protected LoginViewController(String name) {
+		super(name, LoginViewController.class.getResource("LoginView.fxml"));
+	}
 
-    public static LoginViewController createWithName(String name) throws IOException {
-        LoginViewController viewController = new LoginViewController(name);
-        viewController.loadView();
-        return viewController;
-    }
+	public static LoginViewController createWithName(String name) throws IOException {
+		LoginViewController viewController = new LoginViewController(name);
+		viewController.loadView();
+		return viewController;
+	}
 
 	@Override
-    public ArrayList<Node> getInputNodes() {
-        ArrayList<Node> inputNodes = new ArrayList<>();
-        inputNodes.add(emailTextField);
-        inputNodes.add(passwordPasswordField);
-        return inputNodes;
-    }
-	
+	public ArrayList<Node> getInputNodes() {
+		ArrayList<Node> inputNodes = new ArrayList<>();
+		inputNodes.add(emailTextField);
+		inputNodes.add(passwordPasswordField);
+		return inputNodes;
+	}
+
 	@Override
-    public Data getInputData() {
-        Data data = new Data();
-        data.put("email", emailTextField.getText());
-        data.put("password", passwordPasswordField.getText());
-        return data;
-    }
+	public Data getInputData() {
+		Data data = new Data();
+		data.put("email", emailTextField.getText());
+		data.put("password", passwordPasswordField.getText());
+		return data;
+	}
 }
