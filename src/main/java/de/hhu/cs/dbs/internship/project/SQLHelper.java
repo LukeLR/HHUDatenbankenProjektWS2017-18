@@ -130,7 +130,7 @@ public class SQLHelper {
 				streetNew, houseNumberNew, zipCodeNew, cityNew, Project.getInstance().getConnection());
 	}
 	
-	public static void updateEMailAdressInTable(String tablename, String eMailOld, String eMailNew, Connection con) throws SQLException {
+	public static void updateEMailAddressInTable(String tablename, String eMailOld, String eMailNew, Connection con) throws SQLException {
 		Logger logger = Logger.getLogger(SQLHelper.class.getName());
 		logger.info("Trying to change E-Mail-Addresses from " + eMailOld + " to " + eMailNew + " in " + tablename + ".");
 		
@@ -141,5 +141,9 @@ public class SQLHelper {
     	updateEMailStatement.executeUpdate();
     	
     	logger.info("Changing E-Mail-Addresses done!");
+	}
+	
+	public static void deleteAllEntriesWithEMailAddressInTable(String tablename, String eMail, Connection con) throws SQLException {
+		
 	}
 }
