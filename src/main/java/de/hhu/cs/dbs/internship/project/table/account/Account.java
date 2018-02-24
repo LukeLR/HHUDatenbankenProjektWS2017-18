@@ -84,6 +84,7 @@ public class Account extends Table {
         			"DELETE FROM Kunde WHERE E_Mail_Adresse = ?");
         	removeOldKundeStatement.setString(1, eMailOld);
         	removeOldKundeStatement.executeUpdate();
+        	Project.getInstance().getData().replace("email", data1.get("Kunde.E-Mail-Adresse"));
     	} else {
     		logger.info("E-Mail-Address unchanged!");
     		updateKundeStatement = con.prepareStatement(
@@ -98,7 +99,6 @@ public class Account extends Table {
     	}
     	
     	con.getRawConnection().commit();
-    	//TODO: Update user login information
 		con.getRawConnection().setAutoCommit(true);
     }
 
