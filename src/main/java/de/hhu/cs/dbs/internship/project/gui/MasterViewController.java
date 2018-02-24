@@ -4,11 +4,15 @@ import com.alexanderthelen.applicationkit.database.Table;
 import com.alexanderthelen.applicationkit.gui.TableViewController;
 import com.alexanderthelen.applicationkit.gui.ViewController;
 
+import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.table.account.Account;
+import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @SuppressWarnings("restriction")
 public class MasterViewController extends com.alexanderthelen.applicationkit.gui.MasterViewController {
@@ -24,6 +28,15 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 
 	@Override
     protected ArrayList<TreeItem<ViewController>> getTreeItems() {
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		int permissionLevel = 0;
+		
+		try {
+			permissionLevel = Integer.valueOf(Project.getInstance().getData().get("permission").toString());
+		} catch (Exception ex) {
+			logger.log(Level.SEVERE, "User permission level not set!", ex);
+		}
+		
         ArrayList<TreeItem<ViewController>> treeItems = new ArrayList<>();
         TreeItem<ViewController> accountTreeItem;
         //TreeItem<ViewController> subTreeItem;
@@ -52,6 +65,12 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         }
         subTreeItem = new TreeItem<>(tableViewController);
         treeItem.getChildren().add(subTreeItem);*/
+        
+        Table allAccountsTable;
+		if (permissionLevel >= 4) {
+			 allAccountsTable = new AlleAccounts();
+		     allAccountsTable.setTitle("Alle Accounts");
+		}        
         
         return treeItems;
     }
