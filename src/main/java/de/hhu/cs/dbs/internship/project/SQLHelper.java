@@ -131,11 +131,16 @@ public class SQLHelper {
 	}
 	
 	public static void updateEMailAdressInTable(String tablename, String eMailOld, String eMailNew, Connection con) throws SQLException {
+		Logger logger = Logger.getLogger(SQLHelper.class.getName());
+		logger.info("Trying to change E-Mail-Addresses from " + eMailOld + " to " + eMailNew + " in " + tablename + ".");
+		
 		PreparedStatement updateEMailStatement = con.prepareStatement(
     			"UPDATE ? SET E_Mail_Adresse = ? WHERE E_Mail_Adresse = ?");
 		updateEMailStatement.setString(1, tablename);
     	updateEMailStatement.setString(2, eMailNew);
     	updateEMailStatement.setString(3, eMailOld);
     	updateEMailStatement.executeUpdate();
+    	
+    	logger.info("Changing E-Mail-Addresses done!");
 	}
 }
