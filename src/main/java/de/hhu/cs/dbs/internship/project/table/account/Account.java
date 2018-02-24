@@ -84,7 +84,7 @@ public class Account extends Table {
         			"DELETE FROM Kunde WHERE E_Mail_Adresse = ?");
         	removeOldKundeStatement.setString(1, eMailOld);
         	removeOldKundeStatement.executeUpdate();
-        	Project.getInstance().getData().replace("email", data1.get("Kunde.E-Mail-Adresse"));
+        	Project.getInstance().getData().replace("email", data1.get("Kunde.E-Mail-Adresse").toString());
     	} else {
     		logger.info("E-Mail-Address unchanged!");
     		updateKundeStatement = con.prepareStatement(
@@ -100,10 +100,11 @@ public class Account extends Table {
     	
     	con.getRawConnection().commit();
 		con.getRawConnection().setAutoCommit(true);
+		logger.info("Done changing account data for account " + data1.get("E-Mail-Adresse").toString() + ".");
     }
 
     @Override
     public void deleteRowWithData(Data data) throws SQLException {
-        throw new SQLException(getClass().getName() + ".deleteRowWithData(Data) nicht implementiert.");
+        
     }
 }
