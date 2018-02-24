@@ -12,7 +12,7 @@ import javafx.scene.control.TreeItem;
 @SuppressWarnings("restriction")
 public class GUIHelpers {
 	@SuppressWarnings("unchecked")
-	public static void addTableToTree(@SuppressWarnings("rawtypes") Class tableclass, String title, ArrayList<TreeItem<ViewController>> treeItems) {
+	public static void addTableOfClassToTree(@SuppressWarnings("rawtypes") Class tableclass, String title, ArrayList<TreeItem<ViewController>> treeItems) {
 		Account accountTable = new Account();
 		accountTable.setTitle("Account");
 		TableViewController accountTableViewController;
@@ -26,5 +26,9 @@ public class GUIHelpers {
 		TreeItem accountTreeItem = new TreeItem<>(accountTableViewController);
 		accountTreeItem.setExpanded(true);
 		treeItems.add(accountTreeItem);
+	}
+	
+	public static void createTableViewControllerForTableOfClass(Class tableclass, String title) {
+		
 	}
 }

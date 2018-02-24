@@ -39,7 +39,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 		}
 		
 		ArrayList<TreeItem<ViewController>> treeItems = new ArrayList<>();
-		GUIHelpers.addTableToTree(de.hhu.cs.dbs.internship.project.table.account.Account.class, "Account", treeItems);
+		GUIHelpers.addTableOfClassToTree(de.hhu.cs.dbs.internship.project.table.account.Account.class, "Account", treeItems);
 		
 		/*table = new Favorites();
 		table.setTitle("Favoriten");
