@@ -1,6 +1,7 @@
 package de.hhu.cs.dbs.internship.project.table.account;
 
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
@@ -9,6 +10,8 @@ public class Premiumkunde extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Showing " + this.getClass().getName());
 		String selectQuery = "SELECT * FROM (SELECT Ablaufdatum, Studierendenausweis, Kunde.E_Mail_Adresse, "
 				+ "Vorname, Nachname, Passwort, Adressen_ID AS 'AID' FROM Premiumkunde "
 				+ "JOIN Kunde ON Premiumkunde.E_Mail_Adresse = Kunde.E_Mail_Adresse) "
@@ -21,6 +24,8 @@ public class Premiumkunde extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Showing " + this.getClass().getName() + " for Data " + data.toString());
 		String selectQuery = "SELECT * FROM Premiumkunde "
 				+ "WHERE E_Mail_Adresse = '" + data.get("Kunde.E-Mail-Adresse") + "'";
 		return selectQuery;

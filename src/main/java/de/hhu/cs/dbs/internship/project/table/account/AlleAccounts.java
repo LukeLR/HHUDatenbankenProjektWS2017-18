@@ -1,6 +1,7 @@
 package de.hhu.cs.dbs.internship.project.table.account;
 
 import java.sql.SQLException;
+import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
@@ -11,6 +12,8 @@ public class AlleAccounts extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Showing " + this.getClass().getName());
 		String selectQuery = "SELECT E_Mail_Adresse AS 'E-Mail-Adresse', Passwort, Vorname, Nachname, "
 				+ "Strasse AS 'Straße', Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
 				+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID";
@@ -22,6 +25,8 @@ public class AlleAccounts extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Showing " + this.getClass().getName() + " for Data " + data.toString());
 		String selectQuery = "SELECT E_Mail_Adresse AS 'E-Mail-Adresse', Passwort, Vorname, Nachname, "
 				+ "Strasse AS 'Straße', Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
 				+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '"
