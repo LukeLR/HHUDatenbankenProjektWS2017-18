@@ -11,8 +11,10 @@ import javafx.scene.control.TreeItem;
 
 @SuppressWarnings("restriction")
 public class GUIHelpers {
-	public static void addTableOfClassToTree(Table table, String title, ArrayList<TreeItem<TableViewController>> treeItems) {
-		treeItems.add(createTreeItemForTableOfClass(table, title));
+	public static TreeItem<TableViewController> addTableOfClassToTree(Table table, String title, ArrayList<TreeItem<TableViewController>> treeItems) {
+		TreeItem<TableViewController> treeItem = createTreeItemForTableOfClass(table, title);
+		treeItems.add(treeItem);
+		return treeItem;
 	}
 	
 	public static TreeItem<TableViewController> createTreeItemForTableOfClass(Table table, String title) {
@@ -29,7 +31,9 @@ public class GUIHelpers {
 		return accountTreeItem;
 	}
 	
-	public static void addTableOfClassToTreeItem(Table table, String title, TreeItem<TableViewController> parentItem) {
-		parentItem.getChildren().add(createTreeItemForTableOfClass(table, title));
+	public static TreeItem<TableViewController> addTableOfClassToTreeItem(Table table, String title, TreeItem<TableViewController> parentItem) {
+		TreeItem<TableViewController> treeItem = createTreeItemForTableOfClass(table, title);
+		parentItem.getChildren().add(treeItem);
+		return treeItem;
 	}
 }
