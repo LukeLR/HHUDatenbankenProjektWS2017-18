@@ -4,6 +4,7 @@ import com.alexanderthelen.applicationkit.database.Connection;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.DatabaseInfo;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.SQLHelper;
 
@@ -74,11 +75,9 @@ public class Account extends Table {
         	String eMailOld = data.get("Kunde.E-Mail-Adresse").toString();
         	String eMailNew = data.get("Kunde.E-Mail-Adresse").toString();
         	
-        	SQLHelper.updateEMailAddressInTable( "Premiumkunde", eMailOld, eMailNew, con);
-        	SQLHelper.updateEMailAddressInTable( "Angestellter", eMailOld, eMailNew, con);
-        	SQLHelper.updateEMailAddressInTable(    "Warenkorb", eMailOld, eMailNew, con);
-        	SQLHelper.updateEMailAddressInTable(   "Newsletter", eMailOld, eMailNew, con);
-        	SQLHelper.updateEMailAddressInTable("Newsletterabo", eMailOld, eMailNew, con);
+        	for (String tablename:DatabaseInfo.TABLES_WITH_E_MAIL_ADDRESS_WITHOUT_KUNDE) {
+        		SQLHelper.updateEMailAddressInTable(tablename, eMailOld, eMailNew, con);
+        	}
         	
         	PreparedStatement removeOldKundeStatement = con.prepareStatement(
         			"DELETE FROM Kunde WHERE E_Mail_Adresse = ?");
