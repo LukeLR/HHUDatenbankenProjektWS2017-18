@@ -100,7 +100,7 @@ public class Account extends Table {
         	
         	con.getRawConnection().commit();
     		con.getRawConnection().setAutoCommit(true);
-    	} catch (SQLException ex) {
+    	} catch (Exception ex) {
     		con.getRawConnection().rollback();
     		con.getRawConnection().setAutoCommit(true);
     		throw ex;
@@ -124,7 +124,7 @@ public class Account extends Table {
         	}
     		con.getRawConnection().commit();
     		con.getRawConnection().setAutoCommit(true);
-    	} catch (SQLException ex) {
+    	} catch (Exception ex) {
     		con.getRawConnection().rollback();
     		con.getRawConnection().setAutoCommit(true);
     		throw ex;
