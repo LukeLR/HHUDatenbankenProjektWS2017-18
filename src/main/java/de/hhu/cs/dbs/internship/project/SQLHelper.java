@@ -144,6 +144,14 @@ public class SQLHelper {
 	}
 	
 	public static void deleteAllEntriesWithEMailAddressInTable(String tablename, String eMail, Connection con) throws SQLException {
+		Logger logger = Logger.getLogger(SQLHelper.class.getName());
+		logger.info("Trying to delete all entries with E-Mail-Address " + eMail + " from table " + tablename + "...");
 		
+		PreparedStatement deleteEntriesStatement = con.prepareStatement(
+				"DELETE FROM " + tablename + " WHERE E_Mail_Adresse = ?");
+		deleteEntriesStatement.setString(1, eMail);
+		deleteEntriesStatement.executeUpdate();
+		
+		logger.info("Deleting entries for E-Mail-Adress " + eMail + " in table " + tablename + " done!");
 	}
 }
