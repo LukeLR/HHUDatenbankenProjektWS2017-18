@@ -72,24 +72,14 @@ public class Account extends Table {
         	updateKundeStatement.setString(6, data.get("Kunde.E-Mail-Adresse").toString());
         	updateKundeStatement.executeUpdate();
         	
-        	PreparedStatement updatePremiumkundeStatement = con.prepareStatement(
-        			"UPDATE Premiumkunde SET E_Mail_Adresse = ? WHERE E_Mail_Adresse = ?");
-        	updatePremiumkundeStatement.setString(1, data1.get("Kunde.E-Mail-Adresse").toString());
-        	updatePremiumkundeStatement.setString(2, data.get("Kunde.E-Mail-Adresse").toString());
-        	updatePremiumkundeStatement.executeUpdate();
+        	String eMailOld = data.get("Kunde.E-Mail-Adresse").toString();
+        	String eMailNew = data.get("Kunde.E-Mail-Adresse").toString();
         	
-        	PreparedStatement updateAngestellterStatement = con.prepareStatement(
-        			"UPDATE Angestellter SET E_Mail_Adresse = ? WHERE E_Mail_Adresse = ?");
-        	updateAngestellterStatement.setString(1, data1.get("Kunde.E-Mail-Adresse").toString());
-        	updateAngestellterStatement.setString(2, data.get("Kunde.E-Mail-Adresse").toString());
-        	updateAngestellterStatement.executeUpdate();
-        	
-        	PreparedStatement updateWarenkorbStatement = con.prepareStatement(
-        			"UPDATE Warenkorb SET E_Mail_Adresse = ? WHERE E_Mail_Adresse = ?");
-        	updateWarenkorbStatement.setString(1, data1.get("Kunde.E-Mail-Adresse").toString());
-        	updateWarenkorbStatement.setString(2, data.get("Kunde.E-Mail-Adresse").toString());
-        	updateWarenkorbStatement.executeUpdate();
-        	
+        	SQLHelper.updateEMailAdressInTable("Premiumkunde", eMailOld, eMailNew, con);
+        	SQLHelper.updateEMailAdressInTable("Angestellter", eMailOld, eMailNew, con);
+        	SQLHelper.updateEMailAdressInTable("Warenkorb", eMailOld, eMailNew, con);
+        	SQLHelper.updateEMailAdressInTable("Newsletter", eMailOld, eMailNew, con);
+        	SQLHelper.updateEMailAdressInTable("Newsletterabo", eMailOld, eMailNew, con);
     	} else {
     		logger.info("E-Mail-Address unchanged!");
     		updateKundeStatement = con.prepareStatement(
