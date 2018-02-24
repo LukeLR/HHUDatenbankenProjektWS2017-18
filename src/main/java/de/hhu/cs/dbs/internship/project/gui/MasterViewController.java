@@ -25,22 +25,22 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 	@Override
     protected ArrayList<TreeItem<ViewController>> getTreeItems() {
         ArrayList<TreeItem<ViewController>> treeItems = new ArrayList<>();
-        TreeItem<ViewController> treeItem;
-        TreeItem<ViewController> subTreeItem;
-        TableViewController tableViewController;
-        Table table;
+        TreeItem<ViewController> accountTreeItem;
+        //TreeItem<ViewController> subTreeItem;
+        TableViewController accountTableViewController;
+        Table accountTable;
 
-        table = new Account();
-        table.setTitle("Account");
+        accountTable = new Account();
+        accountTable.setTitle("Account");
         try {
-            tableViewController = TableViewController.createWithNameAndTable("account", table);
-            tableViewController.setTitle("Account");
+            accountTableViewController = TableViewController.createWithNameAndTable("account", accountTable);
+            accountTableViewController.setTitle("Account");
         } catch (IOException e) {
-            tableViewController = null;
+            accountTableViewController = null;
         }
-        treeItem = new TreeItem<>(tableViewController);
-        treeItem.setExpanded(true);
-        treeItems.add(treeItem);
+        accountTreeItem = new TreeItem<>(accountTableViewController);
+        accountTreeItem.setExpanded(true);
+        treeItems.add(accountTreeItem);
 
         /*table = new Favorites();
         table.setTitle("Favoriten");
@@ -52,7 +52,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         }
         subTreeItem = new TreeItem<>(tableViewController);
         treeItem.getChildren().add(subTreeItem);*/
-
+        
         return treeItems;
     }
 }
