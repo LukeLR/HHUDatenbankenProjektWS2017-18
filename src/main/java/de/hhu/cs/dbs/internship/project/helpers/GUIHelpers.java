@@ -27,13 +27,14 @@ public class GUIHelpers {
 			accountTableViewController = null;
 		}
 		TreeItem<TableViewController> accountTreeItem = new TreeItem<>(accountTableViewController);
-		//TODO: accountTreeItem.setExpanded(true);
+		
 		return accountTreeItem;
 	}
 	
 	public static TreeItem<TableViewController> addTableOfClassToTreeItem(Table table, String title, TreeItem<TableViewController> parentItem) {
 		TreeItem<TableViewController> treeItem = createTreeItemForTableOfClass(table, title);
 		parentItem.getChildren().add(treeItem);
+		parentItem.setExpanded(true);
 		return treeItem;
 	}
 }
