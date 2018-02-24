@@ -50,11 +50,21 @@ public class Account extends Table {
     	updateKundeStatement.setString(3, data1.get("Vorname").toString());
     	updateKundeStatement.setString(4, data1.get("Nachname").toString());
     	
-    	//TODO: Update Adresse. Maybe delete old address?
-    	PreparedStatement updateAdresseStatement = Project.getInstance().getConnection().prepareStatement(
-    			"UPDATE Adresse SET Strasse = ?, Hausnummer = ?, PLZ = ?, Ort = ? "
-    			+ "WHERE Adressen_ID IN (SELECT Adressen_ID FROM Kunde "
-    			+ "WHERE E_Mail_Adresse = ?)");
+    	//Check if address has changed
+    	if (!data.get("Adresse.Straße").toString().equals(data1.get("Adresse.Straße").toString()) ||
+    		!data.get("Adresse.Hausnummer").toString().equals(data1.get("Adresse.Hausnummer").toString()) ||
+    		!data.get("Adresse.PLZ").toString().equals(data1.get("Adresse.PLZ").toString()) ||
+    		!data.get("Adresse.Ort").toString().equals(data1.get("Adresse.Ort").toString()))
+    	{
+    		//TODO: Update Adresse. Maybe delete old address?
+    		PreparedStatement insertAddressStatement = Project.getInstance().getConnection().prepareStatement(
+    				"INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID) "
+    				+ "VALUES (?, ?, ?, ?, NULL)");
+    		insertAddressStatement.setString(1, data1.get("Adresse.Straße").toString());
+    		insertAddressStatement.setString(2, data1.get("Adresse.Hausnummer").toString());
+    		insertAddressStatement.setString(3, data1.get("Adresse.PLZ").toString());
+    		insertAddressStatement.setString(4, data1.get("Adresse.Ort").toString());
+    	}
     	
     }
 
