@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.Phlegethon90:ApplicationKit:v1.2.0'
+    compile 'com.github.LukeLR:ApplicationKit:v1.3.0'
     testCompile 'org.junit.jupiter:junit-jupiter-api:5.0.2'
 }
 
