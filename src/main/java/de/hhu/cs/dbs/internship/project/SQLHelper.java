@@ -6,8 +6,22 @@ import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Connection;
-
+/**
+ * Contains various helper functions for SQL statements.
+ * @author lukas
+ *
+ */
 public class SQLHelper {
+	/**
+	 * Searches the database for an address id by given address.
+	 * @param street The street of the address in question.
+	 * @param houseNumber The housenumber of the address in question.
+	 * @param zipCode The ZIP code of the address in question.
+	 * @param city The city of the address in question.
+	 * @param con The connection to use for searching. This is useful, if the search should include results for changes that have not been committed yet.
+	 * @return The address id for the address found.
+	 * @throws SQLException If the statement is malformed, or no address is found.
+	 */
 	public static int getAddressIDByAddress
 	(String street, String houseNumber, String zipCode, String city, Connection con) throws SQLException
 	{
@@ -29,7 +43,15 @@ public class SQLHelper {
 		logger.info("Address ID found: " + String.valueOf(addressID));
 		return addressID;
 	}
-	
+	/**
+	 * Searches the database for an address id by given address. In this case, no database connection is given, so the default one is used.
+	 * @param street The street of the address in question.
+	 * @param houseNumber The housenumber of the address in question.
+	 * @param zipCode The ZIP code of the address in question.
+	 * @param city The city of the address in question.
+	 * @return The address id for the address found.
+	 * @throws SQLException If the statement is malformed, or no address is found.
+	 */
 	public static int getAddressIDByAddress
 	(String street, String houseNumber, String zipCode, String city) throws SQLException
 	{
@@ -37,6 +59,20 @@ public class SQLHelper {
 				Project.getInstance().getConnection());
 	}
 	
+	/**
+	 * Compares two addresses. If they have changed, insert the new one into the database. Gets the address ID of the current address, regardless if it has changed or not.
+	 * @param streetOld The street of the old address.
+	 * @param houseNumberOld The housenumber of the old address.
+	 * @param zipCodeOld The zip code of the old address.
+	 * @param cityOld The city of the old address.
+	 * @param streetNew The street of the new address.
+	 * @param houseNumberNew The housenumber of the new address.
+	 * @param zipCodeNew The ZIP code of the new address.
+	 * @param cityNew The city of the new address.
+	 * @param con The connection to use for insertion or searching. This is useful if there are changes that have not been committed yet.
+	 * @return The address ID of the new address, regardless if it has changed or not.
+	 * @throws SQLException If the statement is malformed, or the address is unchanged but not in the database.
+	 */
 	public static int getAddressIDWithChangedAddress
 	(String streetOld, String houseNumberOld, String zipCodeOld, String cityOld,
 	String streetNew, String houseNumberNew, String zipCodeNew, String cityNew, Connection con) throws SQLException
@@ -69,10 +105,24 @@ public class SQLHelper {
     				+ "\nhouseNumber: " + houseNumberOld + " -> " + houseNumberNew
     				+ "\nzipCode: " + zipCodeOld + " -> " + zipCodeNew
     				+ "\n city: " + cityOld + " -> " + cityNew);
+    		//TODO: Maybe insert the old address, if it is not in the database yet? Or provide an additional function for that?
     	}
     	return getAddressIDByAddress (streetNew, houseNumberNew, zipCodeNew, cityNew);
 	}
 	
+	/**
+	 * Compares two addresses. If they have changed, insert the new one into the database. Gets the address ID of the current address, regardless if it has changed or not. In this case, no database connection is given, so the default one is used.
+	 * @param streetOld The street of the old address.
+	 * @param houseNumberOld The housenumber of the old address.
+	 * @param zipCodeOld The zip code of the old address.
+	 * @param cityOld The city of the old address.
+	 * @param streetNew The street of the new address.
+	 * @param houseNumberNew The housenumber of the new address.
+	 * @param zipCodeNew The ZIP code of the new address.
+	 * @param cityNew The city of the new address.
+	 * @return The address ID of the new address, regardless if it has changed or not.
+	 * @throws SQLException If the statement is malformed, or the address is unchanged but not in the database.
+	 */
 	public static int getAddressIDWithChangedAddress
 	(String streetOld, String houseNumberOld, String zipCodeOld, String cityOld,
 	String streetNew, String houseNumberNew, String zipCodeNew, String cityNew) throws SQLException
