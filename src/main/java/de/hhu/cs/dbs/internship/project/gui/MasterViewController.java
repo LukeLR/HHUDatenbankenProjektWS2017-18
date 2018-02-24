@@ -5,6 +5,7 @@ import com.alexanderthelen.applicationkit.gui.TableViewController;
 import com.alexanderthelen.applicationkit.gui.ViewController;
 
 import de.hhu.cs.dbs.internship.project.Project;
+import de.hhu.cs.dbs.internship.project.helpers.GUIHelpers;
 import de.hhu.cs.dbs.internship.project.table.account.Account;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import javafx.scene.control.TreeItem;
@@ -36,25 +37,10 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 		} catch (Exception ex) {
 			logger.log(Level.SEVERE, "User permission level not set!", ex);
 		}
-
+		
 		ArrayList<TreeItem<ViewController>> treeItems = new ArrayList<>();
-		TreeItem<ViewController> accountTreeItem;
-		//TreeItem<ViewController> subTreeItem;
-		TableViewController accountTableViewController;
-		Table accountTable;
-
-		accountTable = new Account();
-		accountTable.setTitle("Account");
-		try {
-			accountTableViewController = TableViewController.createWithNameAndTable("account", accountTable);
-			accountTableViewController.setTitle("Account");
-		} catch (IOException e) {
-			accountTableViewController = null;
-		}
-		accountTreeItem = new TreeItem<>(accountTableViewController);
-		accountTreeItem.setExpanded(true);
-		treeItems.add(accountTreeItem);
-
+		GUIHelpers.addTableToTree(de.hhu.cs.dbs.internship.project.table.account.Account.class, "Account", treeItems);
+		
 		/*table = new Favorites();
 		table.setTitle("Favoriten");
 		try {
