@@ -66,10 +66,10 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         subTreeItem = new TreeItem<>(tableViewController);
         treeItem.getChildren().add(subTreeItem);*/
         
-        Table allAccountsTable;
+        Table alleAccountsTable;
 		if (permissionLevel >= 4) {
-			 allAccountsTable = new AlleAccounts();
-		     allAccountsTable.setTitle("Alle Accounts");
+			 alleAccountsTable = new AlleAccounts();
+		     alleAccountsTable.setTitle("Alle Accounts");
 		}        
         
         return treeItems;
