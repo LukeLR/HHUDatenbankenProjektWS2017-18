@@ -1,15 +1,10 @@
 package de.hhu.cs.dbs.internship.project.table.account;
 
-import com.alexanderthelen.applicationkit.database.Connection;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
-import de.hhu.cs.dbs.internship.project.DatabaseInfo;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.AccountDataHelper;
-import de.hhu.cs.dbs.internship.project.helpers.AddressIDHelper;
-
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 

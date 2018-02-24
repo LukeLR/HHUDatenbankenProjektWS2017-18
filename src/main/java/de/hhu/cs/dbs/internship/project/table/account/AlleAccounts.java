@@ -5,9 +5,7 @@ import java.sql.SQLException;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
-import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.AccountDataHelper;
-import de.hhu.cs.dbs.internship.project.helpers.AddressIDHelper;
 
 public class AlleAccounts extends Table {
 
