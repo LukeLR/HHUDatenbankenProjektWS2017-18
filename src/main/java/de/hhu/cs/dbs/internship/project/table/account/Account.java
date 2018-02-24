@@ -33,16 +33,19 @@ public class Account extends Table {
 	}
 
 	@Override
+	//TODO: Enforce privileges
 	public void insertRowWithData(Data data) throws SQLException {
 		throw new SQLException("Es können keine weiteren Accounts für einen Kunden angelegt werden!");
 	}
 
 	@Override
+	//TODO: Enforce privileges
 	public void updateRowWithData(Data data, Data data1) throws SQLException {
 		AccountDataHelper.changeAccountData(data, data1);
 	}
 
 	@Override
+	//TODO: Enforce privileges
 	public void deleteRowWithData(Data data) throws SQLException {
 		AccountDataHelper.deleteAccountByEMail(data.get("Kunde.E-Mail-Adresse").toString());
 	}
