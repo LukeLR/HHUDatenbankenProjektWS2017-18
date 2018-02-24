@@ -107,7 +107,7 @@ public class SQLHelper {
     				+ "\n city: " + cityOld + " -> " + cityNew);
     		//TODO: Maybe insert the old address, if it is not in the database yet? Or provide an additional function for that?
     	}
-    	return getAddressIDByAddress (streetNew, houseNumberNew, zipCodeNew, cityNew);
+    	return getAddressIDByAddress (streetNew, houseNumberNew, zipCodeNew, cityNew, con);
 	}
 	
 	/**
