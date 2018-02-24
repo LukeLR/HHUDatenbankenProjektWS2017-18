@@ -1,5 +1,6 @@
 package de.hhu.cs.dbs.internship.project.table.account;
 
+import com.alexanderthelen.applicationkit.database.Connection;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
@@ -42,7 +43,11 @@ public class Account extends Table {
     public void updateRowWithData(Data data, Data data1) throws SQLException {
     	Logger logger = Logger.getLogger(this.getClass().getName() + " Login event");
     	logger.info("Trying to change account data from " + data + " to " + data1 + ".");
-    	PreparedStatement updateKundeStatement = Project.getInstance().getConnection().prepareStatement(
+    	
+    	Connection con = Project.getInstance().getConnection();
+    	con.getRawConnection().setAutoCommit(false);
+    	
+    	PreparedStatement updateKundeStatement = con.prepareStatement(
     			"UPDATE Kunde SET E_Mail_Adresse = ?, Passwort = ?, Vorname = ?, Nachname = ? "
     			+ "WHERE E_Mail_Adresse = ?");
     	updateKundeStatement.setString(1, data1.get("E-Mail-Adresse").toString());
@@ -57,7 +62,7 @@ public class Account extends Table {
     		!data.get("Adresse.Ort").toString().equals(data1.get("Adresse.Ort").toString()))
     	{
     		//TODO: Update Adresse. Maybe delete old address?
-    		PreparedStatement insertAddressStatement = Project.getInstance().getConnection().prepareStatement(
+    		PreparedStatement insertAddressStatement = con.prepareStatement(
     				"INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID) "
     				+ "VALUES (?, ?, ?, ?, NULL)");
     		insertAddressStatement.setString(1, data1.get("Adresse.Straße").toString());
