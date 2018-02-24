@@ -20,9 +20,7 @@ public class Premiumkunde extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		String selectQuery = "SELECT * FROM (SELECT * FROM Premiumkunde JOIN Kunde "
-				+ "ON Premiumkunde.E_Mail_Adresse = Kunde.E_Mail_Adresse) "
-				+ "JOIN Adresse ON Kunde.AdressenID = Adresse.AdressenID "
+		String selectQuery = "SELECT * FROM Premiumkunde "
 				+ "WHERE E_Mail_Adresse = '" + data.get("Kunde.E-Mail-Adresse") + "'";
 		return selectQuery;
 	}
