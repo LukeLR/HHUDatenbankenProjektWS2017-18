@@ -48,22 +48,34 @@ public class Account extends Table {
     	Connection con = Project.getInstance().getConnection();
     	con.getRawConnection().setAutoCommit(false);
     	
-    	PreparedStatement updateKundeStatement = con.prepareStatement(
-    			"UPDATE Kunde SET E_Mail_Adresse = ?, Passwort = ?, Vorname = ?, Nachname = ?, "
-    			+ "Adressen_ID = ? WHERE E_Mail_Adresse = ?");
-    	updateKundeStatement.setString(1, data1.get("Kunde.E-Mail-Adresse").toString());
-    	updateKundeStatement.setString(2, data1.get("Kunde.Passwort").toString());
-    	updateKundeStatement.setString(3, data1.get("Kunde.Vorname").toString());
-    	updateKundeStatement.setString(4, data1.get("Kunde.Nachname").toString());
-    	updateKundeStatement.setString(6, data.get("Kunde.E-Mail-Adresse").toString());
+    	int index = 1; //Index where to insert variables in the prepared statement.
     	
+    	//Check address
     	int addressID = SQLHelper.getAddressIDWithChangedAddress(data.get("Adresse.Straße").toString(),
     			data.get("Adresse.Hausnummer").toString(), data.get("Adresse.PLZ").toString(),
     			data.get("Adresse.Ort").toString(), data1.get("Adresse.Straße").toString(),
     			data1.get("Adresse.Hausnummer").toString(), data1.get("Adresse.PLZ").toString(),
     			data1.get("Adresse.Ort").toString(), con);
     	
-    	updateKundeStatement.setInt(5, addressID);
+    	//Check if E-Mail-Address has changed:
+    	if (!data.get("Kunde.E-Mail-Adresse").toString().equals(data1.get("Kunde.E-Mail-Adresse").toString())) {
+    		PreparedStatement updateKundeStatement = con.prepareStatement(
+        			"UPDATE Kunde SET E_Mail_Adresse = ?, Passwort = ?, Vorname = ?, Nachname = ?, "
+        			+ "Adressen_ID = ? WHERE E_Mail_Adresse = ?");
+        	updateKundeStatement.setString(1, data1.get("Kunde.E-Mail-Adresse").toString());
+        	index++;
+    	} else {
+    		PreparedStatement updateKundeStatement = con.prepareStatement(
+        			"UPDATE Kunde SET Passwort = ?, Vorname = ?, Nachname = ?, Adressen_ID = ? "
+        			+ "WHERE E_Mail_Adresse = ?");
+    	}
+    	
+    	updateKundeStatement.setString(index, data1.get("Kunde.Passwort").toString());
+    	updateKundeStatement.setString(index++, data1.get("Kunde.Vorname").toString());
+    	updateKundeStatement.setString(index++, data1.get("Kunde.Nachname").toString());
+    	updateKundeStatement.setInt(index++, addressID);
+    	updateKundeStatement.setString(index++, data.get("Kunde.E-Mail-Adresse").toString());
+    	
     	updateKundeStatement.executeUpdate();
     	
     	con.getRawConnection().commit();
