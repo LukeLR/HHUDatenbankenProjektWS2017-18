@@ -371,29 +371,29 @@ INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID)
 SELECT '';
 SELECT 'Testing: 12 funktionierende Tests: Kunde';
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('helge-schneider@helge-schneider.de', 'Helge', 'Schneider', '123456', 1);
+    VALUES ('helge-schneider@helge-schneider.de', 'Helge', 'Schneider', '123456', 1);     -- Kunde, Angestellter
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('peter.thoms@helge-schneider.de', 'Peter', 'Thoms', '12345678', 2);
+    VALUES ('peter.thoms@helge-schneider.de', 'Peter', 'Thoms', '12345678', 2);           -- Kunde
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('peter.thoms@mail.com', 'Peter', 'Thoms', '!§"$!)§$(!)§$U§!"$KASFFH', 2);
+    VALUES ('peter.thoms@mail.com', 'Peter', 'Thoms', '!§"$!)§$(!)§$U§!"$KASFFH', 2);     -- Kunde, Premiumkunde
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('peter.thoms@mail.org', 'Peter', 'Thoms', '12345678', 2);
+    VALUES ('peter.thoms@mail.org', 'Peter', 'Thoms', '12345678', 2);                     -- Kunde
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('pete-york@helge-schneider.de', 'Pete', 'York', '123456', 3);
+    VALUES ('pete-york@helge-schneider.de', 'Pete', 'York', '123456', 3);                 -- Kunde, Premiumkunde, Angestellter
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('sergej_gleithmann@helge-schneider.de', 'Sergej', 'Gleithmann', '123456', 3);
+    VALUES ('sergej_gleithmann@helge-schneider.de', 'Sergej', 'Gleithmann', '123456', 3); -- Kunde
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('buddy.casino@helge-schneider.de', 'Buddy', 'Casino', '123456', 3);
+    VALUES ('buddy.casino@helge-schneider.de', 'Buddy', 'Casino', '123456', 3);           -- Kunde, Angestellter
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('rainer-lipski@helge-schneider.de', 'Rainer', 'Lipski', '123456', 2);
+    VALUES ('rainer-lipski@helge-schneider.de', 'Rainer', 'Lipski', '123456', 2);         -- Kunde
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('kaistruwe@helge-schneider.de', 'Kai', 'Struwe', '123456', 3);
+    VALUES ('kaistruwe@helge-schneider.de', 'Kai', 'Struwe', '123456', 3);                -- Kunde, Premiumkunde
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)   
-    VALUES ('willy_ketzer@helge-schneider.de', 'Willy', 'Ketzer', '123456', 2);
+    VALUES ('willy_ketzer@helge-schneider.de', 'Willy', 'Ketzer', '123456', 2);           -- Kunde, Angestellter
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('sandro-jampedro@helge-schneider.de', 'Sandro', 'Jampedro', '123456', 2);
+    VALUES ('sandro-jampedro@helge-schneider.de', 'Sandro', 'Jampedro', '123456', 2);     -- Kunde
 INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)
-    VALUES ('karlosboes@gmx.de', 'Karlos', 'Boes', '123456', 3);
+    VALUES ('karlosboes@gmx.de', 'Karlos', 'Boes', '123456', 3);                          -- Kunde
 
 /* Die folgenden neun Tests sollten fehlschlagen:
  * - Der erste Test enthält eine Zahl im Vornamen
