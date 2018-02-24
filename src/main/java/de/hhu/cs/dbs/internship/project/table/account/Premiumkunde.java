@@ -9,9 +9,9 @@ public class Premiumkunde extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
-		String selectQuery = "SELECT * FROM (SELECT Ablaufdatum, Studierendenausweis, Kunde.E_Mail_Adresse,"
-				+ "Vorname, Nachname, Passwort, Adressen_ID AS 'AID' FROM Premiumkunde"
-				+ "JOIN Kunde ON Premiumkunde.E_Mail_Adresse = Kunde.E_Mail_Adresse)"
+		String selectQuery = "SELECT * FROM (SELECT Ablaufdatum, Studierendenausweis, Kunde.E_Mail_Adresse, "
+				+ "Vorname, Nachname, Passwort, Adressen_ID AS 'AID' FROM Premiumkunde "
+				+ "JOIN Kunde ON Premiumkunde.E_Mail_Adresse = Kunde.E_Mail_Adresse) "
 				+ "JOIN Adresse ON AID = Adresse.Adressen_ID";
 		if (filter != null && !filter.isEmpty()) {
 			selectQuery += " AND Kunde.E_Mail_Adresse LIKE '%" + filter + "'";
