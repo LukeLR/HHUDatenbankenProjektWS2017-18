@@ -6,6 +6,7 @@ import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
 import de.hhu.cs.dbs.internship.project.Project;
+import de.hhu.cs.dbs.internship.project.SQLHelper;
 
 public class AlleAccounts extends Table {
 
@@ -31,14 +32,12 @@ public class AlleAccounts extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		throw new SQLException ("Das Anlegen eines neuen Nutzeraccounts ist nur über das Registrierungsformular vorgesehen!");
 	}
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		SQLHelper.changeAccountData(oldData, newData);
 	}
 
 	@Override
