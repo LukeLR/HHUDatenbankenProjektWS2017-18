@@ -9,6 +9,7 @@ import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.GUIHelpers;
 import de.hhu.cs.dbs.internship.project.table.account.Account;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
+import de.hhu.cs.dbs.internship.project.table.account.Premiumkunde;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
@@ -56,7 +57,8 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 
 		if (permissionLevel >= Permission.SHOP_ASSISTANT) {
 			logger.info("User is at least of permission level shop assistant. Enabling 'All Accounts' view.");
-			GUIHelpers.addTableOfClassToTree(new AlleAccounts(), "Alle Accounts", treeItems);
+			TreeItem<TableViewController> alleAccounts = GUIHelpers.addTableOfClassToTree(new AlleAccounts(), "Alle Accounts", treeItems);
+			GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", alleAccounts);
 		}
 
 		return treeItems;
