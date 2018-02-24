@@ -28,7 +28,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 	}
 
 	@Override
-	protected ArrayList<TreeItem<ViewController>> getTreeItems() {
+	protected ArrayList<TreeItem<TableViewController>> getTreeItems() {
 		Logger logger = Logger.getLogger(this.getClass().getName());
 		int permissionLevel = 0;
 
@@ -38,7 +38,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 			logger.log(Level.SEVERE, "User permission level not set!", ex);
 		}
 		
-		ArrayList<TreeItem<ViewController>> treeItems = new ArrayList<>();
+		ArrayList<TreeItem<TableViewController>> treeItems = new ArrayList<>();
 		GUIHelpers.addTableOfClassToTree(de.hhu.cs.dbs.internship.project.table.account.Account.class, "Account", treeItems);
 		
 		/*table = new Favorites();

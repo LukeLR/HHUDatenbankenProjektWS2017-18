@@ -4,19 +4,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.alexanderthelen.applicationkit.gui.TableViewController;
-import com.alexanderthelen.applicationkit.gui.ViewController;
 
 import de.hhu.cs.dbs.internship.project.table.account.Account;
 import javafx.scene.control.TreeItem;
 
 @SuppressWarnings("restriction")
 public class GUIHelpers {
-	@SuppressWarnings("unchecked")
-	public static void addTableOfClassToTree(@SuppressWarnings("rawtypes") Class tableclass, String title, ArrayList<TreeItem<ViewController>> treeItems) {
+	public static void addTableOfClassToTree(Class<?> tableclass, String title, ArrayList<TreeItem<TableViewController>> treeItems) {
 		treeItems.add(createTreeItemForTableOfClass(tableclass, title));
 	}
 	
-	public static TreeItem createTreeItemForTableOfClass(Class tableclass, String title) {
+	public static TreeItem<TableViewController> createTreeItemForTableOfClass(Class<?> tableclass, String title) {
 		Account accountTable = new Account();
 		accountTable.setTitle("Account");
 		TableViewController accountTableViewController;
@@ -26,9 +24,12 @@ public class GUIHelpers {
 		} catch (IOException e) {
 			accountTableViewController = null;
 		}
-		@SuppressWarnings("rawtypes")
-		TreeItem accountTreeItem = new TreeItem<>(accountTableViewController);
+		TreeItem<TableViewController> accountTreeItem = new TreeItem<>(accountTableViewController);
 		//accountTreeItem.setExpanded(true);
 		return accountTreeItem;
+	}
+	
+	public static void addTableOfClassToTreeItem(Class<?> tableclass, String title, TreeItem<TableViewController> parentItem) {
+		parentItem.getChildren().add(createTreeItemForTableOfClass(tableclass, title));
 	}
 }
