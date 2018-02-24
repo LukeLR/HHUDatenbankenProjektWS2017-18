@@ -4,6 +4,7 @@ import com.alexanderthelen.applicationkit.database.Table;
 import com.alexanderthelen.applicationkit.gui.TableViewController;
 import com.alexanderthelen.applicationkit.gui.ViewController;
 
+import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.GUIHelpers;
 import de.hhu.cs.dbs.internship.project.table.account.Account;
@@ -11,6 +12,7 @@ import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
+import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -39,7 +41,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 		}
 		
 		ArrayList<TreeItem<TableViewController>> treeItems = new ArrayList<>();
-		GUIHelpers.addTableOfClassToTree(de.hhu.cs.dbs.internship.project.table.account.Account.class, "Account", treeItems);
+		GUIHelpers.addTableOfClassToTree(new Account(), "Account", treeItems);
 		
 		/*table = new Favorites();
 		table.setTitle("Favoriten");
@@ -52,10 +54,9 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 		subTreeItem = new TreeItem<>(tableViewController);
 		treeItem.getChildren().add(subTreeItem);*/
 
-		Table alleAccountsTable;
-		if (permissionLevel >= 4) {
-			alleAccountsTable = new AlleAccounts();
-			alleAccountsTable.setTitle("Alle Accounts");
+		if (permissionLevel >= Permission.SHOP_ASSISTANT) {
+			logger.info("User is at least of permission level shop assistant. Enabling 'All Accounts' view.");
+			GUIHelpers.addTableOfClassToTree(new AlleAccounts(), "Alle Accounts", treeItems);
 		}
 
 		return treeItems;
