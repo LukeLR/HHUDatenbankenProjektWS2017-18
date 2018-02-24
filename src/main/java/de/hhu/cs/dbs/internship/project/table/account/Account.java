@@ -49,21 +49,25 @@ public class Account extends Table {
     	con.getRawConnection().setAutoCommit(false);
     	
     	PreparedStatement updateKundeStatement = con.prepareStatement(
-    			"UPDATE Kunde SET E_Mail_Adresse = ?, Passwort = ?, Vorname = ?, Nachname = ? "
-    			+ "WHERE E_Mail_Adresse = ?");
-    	updateKundeStatement.setString(1, data1.get("E-Mail-Adresse").toString());
-    	updateKundeStatement.setString(2, data1.get("Passwort").toString());
-    	updateKundeStatement.setString(3, data1.get("Vorname").toString());
-    	updateKundeStatement.setString(4, data1.get("Nachname").toString());
+    			"UPDATE Kunde SET E_Mail_Adresse = ?, Passwort = ?, Vorname = ?, Nachname = ?, "
+    			+ "Adressen_ID = ? WHERE E_Mail_Adresse = ?");
+    	updateKundeStatement.setString(1, data1.get("Kunde.E-Mail-Adresse").toString());
+    	updateKundeStatement.setString(2, data1.get("Kunde.Passwort").toString());
+    	updateKundeStatement.setString(3, data1.get("Kunde.Vorname").toString());
+    	updateKundeStatement.setString(4, data1.get("Kunde.Nachname").toString());
+    	updateKundeStatement.setString(6, data.get("Kunde.E-Mail-Adresse").toString());
     	
-    	int addressID = SQLHelper.getAddressIDWithChangedAddress(data.get("street").toString(),
-    			data.get("houseNumber").toString(), data.get("zipCode").toString(), data.get("city").toString(),
-    			data1.get("street").toString(), data1.get("houseNumber").toString(),
-    			data1.get("zipCode").toString(), data1.get("city").toString(), con);
+    	int addressID = SQLHelper.getAddressIDWithChangedAddress(data.get("Adresse.Straße").toString(),
+    			data.get("Adresse.Hausnummer").toString(), data.get("Adresse.PLZ").toString(),
+    			data.get("Adresse.Ort").toString(), data1.get("Adresse.Straße").toString(),
+    			data1.get("Adresse.Hausnummer").toString(), data1.get("Adresse.PLZ").toString(),
+    			data1.get("Adresse.Ort").toString(), con);
     	
     	updateKundeStatement.setInt(5, addressID);
+    	updateKundeStatement.executeUpdate();
     	
     	con.getRawConnection().commit();
+    	//TODO: Update user login information
 		con.getRawConnection().setAutoCommit(true);
     }
 
