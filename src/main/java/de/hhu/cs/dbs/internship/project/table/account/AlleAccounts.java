@@ -15,7 +15,7 @@ public class AlleAccounts extends Table {
 				+ "Strasse AS 'Straße', Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
 				+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID";
 		if (filter != null && !filter.isEmpty()) {
-			selectQuery += " AND Kunde.E_Mail_Adresse LIKE '%" + filter + "'";
+			selectQuery += " AND Kunde.E_Mail_Adresse LIKE '%" + filter + "%'";
 		}
 		return selectQuery;
 	}
