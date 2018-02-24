@@ -5,7 +5,7 @@ import com.alexanderthelen.applicationkit.database.Data;
 
 import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
-import de.hhu.cs.dbs.internship.project.SQLHelper;
+import de.hhu.cs.dbs.internship.project.helpers.AddressIDHelper;
 
 import java.io.IOException;
 import java.sql.PreparedStatement;
@@ -114,7 +114,7 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
     		 * created.
     		 */
     		
-    		int addressID = SQLHelper.getAddressIDByAddress
+    		int addressID = AddressIDHelper.getAddressIDByAddress
     				(data.get("street").toString(), data.get("houseNumber").toString(),
     				 data.get("zipCode").toString(), data.get("city").toString(), con);
     		customerInsertQuery.setInt(5, addressID);

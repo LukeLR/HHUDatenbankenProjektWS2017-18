@@ -6,7 +6,8 @@ import com.alexanderthelen.applicationkit.database.Table;
 
 import de.hhu.cs.dbs.internship.project.DatabaseInfo;
 import de.hhu.cs.dbs.internship.project.Project;
-import de.hhu.cs.dbs.internship.project.SQLHelper;
+import de.hhu.cs.dbs.internship.project.helpers.AccountDataHelper;
+import de.hhu.cs.dbs.internship.project.helpers.AddressIDHelper;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -43,11 +44,11 @@ public class Account extends Table {
 
     @Override
     public void updateRowWithData(Data data, Data data1) throws SQLException {
-    	SQLHelper.changeAccountData(data, data1);
+    	AccountDataHelper.changeAccountData(data, data1);
     }
 
     @Override
     public void deleteRowWithData(Data data) throws SQLException {
-    	SQLHelper.deleteAccountByEMail(data.get("Kunde.E-Mail-Adresse").toString());
+    	AccountDataHelper.deleteAccountByEMail(data.get("Kunde.E-Mail-Adresse").toString());
     }
 }
