@@ -5,7 +5,6 @@ import com.alexanderthelen.applicationkit.gui.TableViewController;
 import com.alexanderthelen.applicationkit.gui.ViewController;
 
 import de.hhu.cs.dbs.internship.project.table.account.Account;
-import de.hhu.cs.dbs.internship.project.table.account.Favorites;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
         treeItem.setExpanded(true);
         treeItems.add(treeItem);
 
-        table = new Favorites();
+        /*table = new Favorites();
         table.setTitle("Favoriten");
         try {
             tableViewController = TableViewController.createWithNameAndTable("favorites", table);
@@ -52,7 +51,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
             tableViewController = null;
         }
         subTreeItem = new TreeItem<>(tableViewController);
-        treeItem.getChildren().add(subTreeItem);
+        treeItem.getChildren().add(subTreeItem);*/
 
         return treeItems;
     }
