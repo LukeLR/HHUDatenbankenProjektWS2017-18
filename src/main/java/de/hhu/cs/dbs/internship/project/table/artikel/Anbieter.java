@@ -52,7 +52,7 @@ public class Anbieter extends Table {
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
 		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Trying to change account data from " + oldData + " to " + newData + ".");
+		logger.info("Trying to change Anbieter data from " + oldData + " to " + newData + ".");
 		
 		PreparedStatement updateAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Anbieter SET Anbieterbezeichnung = ? WHERE Anbieterbezeichnung = ?");
