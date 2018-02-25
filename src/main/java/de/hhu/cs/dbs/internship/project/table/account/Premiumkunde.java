@@ -31,7 +31,8 @@ public class Premiumkunde extends Table {
 		Logger logger = Logger.getLogger(this.getClass().getName());
 		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
 		String selectQuery = "SELECT * FROM Premiumkunde "
-				+ "WHERE E_Mail_Adresse = '" + data.get("Kunde.E_Mail_Adresse") + "'";
+				+ "WHERE E_Mail_Adresse = '" +
+				(data.get("Kunde.E_Mail_Adresse") == null ? "null" : data.get("Kunde.E_Mail_Adresse").toString()) + "'";
 		return selectQuery;
 	}
 
