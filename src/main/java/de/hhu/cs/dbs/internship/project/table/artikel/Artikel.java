@@ -30,7 +30,7 @@ public class Artikel extends Table {
 		Logger logger = Logger.getLogger(this.getClass().getName());
 		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
 		
-		String selectQuery = "SELECT Bezeichnung, Beschreibung, Bild, Artikel_ID FROM Artikel "
+		String selectQuery = "SELECT Bezeichnung, Beschreibung, Bild FROM Artikel "
 				+ "WHERE Artikel_ID = '" +
 				(data.get("Artikel.Artikel_ID") == null ? "null" : data.get("Artikel.Artikel_ID").toString()) + "'";
 		return selectQuery;
