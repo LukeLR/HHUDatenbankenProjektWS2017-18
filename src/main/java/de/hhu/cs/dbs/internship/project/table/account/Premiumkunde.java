@@ -79,7 +79,8 @@ public class Premiumkunde extends Table {
 		deletePremiumkundeStatement.setString(1, data.get("Kunde.E_Mail_Adresse").toString());
 		deletePremiumkundeStatement.executeUpdate();
 		
-		logger.info("Dataset for E-Mail " + data.get("Kunde.E_Mail_Adresse").toString() + " deleted!");
+		logger.info("Dataset for E-Mail " + data.get("Kunde.E_Mail_Adresse").toString()
+				+ " deleted from " + this.getClass().getName() + ".");
 	}
 
 }
