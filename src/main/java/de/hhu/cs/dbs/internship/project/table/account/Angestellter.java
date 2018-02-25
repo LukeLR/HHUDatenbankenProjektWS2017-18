@@ -15,6 +15,7 @@ public class Angestellter extends Table {
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		Logger logger = Logger.getLogger(this.getClass().getName());
 		logger.info("Showing " + this.getClass().getName());
+		
 		String selectQuery = "SELECT * FROM (SELECT Jobbezeichnung, Gehalt, Kunde.E_Mail_Adresse, "
 				+ "Vorname, Nachname, Passwort, Adressen_ID AS 'AID' FROM Angestellter "
 				+ "JOIN Kunde ON Angestellter.E_Mail_Adresse = Kunde.E_Mail_Adresse) "
