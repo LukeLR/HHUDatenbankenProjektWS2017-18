@@ -29,7 +29,7 @@ public class Premiumkunde extends Table {
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
 		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Showing " + this.getClass().getName() + " for Data " + data.toString());
+		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
 		String selectQuery = "SELECT * FROM Premiumkunde "
 				+ "WHERE E_Mail_Adresse = '" + data.get("Kunde.E_Mail_Adresse") + "'";
 		return selectQuery;

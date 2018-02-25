@@ -25,7 +25,8 @@ public class Angestellter extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
 		return null;
 	}
 
