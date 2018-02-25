@@ -10,7 +10,9 @@ import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import de.hhu.cs.dbs.internship.project.table.account.Angestellter;
 import de.hhu.cs.dbs.internship.project.table.account.Premiumkunde;
 import de.hhu.cs.dbs.internship.project.table.angebot.Anbieter;
+import de.hhu.cs.dbs.internship.project.table.angebot.Angebot;
 import de.hhu.cs.dbs.internship.project.table.artikel.Artikel;
+import de.hhu.cs.dbs.internship.project.table.artikel.ArtikelempfiehltArtikel;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
