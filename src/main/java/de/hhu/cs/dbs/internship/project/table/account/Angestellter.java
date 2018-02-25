@@ -27,7 +27,10 @@ public class Angestellter extends Table {
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
 		Logger logger = Logger.getLogger(this.getClass().getName());
 		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
-		return null;
+		
+		String selectQuery = "SELECT * FROM Angestellter "
+				+ "WHERE E_Mail_Adresse = '" + data.get("Kunde.E_Mail_Adresse") + "'";
+		return selectQuery;
 	}
 
 	@Override
