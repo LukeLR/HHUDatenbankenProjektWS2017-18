@@ -63,11 +63,11 @@ public class Artikel extends Table {
 		updateArtikelStatement.setString(1, (String) newData.get("Artikel.Bezeichnung"));
 		updateArtikelStatement.setString(2, (String) newData.get("Artikel.Beschreibung"));
 		updateArtikelStatement.setString(3, (String) newData.get("Artikel.Bild"));
-		updateArtikelStatement.setInt(4, Integer.valueOf((String) newData.get("Artikel.Artikel_ID")));
+		updateArtikelStatement.setInt(4, (int) newData.get("Artikel.Artikel_ID"));
 		updateArtikelStatement.executeUpdate();
 		
-		logger.info("Done changing account data for Artikel " +
-				newData.get("Anbieter.Anbieterbezeichnung").toString() + ".");
+		logger.info("Done changing article data for Artikel " +
+				newData.get("Artikel.Artikel_ID").toString() + ".");
 	}
 
 	@Override
