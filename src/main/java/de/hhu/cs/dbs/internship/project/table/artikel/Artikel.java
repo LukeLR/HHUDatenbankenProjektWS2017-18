@@ -63,7 +63,7 @@ public class Artikel extends Table {
 		updateArtikelStatement.setString(1, (String) newData.get("Artikel.Bezeichnung"));
 		updateArtikelStatement.setString(2, (String) newData.get("Artikel.Beschreibung"));
 		updateArtikelStatement.setString(3, (String) newData.get("Artikel.Bild"));
-		updateArtikelStatement.setInt(4, (int) newData.get("Artikel.Artikel_ID"));
+		updateArtikelStatement.setInt(4, (int) oldData.get("Artikel.Artikel_ID"));
 		updateArtikelStatement.executeUpdate();
 		
 		logger.info("Done changing article data for Artikel " +
@@ -72,8 +72,15 @@ public class Artikel extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to delete Dataset with data: " + data.toString());
+		
+		PreparedStatement deleteArtikelStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Artikel WHERE Artikel_ID = ?");
+		deleteArtikelStatement.setInt(1, (int) data.get("Artikel.Artikel_ID"));
+		deleteArtikelStatement.executeUpdate();
+		
+		logger.info("Dataset for Artikel " + data.get("Artikel.Artikel_ID").toString()
+				+ " deleted from " + this.getClass().getName() + ".");
 	}
-
 }
