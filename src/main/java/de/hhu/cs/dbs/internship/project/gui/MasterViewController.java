@@ -10,6 +10,7 @@ import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import de.hhu.cs.dbs.internship.project.table.account.Angestellter;
 import de.hhu.cs.dbs.internship.project.table.account.Premiumkunde;
 import de.hhu.cs.dbs.internship.project.table.angebot.Anbieter;
+import de.hhu.cs.dbs.internship.project.table.artikel.Artikel;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
@@ -59,7 +60,11 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 			TreeItem<TableViewController> alleAccounts = GUIHelpers.addTableOfClassToTree(new AlleAccounts(), "Alle Accounts", treeItems);
 			GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", alleAccounts);
 			GUIHelpers.addTableOfClassToTreeItem(new Angestellter(), "Angestellte", alleAccounts);
-			GUIHelpers.addTableOfClassToTree(new Anbieter(), "Anbieter", treeItems);
+			
+			TreeItem<TableViewController> artikel = GUIHelpers.addTableOfClassToTree(new Artikel(), "Artikel", treeItems);
+			GUIHelpers.addTableOfClassToTreeItem(new Anbieter(), "Anbieter", artikel);
+			GUIHelpers.addTableOfClassToTreeItem(new Angebot(), "Angebote", artikel);
+			GUIHelpers.addTableOfClassToTreeItem(new ArtikelempfiehltArtikel(), "Artikelempfehlungen", artikel);
 		}
 		
 		if (permissionLevel >= Permission.CUSTOMER) {
