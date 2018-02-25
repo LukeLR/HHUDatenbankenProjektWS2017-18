@@ -75,10 +75,10 @@ public class Premiumkunde extends Table {
 		
 		PreparedStatement deletePremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Premiumkunde WHERE E_Mail_Adresse = ?");
-		deletePremiumkundeStatement.setString(1, data.get("Premiumkunde.E_Mail_Adresse").toString());
+		deletePremiumkundeStatement.setString(1, data.get("Kunde.E_Mail_Adresse").toString());
 		deletePremiumkundeStatement.executeUpdate();
 		
-		logger.info("Dataset for E-Mail " + data.get("Premiumkunde.E_Mail_Adresse").toString() + " deleted!");
+		logger.info("Dataset for E-Mail " + data.get("Kunde.E_Mail_Adresse").toString() + " deleted!");
 	}
 
 }
