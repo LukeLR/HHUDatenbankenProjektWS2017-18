@@ -22,7 +22,7 @@ public class Angestellter extends Table {
 				+ "JOIN Adresse ON AID = Adresse.Adressen_ID";
 		if (filter != null && !filter.isEmpty()) {
 			logger.info("Searching for " + filter + " in " + this.getClass().getName() + " table");
-			selectQuery += " AND E_Mail_Adresse LIKE '%" + filter + "%'";
+			selectQuery += " WHERE E_Mail_Adresse LIKE '%" + filter + "%'";
 		}
 		return selectQuery;
 	}
