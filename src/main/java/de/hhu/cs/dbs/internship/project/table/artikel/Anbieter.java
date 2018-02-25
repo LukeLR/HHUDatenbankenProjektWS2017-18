@@ -66,8 +66,16 @@ public class Anbieter extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to delete Dataset with data: " + data.toString());
+		
+		PreparedStatement deleteAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Anbieter WHERE Anbieterbezeichnung = ?");
+		deleteAnbieterStatement.setString(1, data.get("Anbieter.Anbieterbezeichnung").toString());
+		deleteAnbieterStatement.executeUpdate();
+		
+		logger.info("Dataset for Anbieterbezeichnung " + data.get("Anbieter.Anbieterbezeichnung").toString()
+				+ " deleted from " + this.getClass().getName() + ".");
 	}
 
 }
