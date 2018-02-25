@@ -1,10 +1,13 @@
 package de.hhu.cs.dbs.internship.project.table.artikel;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
+
+import de.hhu.cs.dbs.internship.project.Project;
 
 public class Artikel extends Table {
 	
@@ -35,8 +38,18 @@ public class Artikel extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to insert new Dataset with data: " + data.toString());
+		
+		PreparedStatement insertArtikelStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Artikel (Bezeichnung, Beschreibung, Bild, Artikel_ID) "
+				+ "VALUES (?, ?, ?, NULL)");
+		insertArtikelStatement.setString(1, (String) data.get("Artikel.Bezeichnung"));
+		insertArtikelStatement.setString(2, (String) data.get("Artikel.Beschreibung"));
+		insertArtikelStatement.setString(3, (String) data.get("Artikel.Bild"));
+		insertArtikelStatement.executeUpdate();
+		
+		logger.info("Dataset inserted into " + this.getClass().getName() + "!");
 	}
 
 	@Override
