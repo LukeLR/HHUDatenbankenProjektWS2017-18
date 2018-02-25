@@ -19,7 +19,7 @@ public class Project extends com.alexanderthelen.applicationkit.Application {
 	@Override
 	public void start() throws Exception {
 		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Startup programs");
+		logger.info("Startup program.");
 		setConnection(new Connection("jdbc:sqlite:database.sqlite"));
 
 		WindowController mainWindowController = WindowController.createWithName("window");
