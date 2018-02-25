@@ -7,10 +7,6 @@ import com.alexanderthelen.applicationkit.database.Table;
 
 public class Warenkoerbe extends Table {
 
-	public Warenkoerbe() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		// TODO Auto-generated method stub
