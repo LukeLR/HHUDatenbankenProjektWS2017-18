@@ -1,0 +1,4 @@
+TODO:
+- Implement permissions on table modification functions
+- Implement NULL check for optional fields on insertion / update
+- 
