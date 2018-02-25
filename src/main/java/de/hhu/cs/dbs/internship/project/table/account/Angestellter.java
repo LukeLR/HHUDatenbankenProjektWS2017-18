@@ -61,13 +61,13 @@ public class Angestellter extends Table {
 				"UPDATE Angestellter SET Jobbezeichnung = ?, Gehalt = ?, E_Mail_Adresse = ? "
 				+ "WHERE E_Mail_Adresse = ?");
 		updateAngestellterStatement.setString(1, newData.get("Angestellter.Jobbezeichnung").toString());
-		updateAngestellterStatement.setString(2, newData.get("Angestellter.Gehalt").toString());
+		updateAngestellterStatement.setInt(2, Integer.valueOf(newData.get("Angestellter.Gehalt").toString()));
 		updateAngestellterStatement.setString(3, newData.get("Angestellter.E_Mail_Adresse").toString());
 		updateAngestellterStatement.setString(4, oldData.get("Angestellter.E_Mail_Adresse").toString());
 		updateAngestellterStatement.executeUpdate();
 		
 		logger.info("Done changing account data for account " +
-				newData.get("Kunde.E-Mail-Adresse").toString() + ".");
+				newData.get("Angestellter.E_Mail_Adresse").toString() + ".");
 	}
 
 	@Override
