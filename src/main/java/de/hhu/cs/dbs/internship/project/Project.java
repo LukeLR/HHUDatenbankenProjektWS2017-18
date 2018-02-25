@@ -1,7 +1,5 @@
 package de.hhu.cs.dbs.internship.project;
 
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Connection;
@@ -21,6 +19,7 @@ public class Project extends com.alexanderthelen.applicationkit.Application {
 	@Override
 	public void start() throws Exception {
 		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Startup programs");
 		setConnection(new Connection("jdbc:sqlite:database.sqlite"));
 
 		WindowController mainWindowController = WindowController.createWithName("window");

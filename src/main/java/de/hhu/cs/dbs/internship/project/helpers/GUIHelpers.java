@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import com.alexanderthelen.applicationkit.database.Table;
 import com.alexanderthelen.applicationkit.gui.TableViewController;
 
-import de.hhu.cs.dbs.internship.project.table.account.Account;
 import javafx.scene.control.TreeItem;
 
 @SuppressWarnings("restriction")

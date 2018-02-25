@@ -1,8 +1,6 @@
 package de.hhu.cs.dbs.internship.project.gui;
 
-import com.alexanderthelen.applicationkit.database.Table;
 import com.alexanderthelen.applicationkit.gui.TableViewController;
-import com.alexanderthelen.applicationkit.gui.ViewController;
 
 import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
@@ -13,7 +11,6 @@ import de.hhu.cs.dbs.internship.project.table.account.Premiumkunde;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
-import java.security.Permissions;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
