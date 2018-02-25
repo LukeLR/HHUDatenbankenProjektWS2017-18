@@ -54,8 +54,20 @@ public class Artikel extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to change article data from " + oldData + " to " + newData + ".");
+		
+		PreparedStatement updateArtikelStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Artikel SET Bezeichnung = ?, Beschreibung = ?, Bild = ? "
+				+ "WHERE Artikel_ID = ?");
+		updateArtikelStatement.setString(1, (String) newData.get("Artikel.Bezeichnung"));
+		updateArtikelStatement.setString(2, (String) newData.get("Artikel.Beschreibung"));
+		updateArtikelStatement.setString(3, (String) newData.get("Artikel.Bild"));
+		updateArtikelStatement.setInt(4, Integer.valueOf((String) newData.get("Artikel.Artikel_ID")));
+		updateArtikelStatement.executeUpdate();
+		
+		logger.info("Done changing account data for Artikel " +
+				newData.get("Anbieter.Anbieterbezeichnung").toString() + ".");
 	}
 
 	@Override
