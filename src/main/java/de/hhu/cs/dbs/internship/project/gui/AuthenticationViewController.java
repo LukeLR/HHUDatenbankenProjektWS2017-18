@@ -38,29 +38,34 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 		loginQuery.setString(1, (String) data.get("email"));
 		ResultSet loginResults = loginQuery.executeQuery();
 		while (loginResults.next()) {
-			logger.info("Found user with E-Mail: " + loginResults.getString("E_Mail_Adresse") +
-					" and password: " + loginResults.getString("Passwort") + ", entered password was: "
-					+ (String) data.get("password"));
-			if (loginResults.getString("Passwort").equals((String) data.get("password"))) {
+			String databaseEMail = loginResults.getString("E_Mail_Adresse");
+			String databasePassword = loginResults.getString("Passwort");
+			String enteredPassword = (String) data.get("password");
+			logger.info("Found user with E-Mail: " + databaseEMail + " and password: " +
+					databasePassword + ", entered password was: " + enteredPassword);
+			
+			if (databasePassword.equals(enteredPassword)) {
 				logger.info("User credentials correct. Done searching for users.");
 
 				// Saving user account information application-wide
-				Project.getInstance().getData().put("email", (String) data.get("email"));
+				Project.getInstance().getData().put("email", databaseEMail);
 
 				// Check if customer is shop assistant
 				PreparedStatement shopAssistantQuery = Project.getInstance().getConnection().prepareStatement(
 						"SELECT E_Mail_Adresse FROM Angestellter WHERE E_Mail_Adresse = ?");
-				shopAssistantQuery.setString(1, (String) data.get("email"));
+				shopAssistantQuery.setString(1, databaseEMail);
 				ResultSet shopAssistantResults = shopAssistantQuery.executeQuery();
-				if (!shopAssistantResults.isClosed() && shopAssistantResults.getString("E_Mail_Adresse").equals((String) data.get("email"))) {
+				
+				if (!shopAssistantResults.isClosed() && shopAssistantResults.getString("E_Mail_Adresse").equals(databaseEMail)) {
 					Project.getInstance().getData().put("permission", Permission.SHOP_ASSISTANT);
 				} else {
 					// Check if customer is premium customer
 					PreparedStatement premiumCustomerQuery = Project.getInstance().getConnection().prepareStatement(
 							"SELECT E_Mail_Adresse FROM Premiumkunde WHERE E_Mail_Adresse = ?");
-					premiumCustomerQuery.setString(1, (String) data.get("email"));
+					premiumCustomerQuery.setString(1, databaseEMail);
 					ResultSet premiumCustomerResults = premiumCustomerQuery.executeQuery();
-					if (!premiumCustomerResults.isClosed() && premiumCustomerResults.getString("E_Mail_Adresse").equals((String) data.get("email"))) {
+					
+					if (!premiumCustomerResults.isClosed() && premiumCustomerResults.getString("E_Mail_Adresse").equals(databaseEMail)) {
 						Project.getInstance().getData().put("permission", Permission.PREMIUM_CUSTOMER);
 					} else {
 						Project.getInstance().getData().put("permission", Permission.CUSTOMER);
