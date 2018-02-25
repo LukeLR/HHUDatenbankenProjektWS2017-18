@@ -60,8 +60,16 @@ public class Angestellter extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to delete Dataset with data: " + data.toString());
+		
+		PreparedStatement deleteAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Angestellter WHERE E_Mail_Adresse = ?");
+		deleteAngestellterStatement.setString(1, data.get("Kunde.E_Mail_Adresse").toString());
+		deleteAngestellterStatement.executeUpdate();
+		
+		logger.info("Dataset for E-Mail " + data.get("Kunde.E_Mail_Adresse").toString()
+				+ " deleted from " + this.getClass().getName() + ".");
 	}
 
 }
