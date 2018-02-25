@@ -39,27 +39,46 @@ public class Premiumkunde extends Table {
 		Logger logger = Logger.getLogger(this.getClass().getName());
 		logger.info("Trying to insert new Dataset with data: " + data.toString());
 		
-		PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
-				"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
-				+ "VALUES (?, ?, ?)");
-		insertPremiumkundeStatement.setString(1, data.get("Ablaufdatum").toString());
-		insertPremiumkundeStatement.setString(2, data.get("Studierendenausweis").toString());
-		insertPremiumkundeStatement.setString(3, data.get("E_Mail_Adresse").toString());
-		insertPremiumkundeStatement.executeUpdate();
+		if (data.get("Premiumkunde.Studierendenausweis") != null &&
+		!data.get("Premiumkunde.Studierendenausweis").toString().isEmpty()) {
+			//TODO: Einfügen von Bildern implementieren
+			/*PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
+					"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
+					+ "VALUES (?, ?, ?)");
+			insertPremiumkundeStatement.setString(1, data.get("Premiumkunde.Ablaufdatum").toString());
+			insertPremiumkundeStatement.setString(2, data.get("Premiumkunde.Studierendenausweis").toString());
+			insertPremiumkundeStatement.setString(3, data.get("Premiumkunde.E_Mail_Adresse").toString());
+			insertPremiumkundeStatement.executeUpdate();*/
+		} else {
+			PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
+					"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
+					+ "VALUES (?, NULL, ?)");
+			insertPremiumkundeStatement.setString(1, data.get("Premiumkunde.Ablaufdatum").toString());
+			insertPremiumkundeStatement.setString(2, data.get("Premiumkunde.E_Mail_Adresse").toString());
+			insertPremiumkundeStatement.executeUpdate();
+		}
 		
 		logger.info("Inserted Premiumkunde data!");
 	}
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
+		// TODO Premiumkunde updateRowWithData implementieren
+		// TODO: Aktualisierung mit Bildern implementieren
 
 	}
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to delete Dataset with data: " + data.toString());
+		
+		PreparedStatement deletePremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Premiumkunde WHERE E_Mail_Adresse = ?");
+		deletePremiumkundeStatement.setString(1, data.get("Premiumkunde.E_Mail_Adresse").toString());
+		deletePremiumkundeStatement.executeUpdate();
+		
+		logger.info("Dataset for E-Mail " + data.get("Premiumkunde.E_Mail_Adresse").toString() + " deleted!");
 	}
 
 }
