@@ -54,8 +54,20 @@ public class Angestellter extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to change account data from " + oldData + " to " + newData + ".");
+		
+		PreparedStatement updateAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Angestellter SET Jobbezeichnung = ?, Gehalt = ?, E_Mail_Adresse = ? "
+				+ "WHERE E_Mail_Adresse = ?");
+		updateAngestellterStatement.setString(1, newData.get("Angestellter.Jobbezeichnung").toString());
+		updateAngestellterStatement.setString(2, newData.get("Angestellter.Gehalt").toString());
+		updateAngestellterStatement.setString(3, newData.get("Angestellter.E_Mail_Adresse").toString());
+		updateAngestellterStatement.setString(4, oldData.get("Angestellter.E_Mail_Adresse").toString());
+		updateAngestellterStatement.executeUpdate();
+		
+		logger.info("Done changing account data for account " +
+				newData.get("Kunde.E-Mail-Adresse").toString() + ".");
 	}
 
 	@Override
