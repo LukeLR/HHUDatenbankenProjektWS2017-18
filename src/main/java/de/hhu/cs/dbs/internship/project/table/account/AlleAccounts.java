@@ -31,7 +31,7 @@ public class AlleAccounts extends Table {
 		String selectQuery = "SELECT E_Mail_Adresse AS 'E-Mail-Adresse', Passwort, Vorname, Nachname, "
 				+ "Strasse AS 'Straße', Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
 				+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '"
-				+ data.get("Kunde.E-Mail-Adresse") + "'";
+				+ (String) data.get("Kunde.E-Mail-Adresse") + "'";
 		return selectQuery;
 	}
 
@@ -47,7 +47,7 @@ public class AlleAccounts extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		AccountDataHelper.deleteAccountByEMail(data.get("Kunde.E-Mail-Adresse").toString());
+		AccountDataHelper.deleteAccountByEMail((String) data.get("Kunde.E-Mail-Adresse"));
 	}
 
 }

@@ -30,9 +30,7 @@ public class Anbieter extends Table {
 		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
 		
 		String selectQuery = "SELECT * FROM Anbieter "
-				+ "WHERE Anbieterbezeichnung = '" +
-				(data.get("Anbieter.Anbieterbezeichnung") == null ? "null" :
-					data.get("Anbieter.Anbieterbezeichnung").toString()) + "'";
+				+ "WHERE Anbieterbezeichnung = '" +	(String) data.get("Anbieter.Anbieterbezeichnung") + "'";
 		return selectQuery;
 	}
 
@@ -43,7 +41,7 @@ public class Anbieter extends Table {
 		
 		PreparedStatement insertAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Anbieter (Anbieterbezeichnung) VALUES (?);");
-		insertAnbieterStatement.setString(1, data.get("Anbieter.Anbieterbezeichnung").toString());
+		insertAnbieterStatement.setString(1, (String) data.get("Anbieter.Anbieterbezeichnung"));
 		insertAnbieterStatement.executeUpdate();
 		
 		logger.info("Dataset inserted into " + this.getClass().getName() + "!");
@@ -56,12 +54,12 @@ public class Anbieter extends Table {
 		
 		PreparedStatement updateAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Anbieter SET Anbieterbezeichnung = ? WHERE Anbieterbezeichnung = ?");
-		updateAnbieterStatement.setString(1, newData.get("Anbieter.Anbieterbezeichnung").toString());
-		updateAnbieterStatement.setString(2, oldData.get("Anbieter.Anbieterbezeichnung").toString());
+		updateAnbieterStatement.setString(1, (String) newData.get("Anbieter.Anbieterbezeichnung"));
+		updateAnbieterStatement.setString(2, (String) oldData.get("Anbieter.Anbieterbezeichnung"));
 		updateAnbieterStatement.executeUpdate();
 		
 		logger.info("Done changing account data for Anbieter " +
-				newData.get("Anbieter.Anbieterbezeichnung").toString() + ".");
+				(String) newData.get("Anbieter.Anbieterbezeichnung") + ".");
 	}
 
 	@Override
@@ -71,10 +69,10 @@ public class Anbieter extends Table {
 		
 		PreparedStatement deleteAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Anbieter WHERE Anbieterbezeichnung = ?");
-		deleteAnbieterStatement.setString(1, data.get("Anbieter.Anbieterbezeichnung").toString());
+		deleteAnbieterStatement.setString(1, (String) data.get("Anbieter.Anbieterbezeichnung"));
 		deleteAnbieterStatement.executeUpdate();
 		
-		logger.info("Dataset for Anbieterbezeichnung " + data.get("Anbieter.Anbieterbezeichnung").toString()
+		logger.info("Dataset for Anbieterbezeichnung " + (String) data.get("Anbieter.Anbieterbezeichnung")
 				+ " deleted from " + this.getClass().getName() + ".");
 	}
 

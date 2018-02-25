@@ -25,7 +25,7 @@ public class AddressIDHelper {
 	 * @throws SQLException If the statement is malformed, or no address is found.
 	 */
 	public static int getAddressIDByAddress
-	(String street, String houseNumber, String zipCode, String city, Connection con) throws SQLException
+	(String street, String houseNumber, int zipCode, String city, Connection con) throws SQLException
 	{
 		Logger logger = Logger.getLogger(AddressIDHelper.class.getName());
 		logger.info("Searching for address ID for address: " + street
@@ -35,10 +35,10 @@ public class AddressIDHelper {
 				"SELECT Adressen_ID FROM Adresse "
 						+ "WHERE Strasse = ? AND Hausnummer = ? AND PLZ = ? AND Ort = ?");
 
-		addressRequestQuery.setString(1, street.toString());
-		addressRequestQuery.setString(2, houseNumber.toString());
-		addressRequestQuery.setString(3, zipCode.toString());
-		addressRequestQuery.setString(4, city.toString());
+		addressRequestQuery.setString(1, street);
+		addressRequestQuery.setString(2, houseNumber);
+		addressRequestQuery.setInt(3, zipCode);
+		addressRequestQuery.setString(4, city);
 
 		ResultSet addressResults = addressRequestQuery.executeQuery();
 		int addressID = addressResults.getInt("Adressen_ID");
@@ -55,7 +55,7 @@ public class AddressIDHelper {
 	 * @throws SQLException If the statement is malformed, or no address is found.
 	 */
 	public static int getAddressIDByAddress
-	(String street, String houseNumber, String zipCode, String city) throws SQLException
+	(String street, String houseNumber, int zipCode, String city) throws SQLException
 	{
 		return getAddressIDByAddress(street, houseNumber, zipCode, city,
 				Project.getInstance().getConnection());
@@ -76,13 +76,13 @@ public class AddressIDHelper {
 	 * @throws SQLException If the statement is malformed, or the address is unchanged but not in the database.
 	 */
 	public static int getAddressIDWithChangedAddress
-	(String streetOld, String houseNumberOld, String zipCodeOld, String cityOld,
-			String streetNew, String houseNumberNew, String zipCodeNew, String cityNew, Connection con) throws SQLException
+	(String streetOld, String houseNumberOld, int zipCodeOld, String cityOld,
+			String streetNew, String houseNumberNew, int zipCodeNew, String cityNew, Connection con) throws SQLException
 	{
 		Logger logger = Logger.getLogger(AddressIDHelper.class.getName());
 
 		//Check if address has changed
-		if (!streetOld.equals(streetNew) || !houseNumberOld.equals(houseNumberNew) || !zipCodeOld.equals(zipCodeNew)
+		if (!streetOld.equals(streetNew) || !houseNumberOld.equals(houseNumberNew) || zipCodeOld != zipCodeNew
 				|| !cityOld.equals(cityNew))
 		{
 			//Address has changed: insert new address into table.
@@ -97,7 +97,7 @@ public class AddressIDHelper {
 							+ "VALUES (?, ?, ?, ?, NULL)");
 			insertAddressStatement.setString(1, streetNew);
 			insertAddressStatement.setString(2, houseNumberNew);
-			insertAddressStatement.setString(3, zipCodeNew);
+			insertAddressStatement.setInt(3, zipCodeNew);
 			insertAddressStatement.setString(4, cityNew);
 
 			insertAddressStatement.executeUpdate();
@@ -125,8 +125,8 @@ public class AddressIDHelper {
 	 * @throws SQLException If the statement is malformed, or the address is unchanged but not in the database.
 	 */
 	public static int getAddressIDWithChangedAddress
-	(String streetOld, String houseNumberOld, String zipCodeOld, String cityOld,
-			String streetNew, String houseNumberNew, String zipCodeNew, String cityNew) throws SQLException
+	(String streetOld, String houseNumberOld, int zipCodeOld, String cityOld,
+			String streetNew, String houseNumberNew, int zipCodeNew, String cityNew) throws SQLException
 	{
 		return getAddressIDWithChangedAddress (streetOld, houseNumberOld, zipCodeOld, cityOld,
 				streetNew, houseNumberNew, zipCodeNew, cityNew, Project.getInstance().getConnection());

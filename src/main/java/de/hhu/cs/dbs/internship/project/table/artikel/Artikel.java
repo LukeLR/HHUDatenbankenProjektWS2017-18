@@ -31,8 +31,7 @@ public class Artikel extends Table {
 		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
 		
 		String selectQuery = "SELECT Bezeichnung, Beschreibung, Bild, Artikel_ID FROM Artikel "
-				+ "WHERE Artikel_ID = '" +
-				(data.get("Artikel.Artikel_ID") == null ? "null" : data.get("Artikel.Artikel_ID").toString()) + "'";
+				+ "WHERE Artikel_ID = '" + (String) data.get("Artikel.Artikel_ID") + "'";
 		return selectQuery;
 	}
 
@@ -66,8 +65,7 @@ public class Artikel extends Table {
 		updateArtikelStatement.setInt(4, (int) oldData.get("Artikel.Artikel_ID"));
 		updateArtikelStatement.executeUpdate();
 		
-		logger.info("Done changing article data for Artikel " +
-				newData.get("Artikel.Artikel_ID").toString() + ".");
+		logger.info("Done changing article data for Artikel " + (String) newData.get("Artikel.Artikel_ID") + ".");
 	}
 
 	@Override
@@ -80,7 +78,7 @@ public class Artikel extends Table {
 		deleteArtikelStatement.setInt(1, (int) data.get("Artikel.Artikel_ID"));
 		deleteArtikelStatement.executeUpdate();
 		
-		logger.info("Dataset for Artikel " + data.get("Artikel.Artikel_ID").toString()
+		logger.info("Dataset for Artikel " + (String) data.get("Artikel.Artikel_ID")
 				+ " deleted from " + this.getClass().getName() + ".");
 	}
 }

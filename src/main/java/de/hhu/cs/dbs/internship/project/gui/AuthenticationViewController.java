@@ -35,32 +35,32 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 
 		PreparedStatement loginQuery = Project.getInstance().getConnection().prepareStatement(
 				"SELECT E_Mail_Adresse, Passwort FROM Kunde WHERE E_Mail_Adresse = ?");
-		loginQuery.setString(1, data.get("email").toString());
+		loginQuery.setString(1, (String) data.get("email"));
 		ResultSet loginResults = loginQuery.executeQuery();
 		while (loginResults.next()) {
 			logger.info("Found user with E-Mail: " + loginResults.getString("E_Mail_Adresse") +
 					" and password: " + loginResults.getString("Passwort") + ", entered password was: "
-					+ data.get("password").toString());
-			if (loginResults.getString("Passwort").equals(data.get("password").toString())) {
+					+ (String) data.get("password"));
+			if (loginResults.getString("Passwort").equals((String) data.get("password"))) {
 				logger.info("User credentials correct. Done searching for users.");
 
 				// Saving user account information application-wide
-				Project.getInstance().getData().put("email", data.get("email").toString());
+				Project.getInstance().getData().put("email", (String) data.get("email"));
 
 				// Check if customer is shop assistant
 				PreparedStatement shopAssistantQuery = Project.getInstance().getConnection().prepareStatement(
 						"SELECT E_Mail_Adresse FROM Angestellter WHERE E_Mail_Adresse = ?");
-				shopAssistantQuery.setString(1, data.get("email").toString());
+				shopAssistantQuery.setString(1, (String) data.get("email"));
 				ResultSet shopAssistantResults = shopAssistantQuery.executeQuery();
-				if (!shopAssistantResults.isClosed() && shopAssistantResults.getString("E_Mail_Adresse").equals(data.get("email").toString())) {
+				if (!shopAssistantResults.isClosed() && shopAssistantResults.getString("E_Mail_Adresse").equals((String) data.get("email"))) {
 					Project.getInstance().getData().put("permission", Permission.SHOP_ASSISTANT);
 				} else {
 					// Check if customer is premium customer
 					PreparedStatement premiumCustomerQuery = Project.getInstance().getConnection().prepareStatement(
 							"SELECT E_Mail_Adresse FROM Premiumkunde WHERE E_Mail_Adresse = ?");
-					premiumCustomerQuery.setString(1, data.get("email").toString());
+					premiumCustomerQuery.setString(1, (String) data.get("email"));
 					ResultSet premiumCustomerResults = premiumCustomerQuery.executeQuery();
-					if (!premiumCustomerResults.isClosed() && premiumCustomerResults.getString("E_Mail_Adresse").equals(data.get("email").toString())) {
+					if (!premiumCustomerResults.isClosed() && premiumCustomerResults.getString("E_Mail_Adresse").equals((String) data.get("email"))) {
 						Project.getInstance().getData().put("permission", Permission.PREMIUM_CUSTOMER);
 					} else {
 						Project.getInstance().getData().put("permission", Permission.CUSTOMER);
@@ -68,7 +68,7 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 				}
 
 				logger.info("User access level is: " + Permission.permissionLevelToString(Integer.valueOf(
-						Project.getInstance().getData().get("permission").toString())) + ".");
+						(String) Project.getInstance().getData().get("permission"))) + ".");
 
 				authenticated = true;
 			}
@@ -93,18 +93,18 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 		PreparedStatement addressInsertQuery = con.prepareStatement(
 				"INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID) "
 						+ "VALUES (?, ?, ?, ?, NULL)");
-		addressInsertQuery.setString(1, data.get("street").toString());
-		addressInsertQuery.setString(2, data.get("houseNumber").toString());
-		addressInsertQuery.setString(3, data.get("zipCode").toString());
-		addressInsertQuery.setString(4, data.get("city").toString());
+		addressInsertQuery.setString(1, (String) data.get("street"));
+		addressInsertQuery.setString(2, (String) data.get("houseNumber"));
+		addressInsertQuery.setInt(3, Integer.valueOf((String) data.get("zipCode")));
+		addressInsertQuery.setString(4, (String) data.get("city"));
 
 		PreparedStatement customerInsertQuery = con.prepareStatement(
 				"INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID) "
 						+ "VALUES (?, ?, ?, ?, ?)");
-		customerInsertQuery.setString(1, data.get("eMail").toString());
-		customerInsertQuery.setString(2, data.get("firstName").toString());
-		customerInsertQuery.setString(3, data.get("lastName").toString());
-		customerInsertQuery.setString(4, data.get("password1").toString());
+		customerInsertQuery.setString(1, (String) data.get("eMail"));
+		customerInsertQuery.setString(2, (String) data.get("firstName"));
+		customerInsertQuery.setString(3, (String) data.get("lastName"));
+		customerInsertQuery.setString(4, (String) data.get("password1"));
 
 		try {
 			addressInsertQuery.executeUpdate();
@@ -115,8 +115,8 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 			 */
 
 			int addressID = AddressIDHelper.getAddressIDByAddress
-					(data.get("street").toString(), data.get("houseNumber").toString(),
-							data.get("zipCode").toString(), data.get("city").toString(), con);
+					((String) data.get("street"), (String) data.get("houseNumber"),
+							Integer.valueOf((String) data.get("zipCode")), (String) data.get("city"), con);
 			customerInsertQuery.setInt(5, addressID);
 
 			customerInsertQuery.executeUpdate();

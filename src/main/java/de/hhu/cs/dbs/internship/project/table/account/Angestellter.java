@@ -33,8 +33,7 @@ public class Angestellter extends Table {
 		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
 		
 		String selectQuery = "SELECT * FROM Angestellter "
-				+ "WHERE E_Mail_Adresse = '" +
-				(data.get("Kunde.E_Mail_Adresse") == null ? "null" : data.get("Kunde.E_Mail_Adresse").toString()) + "'";
+				+ "WHERE E_Mail_Adresse = '" + (String) data.get("Kunde.E_Mail_Adresse") + "'";
 		return selectQuery;
 	}
 
@@ -46,9 +45,9 @@ public class Angestellter extends Table {
 		PreparedStatement insertAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Angestellter (Jobbezeichnung, Gehalt, E_Mail_Adresse) "
 				+ "VALUES (?, ?, ?)");
-		insertAngestellterStatement.setString(1, data.get("Angestellter.Jobbezeichnung").toString());
-		insertAngestellterStatement.setInt(2, Integer.valueOf(data.get("Angestellter.Gehalt").toString()));
-		insertAngestellterStatement.setString(3, data.get("Angestellter.E_Mail_Adresse").toString());
+		insertAngestellterStatement.setString(1, (String) data.get("Angestellter.Jobbezeichnung"));
+		insertAngestellterStatement.setInt(2, Integer.valueOf((String) data.get("Angestellter.Gehalt")));
+		insertAngestellterStatement.setString(3, (String) data.get("Angestellter.E_Mail_Adresse"));
 		insertAngestellterStatement.executeUpdate();
 		
 		logger.info("Dataset inserted into " + this.getClass().getName() + "!");
@@ -62,14 +61,14 @@ public class Angestellter extends Table {
 		PreparedStatement updateAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Angestellter SET Jobbezeichnung = ?, Gehalt = ?, E_Mail_Adresse = ? "
 				+ "WHERE E_Mail_Adresse = ?");
-		updateAngestellterStatement.setString(1, newData.get("Angestellter.Jobbezeichnung").toString());
-		updateAngestellterStatement.setInt(2, Integer.valueOf(newData.get("Angestellter.Gehalt").toString()));
-		updateAngestellterStatement.setString(3, newData.get("Angestellter.E_Mail_Adresse").toString());
-		updateAngestellterStatement.setString(4, oldData.get("Angestellter.E_Mail_Adresse").toString());
+		updateAngestellterStatement.setString(1, (String) newData.get("Angestellter.Jobbezeichnung"));
+		updateAngestellterStatement.setInt(2, Integer.valueOf((String) newData.get("Angestellter.Gehalt")));
+		updateAngestellterStatement.setString(3, (String) newData.get("Angestellter.E_Mail_Adresse"));
+		updateAngestellterStatement.setString(4, (String) oldData.get("Angestellter.E_Mail_Adresse"));
 		updateAngestellterStatement.executeUpdate();
 		
 		logger.info("Done changing account data for account " +
-				newData.get("Angestellter.E_Mail_Adresse").toString() + ".");
+				(String) newData.get("Angestellter.E_Mail_Adresse") + ".");
 	}
 
 	@Override
@@ -79,10 +78,10 @@ public class Angestellter extends Table {
 		
 		PreparedStatement deleteAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Angestellter WHERE E_Mail_Adresse = ?");
-		deleteAngestellterStatement.setString(1, data.get("Kunde.E_Mail_Adresse").toString());
+		deleteAngestellterStatement.setString(1, (String) data.get("Kunde.E_Mail_Adresse"));
 		deleteAngestellterStatement.executeUpdate();
 		
-		logger.info("Dataset for E-Mail " + data.get("Kunde.E_Mail_Adresse").toString()
+		logger.info("Dataset for E-Mail " + (String) data.get("Kunde.E_Mail_Adresse")
 				+ " deleted from " + this.getClass().getName() + ".");
 	}
 
