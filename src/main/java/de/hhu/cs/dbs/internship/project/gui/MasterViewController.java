@@ -9,6 +9,7 @@ import de.hhu.cs.dbs.internship.project.table.account.Account;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import de.hhu.cs.dbs.internship.project.table.account.Angestellter;
 import de.hhu.cs.dbs.internship.project.table.account.Premiumkunde;
+import de.hhu.cs.dbs.internship.project.table.angebot.Anbieter;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
@@ -54,10 +55,16 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 		treeItem.getChildren().add(subTreeItem);*/
 
 		if (permissionLevel >= Permission.SHOP_ASSISTANT) {
-			logger.info("User is at least of permission level shop assistant. Enabling 'All Accounts' view.");
+			logger.info("User is at least of permission level shop assistant.");
 			TreeItem<TableViewController> alleAccounts = GUIHelpers.addTableOfClassToTree(new AlleAccounts(), "Alle Accounts", treeItems);
 			GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", alleAccounts);
 			GUIHelpers.addTableOfClassToTreeItem(new Angestellter(), "Angestellte", alleAccounts);
+			GUIHelpers.addTableOfClassToTree(new Anbieter(), "Anbieter", treeItems);
+		}
+		
+		if (permissionLevel >= Permission.CUSTOMER) {
+			logger.info("User is at least of permission level customer.");
+			
 		}
 
 		return treeItems;
