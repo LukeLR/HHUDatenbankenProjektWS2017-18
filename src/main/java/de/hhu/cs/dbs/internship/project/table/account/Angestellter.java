@@ -17,6 +17,7 @@ public class Angestellter extends Table {
 				+ "JOIN Kunde ON Angestellter.E_Mail_Adresse = Kunde.E_Mail_Adresse) "
 				+ "JOIN Adresse ON AID = Adresse.Adressen_ID";
 		if (filter != null && !filter.isEmpty()) {
+			logger.info("Searching for " + filter + " in " + this.getClass().getName() + " table");
 			selectQuery += " AND Kunde.E_Mail_Adresse LIKE '%" + filter + "'";
 		}
 		return selectQuery;
