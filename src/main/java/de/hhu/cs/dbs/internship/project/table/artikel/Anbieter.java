@@ -1,10 +1,13 @@
 package de.hhu.cs.dbs.internship.project.table.artikel;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
+
+import de.hhu.cs.dbs.internship.project.Project;
 
 public class Anbieter extends Table {
 
@@ -23,20 +26,42 @@ public class Anbieter extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
+		
+		String selectQuery = "SELECT * FROM Anbieter "
+				+ "WHERE Anbieterbezeichnung = '" +
+				(data.get("Anbieter.Anbieterbezeichnung") == null ? "null" :
+					data.get("Anbieter.Anbieterbezeichnung").toString()) + "'";
+		return selectQuery;
 	}
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to insert new Dataset with data: " + data.toString());
+		
+		PreparedStatement insertAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Anbieter (Anbieterbezeichnung) VALUES (?);");
+		insertAnbieterStatement.setString(1, data.get("Anbieter.Anbieterbezeichnung").toString());
+		insertAnbieterStatement.executeUpdate();
+		
+		logger.info("Dataset inserted into " + this.getClass().getName() + "!");
 	}
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to change account data from " + oldData + " to " + newData + ".");
+		
+		PreparedStatement updateAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Anbieter SET Anbieterbezeichnung = ? WHERE Anbieterbezeichnung = ?");
+		updateAnbieterStatement.setString(1, newData.get("Anbieter.Anbieterbezeichnung").toString());
+		updateAnbieterStatement.setString(2, oldData.get("Anbieter.Anbieterbezeichnung").toString());
+		updateAnbieterStatement.executeUpdate();
+		
+		logger.info("Done changing account data for Anbieter " +
+				newData.get("Anbieter.Anbieterbezeichnung").toString() + ".");
 	}
 
 	@Override
