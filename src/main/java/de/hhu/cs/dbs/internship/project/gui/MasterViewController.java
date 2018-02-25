@@ -13,6 +13,14 @@ import de.hhu.cs.dbs.internship.project.table.artikel.Anbieter;
 import de.hhu.cs.dbs.internship.project.table.artikel.Angebot;
 import de.hhu.cs.dbs.internship.project.table.artikel.Artikel;
 import de.hhu.cs.dbs.internship.project.table.artikel.ArtikelempfiehltArtikel;
+import de.hhu.cs.dbs.internship.project.table.lieferdienst.Lieferdienst;
+import de.hhu.cs.dbs.internship.project.table.newsletter.Newsletter;
+import de.hhu.cs.dbs.internship.project.table.newsletter.Newsletterabo;
+import de.hhu.cs.dbs.internship.project.table.schlagwort.Schlagwort;
+import de.hhu.cs.dbs.internship.project.table.warenkorb.AlleWarenkoerbe;
+import de.hhu.cs.dbs.internship.project.table.warenkorb.ArtikelImWarenkorb;
+import de.hhu.cs.dbs.internship.project.table.warenkorb.Lieferabo;
+import de.hhu.cs.dbs.internship.project.table.warenkorb.Warenkoerbe;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
@@ -36,6 +44,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 	protected ArrayList<TreeItem<TableViewController>> getTreeItems() {
 		Logger logger = Logger.getLogger(this.getClass().getName());
 		int permissionLevel = 0;
+		ArrayList<TreeItem<TableViewController>> treeItems = new ArrayList<>();
 
 		try {
 			permissionLevel = Integer.valueOf(Project.getInstance().getData().get("permission").toString());
@@ -43,37 +52,44 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 			logger.log(Level.SEVERE, "User permission level not set!", ex);
 		}
 		
-		ArrayList<TreeItem<TableViewController>> treeItems = new ArrayList<>();
-		GUIHelpers.addTableOfClassToTree(new Account(), "Account", treeItems);
-		
-		/*table = new Favorites();
-		table.setTitle("Favoriten");
-		try {
-			tableViewController = TableViewController.createWithNameAndTable("favorites", table);
-			tableViewController.setTitle("Favoriten");
-		} catch (IOException e) {
-			tableViewController = null;
-		}
-		subTreeItem = new TreeItem<>(tableViewController);
-		treeItem.getChildren().add(subTreeItem);*/
-
-		if (permissionLevel >= Permission.SHOP_ASSISTANT) {
-			logger.info("User is at least of permission level shop assistant.");
-			TreeItem<TableViewController> alleAccounts = GUIHelpers.addTableOfClassToTree(new AlleAccounts(), "Alle Accounts", treeItems);
-			GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", alleAccounts);
-			GUIHelpers.addTableOfClassToTreeItem(new Angestellter(), "Angestellte", alleAccounts);
+		if (permissionLevel >= Permission.READ_ONLY) {
+			logger.info("User is at least of permission level read only.");
+			GUIHelpers.addTableOfClassToTree(new Account(), "Account", treeItems);
 			
-			TreeItem<TableViewController> artikel = GUIHelpers.addTableOfClassToTree(new Artikel(), "Artikel", treeItems);
-			GUIHelpers.addTableOfClassToTreeItem(new Anbieter(), "Anbieter", artikel);
-			GUIHelpers.addTableOfClassToTreeItem(new Angebot(), "Angebote", artikel);
-			GUIHelpers.addTableOfClassToTreeItem(new ArtikelempfiehltArtikel(), "Artikelempfehlungen", artikel);
+			if (permissionLevel >= Permission.CUSTOMER) {
+				logger.info("User is at least of permission level customer.");
+				TreeItem<TableViewController> artikel = GUIHelpers.addTableOfClassToTree(new Artikel(), "Artikel", treeItems);
+				GUIHelpers.addTableOfClassToTreeItem(new Anbieter(), "Anbieter", artikel);
+				GUIHelpers.addTableOfClassToTreeItem(new Angebot(), "Angebote", artikel);
+				GUIHelpers.addTableOfClassToTreeItem(new ArtikelempfiehltArtikel(), "Artikelempfehlungen", artikel);
+				
+				GUIHelpers.addTableOfClassToTree(new Lieferdienst(), "Lieferdienste", treeItems);
+				
+				TreeItem<TableViewController> newsletter = GUIHelpers.addTableOfClassToTree(new Newsletter(), "Newsletter", treeItems);
+				GUIHelpers.addTableOfClassToTreeItem(new Newsletterabo(), "Newsletterabos", newsletter);
+				
+				TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new Warenkoerbe(), "Warenkörbe", treeItems);
+				GUIHelpers.addTableOfClassToTreeItem(new ArtikelImWarenkorb(), "Artikel im Warenkorb", warenkorb);
+				
+				if (permissionLevel >= Permission.PREMIUM_CUSTOMER) {
+					logger.info("User is at least of permission level premium customer.");
+					
+					GUIHelpers.addTableOfClassToTreeItem(new Lieferabo(), "Lieferabos", warenkorb);
+					
+					if (permissionLevel >= Permission.SHOP_ASSISTANT) {
+						logger.info("User is at least of permission level shop assistant.");
+						TreeItem<TableViewController> alleAccounts = GUIHelpers.addTableOfClassToTree(new AlleAccounts(), "Alle Accounts", treeItems);
+						GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", alleAccounts);
+						GUIHelpers.addTableOfClassToTreeItem(new Angestellter(), "Angestellte", alleAccounts);
+						
+						GUIHelpers.addTableOfClassToTree(new Schlagwort(), "Schlagworte", treeItems);
+						
+						GUIHelpers.addTableOfClassToTreeItem(new AlleWarenkoerbe(), "Alle Warenkörbe", warenkorb);
+					}
+				}
+			}
 		}
 		
-		if (permissionLevel >= Permission.CUSTOMER) {
-			logger.info("User is at least of permission level customer.");
-			
-		}
-
 		return treeItems;
 	}
 }
