@@ -32,7 +32,8 @@ public class Angestellter extends Table {
 		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
 		
 		String selectQuery = "SELECT * FROM Angestellter "
-				+ "WHERE E_Mail_Adresse = '" + data.get("Kunde.E_Mail_Adresse") + "'";
+				+ "WHERE E_Mail_Adresse = '" +
+				(data.get("Kunde.E_Mail_Adresse") == null ? "null" : data.get("Kunde.E_Mail_Adresse").toString()) + "'";
 		return selectQuery;
 	}
 
