@@ -57,7 +57,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 			logger.info("User is at least of permission level shop assistant. Enabling 'All Accounts' view.");
 			TreeItem<TableViewController> alleAccounts = GUIHelpers.addTableOfClassToTree(new AlleAccounts(), "Alle Accounts", treeItems);
 			GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", alleAccounts);
-			GUIHelpers.addTableOfClassToTree(new Angestellter(), "Angestellte", alleAccounts);
+			GUIHelpers.addTableOfClassToTreeItem(new Angestellter(), "Angestellte", alleAccounts);
 		}
 
 		return treeItems;
