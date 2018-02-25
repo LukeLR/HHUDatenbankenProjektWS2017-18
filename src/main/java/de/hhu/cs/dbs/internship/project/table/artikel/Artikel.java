@@ -24,8 +24,13 @@ public class Artikel extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		Logger logger = Logger.getLogger(this.getClass().getName());
+		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
+		
+		String selectQuery = "SELECT Bezeichnung, Beschreibung, Bild, Artikel_ID FROM Artikel "
+				+ "WHERE Artikel_ID = '" +
+				(data.get("Artikel.Artikel_ID") == null ? "null" : data.get("Artikel.Artikel_ID").toString()) + "'";
+		return selectQuery;
 	}
 
 	@Override
