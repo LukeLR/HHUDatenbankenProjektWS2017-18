@@ -45,7 +45,17 @@ public class UnifiedLoggingHelper {
 		logger.info("Trying to delete Dataset from " + tableName + " with data: " + data.toString());
 	}
 	
+	public static void logDelete(String tableName, String key) {
+		Logger logger = Logger.getLogger(tableName);
+		logger.info("Trying to delete Dataset from " + tableName + " with data: " + key);
+	}
+	
 	public static void logDeleteDone(String tableName, Data data, String key) {
+		Logger logger = Logger.getLogger(tableName);
+		logger.info("Dataset for " + key + " deleted from " + tableName + ".");
+	}
+	
+	public static void logDeleteDone(String tableName, String key) {
 		Logger logger = Logger.getLogger(tableName);
 		logger.info("Dataset for " + key + " deleted from " + tableName + ".");
 	}
