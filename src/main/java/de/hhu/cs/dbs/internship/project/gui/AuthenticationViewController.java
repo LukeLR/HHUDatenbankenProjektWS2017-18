@@ -73,7 +73,7 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 				}
 
 				logger.info("User access level is: " + Permission.permissionLevelToString(Integer.valueOf(
-						(String) Project.getInstance().getData().get("permission"))) + ".");
+						String.valueOf(Project.getInstance().getData().get("permission")))) + ".");
 
 				authenticated = true;
 			}
