@@ -72,8 +72,24 @@ public class ArtikelempfiehltArtikel extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updateArtikelEmpfiehltArtikelStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Artikel_empfiehlt_Artikel SET Artikel_ID1 = ?, Artikel_ID2 = ? "
+				+ "WHERE Artikel_ID1 = ? AND Artikel_ID2 = ?");
+		updateArtikelEmpfiehltArtikelStatement.setInt
+			(1, Integer.valueOf(String.valueOf(newData.get("Artikel.Artikel1-Artikel_ID"))));
+		updateArtikelEmpfiehltArtikelStatement.setInt
+			(2, Integer.valueOf(String.valueOf(newData.get("Artikel.Artikel2-Artikel_ID"))));
+		updateArtikelEmpfiehltArtikelStatement.setInt
+			(3, Integer.valueOf(String.valueOf(oldData.get("Artikel.Artikel1-Artikel_ID"))));
+		updateArtikelEmpfiehltArtikelStatement.setInt
+			(4, Integer.valueOf(String.valueOf(oldData.get("Artikel.Artikel2-Artikel_ID"))));
+		updateArtikelEmpfiehltArtikelStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
+				String.valueOf(newData.get("Artikel.Artikel1-Artikel_ID")) + "-"
+				+ String.valueOf(newData.get("Artikel.Artikel2-Artikel_ID")));
 	}
 
 	@Override
