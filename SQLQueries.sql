@@ -37,3 +37,4 @@ JOIN Artikel a1
 ON a.Artikel_ID1 = a1.Artikel_ID
 JOIN Artikel a2
 ON a.Artikel_ID2 = a2.Artikel_ID
+WHERE a1.Bezeichnung LIKE '%Su%'
