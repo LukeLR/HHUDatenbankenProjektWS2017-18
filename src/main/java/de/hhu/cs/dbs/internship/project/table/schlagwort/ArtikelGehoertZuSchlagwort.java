@@ -15,7 +15,7 @@ public class ArtikelGehoertZuSchlagwort extends Table {
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
-		String selectQuery = "SELECT Artikel_ID, Schlagwort FROM Artikel_gehort_zu_Schlagwort";
+		String selectQuery = "SELECT Artikel_ID, Schlagwort FROM Artikel_gehoert_zu_Schlagwort";
 		
 		if (filter != null && !filter.isEmpty()) {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
@@ -30,7 +30,7 @@ public class ArtikelGehoertZuSchlagwort extends Table {
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
-		String selectQuery = "SELECT Artikel_ID, Schlagwort FROM Artikel_gehort_zu_Schlagwort "
+		String selectQuery = "SELECT Artikel_ID, Schlagwort FROM Artikel_gehoert_zu_Schlagwort "
 				+ "WHERE Artikel_ID = '"
 				+ String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Artikel_ID"))
 				+ "' AND Schlagwort = '"
@@ -45,7 +45,7 @@ public class ArtikelGehoertZuSchlagwort extends Table {
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
 		PreparedStatement insertArtikelSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
-				"INSERT INTO Artikel_gehort_zu_Schlagwort (Artikel_ID, Schlagwort) "
+				"INSERT INTO Artikel_gehoert_zu_Schlagwort (Artikel_ID, Schlagwort) "
 				+ "VALUES (?, ?)");
 		insertArtikelSchlagwortStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Artikel_ID"))));
 		insertArtikelSchlagwortStatement.setString(2, String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Schlagwort")));
