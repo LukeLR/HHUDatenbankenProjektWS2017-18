@@ -8,17 +8,17 @@ import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
 import de.hhu.cs.dbs.internship.project.Project;
+import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class Artikel extends Table {
 	
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
-		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Showing " + this.getClass().getName());
+		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
 		String selectQuery = "SELECT Bezeichnung, Beschreibung, Bild, Artikel_ID FROM Artikel";
 		if (filter != null && !filter.isEmpty()) {
-			logger.info("Searching for " + filter + " in " + this.getClass().getName() + " table");
+			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " WHERE Bezeichnung LIKE '%" + filter + "%' "
 					+ "OR Beschreibung LIKE '%" + filter + "%'";
 		}
@@ -27,8 +27,7 @@ public class Artikel extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
+		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
 		String selectQuery = "SELECT Bezeichnung, Beschreibung, Bild, Artikel_ID FROM Artikel "
 				+ "WHERE Artikel_ID = '" + (String) data.get("Artikel.Artikel_ID") + "'";
@@ -37,8 +36,7 @@ public class Artikel extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Trying to insert new Dataset with data: " + data.toString());
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
 		PreparedStatement insertArtikelStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Artikel (Bezeichnung, Beschreibung, Bild, Artikel_ID) "
@@ -48,13 +46,12 @@ public class Artikel extends Table {
 		insertArtikelStatement.setString(3, (String) data.get("Artikel.Bild"));
 		insertArtikelStatement.executeUpdate();
 		
-		logger.info("Dataset inserted into " + this.getClass().getName() + "!");
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, (String) data.get("Artikel.Bezeichnung"));
 	}
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Trying to change article data from " + oldData + " to " + newData + ".");
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
 		PreparedStatement updateArtikelStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Artikel SET Bezeichnung = ?, Beschreibung = ?, Bild = ? "
@@ -65,20 +62,18 @@ public class Artikel extends Table {
 		updateArtikelStatement.setInt(4, (int) oldData.get("Artikel.Artikel_ID"));
 		updateArtikelStatement.executeUpdate();
 		
-		logger.info("Done changing article data for Artikel " + (String) newData.get("Artikel.Artikel_ID") + ".");
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, (String) newData.get("Artikel.Bezeichnung"));
 	}
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Trying to delete Dataset with data: " + data.toString());
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
 		PreparedStatement deleteArtikelStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Artikel WHERE Artikel_ID = ?");
 		deleteArtikelStatement.setInt(1, (int) data.get("Artikel.Artikel_ID"));
 		deleteArtikelStatement.executeUpdate();
 		
-		logger.info("Dataset for Artikel " + (String) data.get("Artikel.Artikel_ID")
-				+ " deleted from " + this.getClass().getName() + ".");
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), (String) data.get("Artikel.Artikel_ID"));
 	}
 }

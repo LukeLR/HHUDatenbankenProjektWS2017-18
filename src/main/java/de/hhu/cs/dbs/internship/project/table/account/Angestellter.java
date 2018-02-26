@@ -8,20 +8,20 @@ import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
 import de.hhu.cs.dbs.internship.project.Project;
+import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class Angestellter extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
-		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Showing " + this.getClass().getName());
+		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
 		String selectQuery = "SELECT * FROM (SELECT Jobbezeichnung, Gehalt, Kunde.E_Mail_Adresse, "
 				+ "Vorname, Nachname, Passwort, Adressen_ID AS 'AID' FROM Angestellter "
 				+ "JOIN Kunde ON Angestellter.E_Mail_Adresse = Kunde.E_Mail_Adresse) "
 				+ "JOIN Adresse ON AID = Adresse.Adressen_ID";
 		if (filter != null && !filter.isEmpty()) {
-			logger.info("Searching for " + filter + " in " + this.getClass().getName() + " table");
+			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " WHERE E_Mail_Adresse LIKE '%" + filter + "%'";
 		}
 		return selectQuery;
@@ -29,8 +29,7 @@ public class Angestellter extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Trying to get Data for Dataset " + data.toString() + " in " + this.getClass().getName() + ".");
+		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
 		String selectQuery = "SELECT * FROM Angestellter "
 				+ "WHERE E_Mail_Adresse = '" + (String) data.get("Kunde.E_Mail_Adresse") + "'";
@@ -39,8 +38,7 @@ public class Angestellter extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Trying to insert new Dataset with data: " + data.toString());
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
 		PreparedStatement insertAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Angestellter (Jobbezeichnung, Gehalt, E_Mail_Adresse) "
@@ -50,13 +48,12 @@ public class Angestellter extends Table {
 		insertAngestellterStatement.setString(3, (String) data.get("Angestellter.E_Mail_Adresse"));
 		insertAngestellterStatement.executeUpdate();
 		
-		logger.info("Dataset inserted into " + this.getClass().getName() + "!");
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, (String) data.get("Angestellter.E_Mail_Adresse"));
 	}
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Trying to change account data from " + oldData + " to " + newData + ".");
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
 		PreparedStatement updateAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Angestellter SET Jobbezeichnung = ?, Gehalt = ?, E_Mail_Adresse = ? "
@@ -67,22 +64,19 @@ public class Angestellter extends Table {
 		updateAngestellterStatement.setString(4, (String) oldData.get("Angestellter.E_Mail_Adresse"));
 		updateAngestellterStatement.executeUpdate();
 		
-		logger.info("Done changing account data for account " +
-				(String) newData.get("Angestellter.E_Mail_Adresse") + ".");
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, (String) newData.get("Angestellter.E_Mail_Adresse"));
 	}
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		Logger logger = Logger.getLogger(this.getClass().getName());
-		logger.info("Trying to delete Dataset with data: " + data.toString());
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
 		PreparedStatement deleteAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Angestellter WHERE E_Mail_Adresse = ?");
 		deleteAngestellterStatement.setString(1, (String) data.get("Kunde.E_Mail_Adresse"));
 		deleteAngestellterStatement.executeUpdate();
 		
-		logger.info("Dataset for E-Mail " + (String) data.get("Kunde.E_Mail_Adresse")
-				+ " deleted from " + this.getClass().getName() + ".");
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, (String) data.get("Kunde.E_Mail_Adresse"));
 	}
 
 }

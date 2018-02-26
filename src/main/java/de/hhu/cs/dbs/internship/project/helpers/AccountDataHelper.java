@@ -12,39 +12,39 @@ import de.hhu.cs.dbs.internship.project.Project;
 
 public class AccountDataHelper {
 
-	public static void changeAccountData(Data data, Data data1) throws SQLException {
-		Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
-		logger.info("Trying to change account data from " + data + " to " + data1 + ".");
-
+	public static void changeAccountData(Data oldData, Data newData) throws SQLException {
+		UnifiedLoggingHelper.logUpdate("Account", oldData, newData);
+		Logger logger = Logger.getLogger("Account");
+		
 		Connection con = Project.getInstance().getConnection();
 		con.getRawConnection().setAutoCommit(false);
 
 		try {
 			//Check address and insert if necessary.
-			int addressID = AddressIDHelper.getAddressIDWithChangedAddress((String) data.get("Adresse.Straße"),
-					(String) data.get("Adresse.Hausnummer"), Integer.valueOf((String) data.get("Adresse.PLZ")),
-					(String) data.get("Adresse.Ort"), (String) data1.get("Adresse.Straße"),
-					(String) data1.get("Adresse.Hausnummer"), Integer.valueOf((String) data1.get("Adresse.PLZ")),
-					(String) data1.get("Adresse.Ort"), con);
+			int addressID = AddressIDHelper.getAddressIDWithChangedAddress((String) oldData.get("Adresse.Straße"),
+					(String) oldData.get("Adresse.Hausnummer"), Integer.valueOf((String) oldData.get("Adresse.PLZ")),
+					(String) oldData.get("Adresse.Ort"), (String) newData.get("Adresse.Straße"),
+					(String) newData.get("Adresse.Hausnummer"), Integer.valueOf((String) newData.get("Adresse.PLZ")),
+					(String) newData.get("Adresse.Ort"), con);
 
 			/* Check if E-Mail-Address has changed. Re-Insert and delete customer if it did, to ensure
 			 * foreign key constraints on occurrence of that customer in other tables during the update.
 			 */
 			PreparedStatement updateKundeStatement;
-			if (!((String) data.get("Kunde.E-Mail-Adresse")).equals((String) data1.get("Kunde.E-Mail-Adresse"))) {
+			if (!((String) oldData.get("Kunde.E-Mail-Adresse")).equals((String) newData.get("Kunde.E-Mail-Adresse"))) {
 				logger.info("E-Mail-Address changed!");
 				updateKundeStatement = con.prepareStatement(
 						"INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)"
 								+ "VALUES (?, ?, ?, ?, ?)");
-				updateKundeStatement.setString(1, (String) data1.get("Kunde.E-Mail-Adresse"));
-				updateKundeStatement.setString(2, (String) data1.get("Kunde.Vorname"));
-				updateKundeStatement.setString(3, (String) data1.get("Kunde.Nachname"));
-				updateKundeStatement.setString(4, (String) data1.get("Kunde.Passwort"));
+				updateKundeStatement.setString(1, (String) newData.get("Kunde.E-Mail-Adresse"));
+				updateKundeStatement.setString(2, (String) newData.get("Kunde.Vorname"));
+				updateKundeStatement.setString(3, (String) newData.get("Kunde.Nachname"));
+				updateKundeStatement.setString(4, (String) newData.get("Kunde.Passwort"));
 				updateKundeStatement.setInt(5, addressID);
 				updateKundeStatement.executeUpdate();
 
-				String eMailOld = (String) data.get("Kunde.E-Mail-Adresse");
-				String eMailNew = (String) data1.get("Kunde.E-Mail-Adresse");
+				String eMailOld = (String) oldData.get("Kunde.E-Mail-Adresse");
+				String eMailNew = (String) newData.get("Kunde.E-Mail-Adresse");
 
 				for (String tablename:DatabaseInfo.TABLES_WITH_E_MAIL_ADDRESS_WITHOUT_KUNDE) {
 					AccountDataHelper.updateEMailAddressInTable(tablename, eMailOld, eMailNew, con);
@@ -54,17 +54,17 @@ public class AccountDataHelper {
 						"DELETE FROM Kunde WHERE E_Mail_Adresse = ?");
 				removeOldKundeStatement.setString(1, eMailOld);
 				removeOldKundeStatement.executeUpdate();
-				Project.getInstance().getData().replace("email", (String) data1.get("Kunde.E-Mail-Adresse"));
+				Project.getInstance().getData().replace("email", (String) newData.get("Kunde.E-Mail-Adresse"));
 			} else {
 				logger.info("E-Mail-Address unchanged!");
 				updateKundeStatement = con.prepareStatement(
 						"UPDATE Kunde SET Passwort = ?, Vorname = ?, Nachname = ?, Adressen_ID = ? "
 								+ "WHERE E_Mail_Adresse = ?");
-				updateKundeStatement.setString(1, (String) data1.get("Kunde.Passwort"));
-				updateKundeStatement.setString(2, (String) data1.get("Kunde.Vorname"));
-				updateKundeStatement.setString(3, (String) data1.get("Kunde.Nachname"));
+				updateKundeStatement.setString(1, (String) newData.get("Kunde.Passwort"));
+				updateKundeStatement.setString(2, (String) newData.get("Kunde.Vorname"));
+				updateKundeStatement.setString(3, (String) newData.get("Kunde.Nachname"));
 				updateKundeStatement.setInt(4, addressID);
-				updateKundeStatement.setString(5, (String) data.get("Kunde.E-Mail-Adresse"));
+				updateKundeStatement.setString(5, (String) oldData.get("Kunde.E-Mail-Adresse"));
 				updateKundeStatement.executeUpdate();
 			}
 
@@ -76,12 +76,11 @@ public class AccountDataHelper {
 			throw ex;
 		}
 
-		logger.info("Done changing account data for account " + (String) data1.get("Kunde.E-Mail-Adresse") + ".");
+		UnifiedLoggingHelper.logUpdateDone("Account", oldData, newData, (String) newData.get("Kunde.E-Mail-Adresse"));
 	}
 
 	public static void deleteAccountByEMail (String eMail) throws SQLException {
-		Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
-		logger.info("Trying to delete account " + eMail + "...");
+		UnifiedLoggingHelper.logDelete("Account", eMail);
 
 		Connection con = Project.getInstance().getConnection();
 		con.getRawConnection().setAutoCommit(false);
@@ -98,7 +97,7 @@ public class AccountDataHelper {
 			throw ex;
 		}
 
-		logger.info("Deletion of account " + eMail + " done!");
+		UnifiedLoggingHelper.logDeleteDone("Account", eMail);
 	}
 
 	public static void deleteAllEntriesWithEMailAddressInTable(String tablename, String eMail, Connection con) throws SQLException {
