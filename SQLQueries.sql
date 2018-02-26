@@ -38,3 +38,20 @@ ON a.Artikel_ID1 = a1.Artikel_ID
 JOIN Artikel a2
 ON a.Artikel_ID2 = a2.Artikel_ID
 WHERE a1.Bezeichnung LIKE '%Su%'
+
+--Show-Anbieter-bietet-an-Query
+SELECT
+    Anbieter_bietet_an.Anbieterbezeichnung,
+    Anbieter_bietet_an.Angebots_ID,
+    Anbieter_bietet_an.Bestand,
+    Angebot.Angebots_ID,
+    Angebot.Artikel_ID,
+    Angebot.Preis,
+    Artikel.Bezeichnung,
+    Artikel.Beschreibung,
+    Artikel.Bild
+FROM Anbieter_bietet_an
+JOIN Angebot
+ON Anbieter_bietet_an.Angebots_ID = Angebot.Angebots_ID
+JOIN Artikel
+ON Angebot.Artikel_ID = Artikel.Artikel_ID
