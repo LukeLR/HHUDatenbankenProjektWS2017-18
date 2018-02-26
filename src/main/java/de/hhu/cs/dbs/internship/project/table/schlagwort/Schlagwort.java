@@ -52,8 +52,15 @@ public class Schlagwort extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updateSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Schlagwort SET Schlagwort = ? WHERE Schlagwort = ?");
+		updateSchlagwortStatement.setString(1, String.valueOf(newData.get("Schlagwort.Schlagwort")));
+		updateSchlagwortStatement.setString(1, String.valueOf(oldData.get("Schlagwort.Schlagwort")));
+		updateSchlagwortStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Schlagwort.Schlagwort")));
 	}
 
 	@Override
