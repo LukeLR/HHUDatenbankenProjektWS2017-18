@@ -47,7 +47,7 @@ public class ArtikelGehoertZuSchlagwort extends Table {
 		PreparedStatement insertArtikelSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Artikel_gehort_zu_Schlagwort (Artikel_ID, Schlagwort) "
 				+ "VALUES (?, ?)");
-		insertArtikelSchlagwortStatement.setInt(1, Integer.valueOf(String.valueOf("Artikel_gehoert_zu_Schlagwort.Artikel_ID")));
+		insertArtikelSchlagwortStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Artikel_ID"))));
 		insertArtikelSchlagwortStatement.setString(2, String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Schlagwort")));
 		insertArtikelSchlagwortStatement.executeUpdate();
 		
@@ -58,8 +58,19 @@ public class ArtikelGehoertZuSchlagwort extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updateArtikelSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Artikel_gehoert_zu_Schlagwort "
+				+ "SET Artikel_ID = ?, "
+					+ "Schlagwort = ? "
+				+ "WHERE Artikel_ID = ? AND "
+					+ "Schlagwort = ?");
+		updateArtikelSchlagwortStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Artikel_gehoert_zu_Schlagwort.Artikel_ID"))));
+		updateArtikelSchlagwortStatement.setString(2, String.valueOf(newData.get("Artikel_gehoert_zu_Schlagwort.Schlagwort")));
+		updateArtikelSchlagwortStatement.setInt(3, Integer.valueOf(String.valueOf(oldData.get("Artikel_gehoert_zu_Schlagwort.Artikel_ID"))));
+		updateArtikelSchlagwortStatement.setString(4, String.valueOf(oldData.get("Artikel_gehoert_zu_Schlagwort.Schlagwort")));
+		updateArtikelSchlagwortStatement.executeUpdate();
 	}
 
 	@Override
