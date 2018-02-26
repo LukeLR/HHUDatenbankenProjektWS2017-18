@@ -21,3 +21,11 @@ FROM (
 )
 JOIN Artikel
 ON 'Artikel2-Artikel_ID' = Artikel.Artikel_ID
+
+--simpler version: (above doesn't work)
+SELECT *
+FROM Artikel_empfiehlt_Artikel a
+JOIN Artikel a1
+ON a.Artikel_ID1 = a1.Artikel_ID
+JOIN Artikel a2
+ON a.Artikel_ID2 = a2.Artikel_ID
