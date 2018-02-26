@@ -1,10 +1,12 @@
 package de.hhu.cs.dbs.internship.project.table.warenkorb;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class AlleWarenkoerbe extends Table {
@@ -47,8 +49,25 @@ public class AlleWarenkoerbe extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updateWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Warenkorb "
+					+ "SET Bestelldatum = ?, "
+					+ "Bestellstatus = ?, "
+					+ "E_Mail_Adresse = ?, "
+					+ "Lieferdienst_Bezeichnung = ?, "
+					+ "Lieferdatum = ? "
+				+ "WHERE Warenkorb_ID = ?");
+		updateWarenkorbStatement.setString(1, String.valueOf(newData.get("Warenkorb.Bestelldatum")));
+		updateWarenkorbStatement.setString(2, String.valueOf(newData.get("Warenkorb.Bestellstatus")));
+		updateWarenkorbStatement.setString(3, String.valueOf(newData.get("Warenkorb.E_Mail_Adresse")));
+		updateWarenkorbStatement.setString(4, String.valueOf(newData.get("Warenkorb.Lieferdienst_Bezeichnung")));
+		updateWarenkorbStatement.setString(5, String.valueOf(newData.get("Warenkorb.Lieferdatum")));
+		updateWarenkorbStatement.setInt(6, Integer.valueOf(String.valueOf(oldData.get("Warenkorb.Warenkorb_ID"))));
+		updateWarenkorbStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Warenkorb.E_Mail_Adresse")));
 	}
 
 	@Override
