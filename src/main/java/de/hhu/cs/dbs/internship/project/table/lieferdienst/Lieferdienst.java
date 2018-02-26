@@ -48,7 +48,7 @@ public class Lieferdienst extends Table {
 				"INSERT INTO Lieferdienst (Lieferdienst_Bezeichnung, Versandkosten)"
 				+ "VALUES (?, ?)");
 		insertLieferdienstStatement.setString(1, String.valueOf(data.get("Lieferdienst.Lieferdienst_Bezeichnung")));
-		insertLieferdienstStatement.setFloat(2, Float.valueOf(String.valueOf(data.get("Lieferdienst.Versandkosten"))));
+		insertLieferdienstStatement.setDouble(2, Double.valueOf(String.valueOf(data.get("Lieferdienst.Versandkosten"))));
 		insertLieferdienstStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data,
@@ -66,9 +66,9 @@ public class Lieferdienst extends Table {
 				+ "WHERE Lieferdienst_Bezeichnung = ? AND "
 					+ "Versandkosten = ?");
 		updateLieferdienstStatement.setString(1, String.valueOf(newData.get("Lieferdienst.Lieferdienst_Bezeichnung")));
-		updateLieferdienstStatement.setFloat(2, Float.valueOf(String.valueOf(newData.get("Lieferdienst.Versandkosten"))));
+		updateLieferdienstStatement.setDouble(2, Double.valueOf(String.valueOf(newData.get("Lieferdienst.Versandkosten"))));
 		updateLieferdienstStatement.setString(1, String.valueOf(oldData.get("Lieferdienst.Lieferdienst_Bezeichnung")));
-		updateLieferdienstStatement.setFloat(2, Float.valueOf(String.valueOf(oldData.get("Lieferdienst.Versandkosten"))));
+		updateLieferdienstStatement.setDouble(2, Double.valueOf(String.valueOf(oldData.get("Lieferdienst.Versandkosten"))));
 		updateLieferdienstStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
