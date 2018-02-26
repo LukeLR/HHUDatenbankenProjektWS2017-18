@@ -15,6 +15,7 @@ import de.hhu.cs.dbs.internship.project.table.artikel.Angebot;
 import de.hhu.cs.dbs.internship.project.table.artikel.Artikel;
 import de.hhu.cs.dbs.internship.project.table.artikel.ArtikelempfiehltArtikel;
 import de.hhu.cs.dbs.internship.project.table.lieferdienst.Lieferdienst;
+import de.hhu.cs.dbs.internship.project.table.newsletter.ArtikelImNewsletter;
 import de.hhu.cs.dbs.internship.project.table.newsletter.Newsletter;
 import de.hhu.cs.dbs.internship.project.table.newsletter.Newsletterabo;
 import de.hhu.cs.dbs.internship.project.table.schlagwort.ArtikelGehoertZuSchlagwort;
@@ -70,6 +71,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 				
 				TreeItem<TableViewController> newsletter = GUIHelpers.addTableOfClassToTree(new Newsletter(), "Newsletter", treeItems);
 				GUIHelpers.addTableOfClassToTreeItem(new Newsletterabo(), "Newsletterabos", newsletter);
+				GUIHelpers.addTableOfClassToTreeItem(new ArtikelImNewsletter(), "Artikel im Newsletter", newsletter);
 				
 				TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new Warenkoerbe(), "Warenkörbe", treeItems);
 				GUIHelpers.addTableOfClassToTreeItem(new AngebotImWarenkorb(), "Angebote im Warenkorb", warenkorb);
