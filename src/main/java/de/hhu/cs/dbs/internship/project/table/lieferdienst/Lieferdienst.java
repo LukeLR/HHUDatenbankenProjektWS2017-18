@@ -32,7 +32,9 @@ public class Lieferdienst extends Table {
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
 		String selectQuery = "SELECT Lieferdienst_Bezeichnung, Versandkosten "
-				+ "FROM Lieferdienst";
+				+ "FROM Lieferdienst "
+				+ "WHERE Lieferdienst_Bezeichnung = '"
+				+ String.valueOf(data.get("Lieferdienst.Lieferdienst_Bezeichnung")) + "'";
 		
 		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
