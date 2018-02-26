@@ -57,7 +57,7 @@ public class ArtikelempfiehltArtikel extends Table {
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
 		PreparedStatement insertArtikelEmpfiehltArtikelStatement = Project.getInstance().getConnection().prepareStatement(
-				"INSERT INTO Artikel_empfiehlt_Artikel (Artikel_ID1, Artikel_ID2)"
+				"INSERT INTO Artikel_empfiehlt_Artikel (Artikel_ID1, Artikel_ID2) "
 				+ "VALUES (?, ?)");
 		insertArtikelEmpfiehltArtikelStatement.setInt
 			(1, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel1-Artikel_ID"))));
