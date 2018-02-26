@@ -47,7 +47,7 @@ public class Angebot extends Table {
 				"INSERT INTO Angebot (Angebots_ID, Artikel_ID, Preis) VALUES (NULL, ?, ?)");
 		insertAngebotStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot.Artikel_ID"))));
 		//TODO: Check for prices with decimals
-		insertAngebotStatement.setFloat(2, Float.valueOf(String.valueOf(data.get("Angebot.Preis"))));
+		insertAngebotStatement.setDouble(2, Double.valueOf(String.valueOf(data.get("Angebot.Preis"))));
 		insertAngebotStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Angebot.Artikel_ID")));
