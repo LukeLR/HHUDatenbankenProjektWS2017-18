@@ -82,8 +82,8 @@ public class AnbieterBietetAn extends Table {
 				+ "SET Anbieterbezeichnung = ?, "
 					+ "Angebots_ID = ?, "
 					+ "Bestand = ? "
-				+ "WHERE Anbieterbezeichnung = ?, "
-					+ "Angebots_ID = ?, "
+				+ "WHERE Anbieterbezeichnung = ? AND "
+					+ "Angebots_ID = ? AND "
 					+ "Bestand = ?");
 		updateAnbieterBietetAnStatement.setString(1, String.valueOf(newData.get("Anbieter_bietet_an.Anbieterbezeichnung")));
 		updateAnbieterBietetAnStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Anbieter_bietet_an.Angebots_ID"))));
@@ -105,8 +105,8 @@ public class AnbieterBietetAn extends Table {
 		
 		PreparedStatement deleteAnbieterBietetAnStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Anbieter_bietet_an "
-				+ "WHERE Anbieterbezeichnung = ?, "
-					+ "Angebots_ID = ?, "
+				+ "WHERE Anbieterbezeichnung = ? AND "
+					+ "Angebots_ID = ? AND "
 					+ "Bestand = ?");
 		deleteAnbieterBietetAnStatement.setString(1, String.valueOf(data.get("Anbieter_bietet_an.Anbieterbezeichnung")));
 		deleteAnbieterBietetAnStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Anbieter_bietet_an.Angebots_ID"))));
