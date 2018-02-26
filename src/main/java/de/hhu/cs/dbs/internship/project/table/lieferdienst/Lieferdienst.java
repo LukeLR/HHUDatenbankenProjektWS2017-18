@@ -76,8 +76,15 @@ public class Lieferdienst extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteLieferdienstStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Lieferdienst "
+				+ "WHERE Lieferdienstbezeichnung = ?");
+		deleteLieferdienstStatement.setString(1, String.valueOf(data.get("Lieferdienst.Lieferdienst_Bezeichnung")));
+		deleteLieferdienstStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Lieferdienst.Lieferdienst_Bezeichnung")));
 	}
 
 }
