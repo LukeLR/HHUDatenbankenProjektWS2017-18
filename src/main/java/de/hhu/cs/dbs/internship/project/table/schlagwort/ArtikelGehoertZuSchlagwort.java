@@ -71,6 +71,10 @@ public class ArtikelGehoertZuSchlagwort extends Table {
 		updateArtikelSchlagwortStatement.setInt(3, Integer.valueOf(String.valueOf(oldData.get("Artikel_gehoert_zu_Schlagwort.Artikel_ID"))));
 		updateArtikelSchlagwortStatement.setString(4, String.valueOf(oldData.get("Artikel_gehoert_zu_Schlagwort.Schlagwort")));
 		updateArtikelSchlagwortStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
+				String.valueOf(newData.get("Artikel_gehoert_zu_Schlagwort.Artikel_ID")) + "-"
+				+ String.valueOf(newData.get("Artikel_gehoert_zu_Schlagwort.Schlagwort")));
 	}
 
 	@Override
