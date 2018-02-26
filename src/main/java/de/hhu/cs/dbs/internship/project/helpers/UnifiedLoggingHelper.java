@@ -25,6 +25,11 @@ public class UnifiedLoggingHelper {
 		logger.info("Trying to get Data for Dataset " + data.toString() + " in table " + tableName + ".");
 	}
 	
+	public static void logSelectDone(String tableName, Data data, String selectQuery) {
+		Logger logger = Logger.getLogger(tableName);
+		logger.info("Returned the following Query for select on " + tableName + ":\n" + selectQuery);
+	}
+	
 	public static void logInsert(String tableName, Data data) {
 		Logger logger = Logger.getLogger(tableName);
 		logger.info("Trying to insert new Dataset with data: " + data.toString() + " in table " + tableName + ".");
