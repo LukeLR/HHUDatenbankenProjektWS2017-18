@@ -1,10 +1,12 @@
 package de.hhu.cs.dbs.internship.project.table.artikel;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class ArtikelempfiehltArtikel extends Table {
@@ -52,8 +54,20 @@ public class ArtikelempfiehltArtikel extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
+		
+		PreparedStatement insertArtikelEmpfiehltArtikelStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Artikel_empfiehlt_Artikel (Artikel_ID1, Artikel_ID2)"
+				+ "VALUES (?, ?)");
+		insertArtikelEmpfiehltArtikelStatement.setInt
+			(1, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel1-Artikel_ID"))));
+		insertArtikelEmpfiehltArtikelStatement.setInt
+			(2, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel2-Artikel_ID"))));
+		insertArtikelEmpfiehltArtikelStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Artikel.Artikel1-Artikel_ID")) + "-"
+				+ String.valueOf(data.get("Artikel.Artikel2-Artikel_ID")));
 	}
 
 	@Override
