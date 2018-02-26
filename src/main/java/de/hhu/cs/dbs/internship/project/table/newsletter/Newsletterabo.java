@@ -41,7 +41,7 @@ public class Newsletterabo extends Table {
 		String selectQuery = "SELECT E_Mail_Adresse, Newsletter_ID "
 				+ "FROM Newsletterabo "
 				+ "WHERE E_Mail_Adresse = '"
-				+ String.valueOf(data.get("Newsletterabo.E_Mail_Adresse"))
+				+ String.valueOf(data.get("Newsletterabo.Abonnent"))
 				+ "' AND Newsletter_ID = '"
 				+ String.valueOf(data.get("Newsletterabo.Newsletter_ID")) + "'";
 		
