@@ -26,8 +26,16 @@ public class ArtikelGehoertZuSchlagwort extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
+		
+		String selectQuery = "SELECT Artikel_ID, Schlagwort FROM Artikel_gehort_zu_Schlagwort "
+				+ "WHERE Artikel_ID = '"
+				+ String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Artikel_ID"))
+				+ "' AND Schlagwort = '"
+				+ String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Schlagwort")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
+		return selectQuery;
 	}
 
 	@Override
