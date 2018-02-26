@@ -10,6 +10,7 @@ import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import de.hhu.cs.dbs.internship.project.table.account.Angestellter;
 import de.hhu.cs.dbs.internship.project.table.account.Premiumkunde;
 import de.hhu.cs.dbs.internship.project.table.artikel.Anbieter;
+import de.hhu.cs.dbs.internship.project.table.artikel.AnbieterBietetAn;
 import de.hhu.cs.dbs.internship.project.table.artikel.Angebot;
 import de.hhu.cs.dbs.internship.project.table.artikel.Artikel;
 import de.hhu.cs.dbs.internship.project.table.artikel.ArtikelempfiehltArtikel;
@@ -61,6 +62,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 				TreeItem<TableViewController> artikel = GUIHelpers.addTableOfClassToTree(new Artikel(), "Artikel", treeItems);
 				GUIHelpers.addTableOfClassToTreeItem(new Anbieter(), "Anbieter", artikel);
 				GUIHelpers.addTableOfClassToTreeItem(new Angebot(), "Angebote", artikel);
+				GUIHelpers.addTableOfClassToTreeItem(new AnbieterBietetAn(), "Anbieter bietet an", artikel);
 				GUIHelpers.addTableOfClassToTreeItem(new ArtikelempfiehltArtikel(), "Artikelempfehlungen", artikel);
 				
 				GUIHelpers.addTableOfClassToTree(new Lieferdienst(), "Lieferdienste", treeItems);
