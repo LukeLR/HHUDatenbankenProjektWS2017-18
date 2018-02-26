@@ -101,8 +101,22 @@ public class AnbieterBietetAn extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteAnbieterBietetAnStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Anbieter_bietet_an "
+				+ "WHERE Anbieterbezeichnung = ?, "
+					+ "Angebots_ID = ?, "
+					+ "Bestand = ?");
+		deleteAnbieterBietetAnStatement.setString(1, String.valueOf(data.get("Anbieter_bietet_an.Anbieterbezeichnung")));
+		deleteAnbieterBietetAnStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Anbieter_bietet_an.Angebots_ID"))));
+		deleteAnbieterBietetAnStatement.setInt(3, Integer.valueOf(String.valueOf(data.get("Anbieter_bietet_an.Bestand"))));
+		deleteAnbieterBietetAnStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Anbieter_bietet_an.Anbieterbezeichnung")) + "-"
+				+ String.valueOf(data.get("Anbieter_bietet_an.Angebots_ID")) + "-"
+				+ String.valueOf(data.get("Anbieter_bietet_an.Bestand")));
 	}
 
 }
