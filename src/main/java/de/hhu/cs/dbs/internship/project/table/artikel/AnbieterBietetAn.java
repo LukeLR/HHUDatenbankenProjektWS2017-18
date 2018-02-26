@@ -47,7 +47,8 @@ public class AnbieterBietetAn extends Table {
 		String selectQuery = "SELECT Anbieterbezeichnung, Angebots_ID, Bestand "
 				+ "FROM Anbieter_bietet_an "
 				+ "WHERE Anbieterbezeichnung = '" + String.valueOf(data.get("Anbieter_bietet_an.Anbieterbezeichnung"))
-				+ "' AND Angebots_ID = '" + String.valueOf(data.get("Anbieter_bietet_an.Angebots_ID"));
+				+ "' AND Angebots_ID = '" + String.valueOf(data.get("Anbieter_bietet_an.Angebots_ID")) + "'";
+		
 		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
 	}
