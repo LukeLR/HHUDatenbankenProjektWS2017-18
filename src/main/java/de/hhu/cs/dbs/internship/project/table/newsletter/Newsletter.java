@@ -15,7 +15,7 @@ public class Newsletter extends Table {
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
-		String selectQuery = "SELECT Betreff, Text, Newsletter_ID, E_Mail_Adresse "
+		String selectQuery = "SELECT Betreff, Text, Datum, Newsletter_ID, E_Mail_Adresse "
 				+ "FROM Newsletter";
 		
 		if (filter != null && !filter.isEmpty()) {
