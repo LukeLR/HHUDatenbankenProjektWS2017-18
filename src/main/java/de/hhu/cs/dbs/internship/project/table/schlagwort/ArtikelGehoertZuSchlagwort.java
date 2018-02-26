@@ -79,8 +79,19 @@ public class ArtikelGehoertZuSchlagwort extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteArtikelSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Artikel_gehoert_zu_Schlagwort "
+				+ "WHERE Artikel_ID = ? AND "
+					+ "Schlagwort = ?");
+		deleteArtikelSchlagwortStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Artikel_ID"))));
+		deleteArtikelSchlagwortStatement.setString(2, String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Schlagwort")));
+		deleteArtikelSchlagwortStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Artikel_ID")) + "-"
+				+ String.valueOf(data.get("Artikel_gehoert_zu_Schlagwort.Schlagwort")));
 	}
 
 }
