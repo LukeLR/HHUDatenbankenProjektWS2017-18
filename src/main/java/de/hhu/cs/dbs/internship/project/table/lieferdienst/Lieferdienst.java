@@ -50,7 +50,7 @@ public class Lieferdienst extends Table {
 		insertLieferdienstStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data,
-				String.valueOf(data.get("Lieferdienst.Lieferdienst_Bezeichnung"));
+				String.valueOf(data.get("Lieferdienst.Lieferdienst_Bezeichnung")));
 	}
 
 	@Override
