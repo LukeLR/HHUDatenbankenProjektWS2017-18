@@ -13,7 +13,16 @@ public class ArtikelempfiehltArtikel extends Table {
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
-		String selectQuery = "SELECT * "
+		String selectQuery =
+				"SELECT "
+						+ "artikel1.Bezeichnung AS 'Artikel1-Bezeichnung', "
+						+ "artikel1.Beschreibung AS 'Artikel1-Beschreibung', "
+						+ "artikel1.Bild AS 'Artikel1-Bild', "
+						+ "artikel1.Artikel_ID AS 'Artikel1-Artikel_ID', "
+						+ "artikel2.Artikel_ID AS 'Artikel2-Artikel_ID', "
+						+ "artikel2.Bezeichnung AS 'Artikel2-Bezeichnung', "
+						+ "artikel2.Beschreibung AS 'Artikel2-Beschreibung', "
+						+ "artikel2.Bild AS 'Artikel2-Bild'"
 				+ "FROM Artikel_empfiehlt_Artikel empfiehlt "
 				+ "JOIN Artikel artikel1 "
 				+ "ON empfiehlt.Artikel_ID1 = artikel1.Artikel_ID "
