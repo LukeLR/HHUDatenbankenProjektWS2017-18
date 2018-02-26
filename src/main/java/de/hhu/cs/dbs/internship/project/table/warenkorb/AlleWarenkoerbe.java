@@ -40,8 +40,9 @@ public class AlleWarenkoerbe extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		throw new SQLException("Das Anlegen von Warenkörben ist in der 'Alle Warenkörbe'-Ansicht "
+				+ "nicht vorgesehen! Jeder Kunde kann seine eigenen Warenkörbe in der Ansicht "
+				+ "'Warenkörbe' bearbeiten.");
 	}
 
 	@Override
