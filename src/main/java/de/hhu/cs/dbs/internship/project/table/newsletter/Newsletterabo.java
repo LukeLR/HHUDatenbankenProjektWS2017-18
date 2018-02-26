@@ -88,8 +88,19 @@ public class Newsletterabo extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteNewsletteraboStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Newsletterabo "
+				+ "WHERE E_Mail_Adresse = ? AND "
+					+ "Newsletter_ID = ?");
+		deleteNewsletteraboStatement.setString(3, String.valueOf(data.get("Newsletterabo.E_Mail_Adresse")));
+		deleteNewsletteraboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Newsletter.Newsletter_ID"))));
+		deleteNewsletteraboStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Newsletterabo.E_Mail_Adresse")) + "-" +
+				String.valueOf(data.get("Newsletter.Newsletter_ID")));
 	}
 
 }
