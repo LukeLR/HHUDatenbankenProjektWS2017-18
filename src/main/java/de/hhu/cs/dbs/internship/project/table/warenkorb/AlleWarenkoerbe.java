@@ -42,9 +42,7 @@ public class AlleWarenkoerbe extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		throw new SQLException("Das Anlegen von Warenkörben ist in der 'Alle Warenkörbe'-Ansicht "
-				+ "nicht vorgesehen! Jeder Kunde kann seine eigenen Warenkörbe in der Ansicht "
-				+ "'Warenkörbe' bearbeiten.");
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 	}
 
 	@Override
