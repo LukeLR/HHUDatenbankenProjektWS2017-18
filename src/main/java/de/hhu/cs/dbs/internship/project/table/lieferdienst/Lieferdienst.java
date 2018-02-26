@@ -55,8 +55,23 @@ public class Lieferdienst extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updateLieferdienstStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Lieferdienst "
+				+ "SET Lieferdienst_Bezeichnung = ?, "
+					+ "Versandkosten = ? "
+				+ "WHERE Lieferdienstbezeichnung = ? AND "
+					+ "Versandkosten = ?");
+		updateLieferdienstStatement.setString(1, String.valueOf(newData.get("Lieferdienst.Lieferdienst_Bezeichnung")));
+		updateLieferdienstStatement.setFloat(2, Float.valueOf(String.valueOf(newData.get("Lieferdienst.Versandkosten"))));
+		updateLieferdienstStatement.setString(1, String.valueOf(oldData.get("Lieferdienst.Lieferdienst_Bezeichnung")));
+		updateLieferdienstStatement.setFloat(2, Float.valueOf(String.valueOf(oldData.get("Lieferdienst.Versandkosten"))));
+		updateLieferdienstStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
+				String.valueOf(newData.get("Lieferdienst.Lieferdienst_Bezeichnung")));
+		
 	}
 
 	@Override
