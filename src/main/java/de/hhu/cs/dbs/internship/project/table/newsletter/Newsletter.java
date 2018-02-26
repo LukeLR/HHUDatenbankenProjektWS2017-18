@@ -1,10 +1,12 @@
 package de.hhu.cs.dbs.internship.project.table.newsletter;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class Newsletter extends Table {
@@ -40,8 +42,17 @@ public class Newsletter extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
+		
+		PreparedStatement insertNewsletterStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Newsletter (Betreff, Text, Newsletter_ID, E_Mail_Adresse) "
+				+ "VALUES (?, ?, NULL, ?)");
+		insertNewsletterStatement.setString(1, String.valueOf(data.get("Newsletter.Betreff")));
+		insertNewsletterStatement.setString(2, String.valueOf(data.get("Newsletter.Text")));
+		insertNewsletterStatement.setString(3, String.valueOf(data.get("Newsletter.E_Mail_Adresse")));
+		insertNewsletterStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Newsletter.Betreff")));
 	}
 
 	@Override
