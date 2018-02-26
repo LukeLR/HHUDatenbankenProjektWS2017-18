@@ -67,8 +67,8 @@ public class Lieferdienst extends Table {
 					+ "Versandkosten = ?");
 		updateLieferdienstStatement.setString(1, String.valueOf(newData.get("Lieferdienst.Lieferdienst_Bezeichnung")));
 		updateLieferdienstStatement.setDouble(2, Double.valueOf(String.valueOf(newData.get("Lieferdienst.Versandkosten"))));
-		updateLieferdienstStatement.setString(1, String.valueOf(oldData.get("Lieferdienst.Lieferdienst_Bezeichnung")));
-		updateLieferdienstStatement.setDouble(2, Double.valueOf(String.valueOf(oldData.get("Lieferdienst.Versandkosten"))));
+		updateLieferdienstStatement.setString(3, String.valueOf(oldData.get("Lieferdienst.Lieferdienst_Bezeichnung")));
+		updateLieferdienstStatement.setDouble(4, Double.valueOf(String.valueOf(oldData.get("Lieferdienst.Versandkosten"))));
 		updateLieferdienstStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
