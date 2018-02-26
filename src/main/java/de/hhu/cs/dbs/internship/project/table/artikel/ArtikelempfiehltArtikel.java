@@ -94,8 +94,20 @@ public class ArtikelempfiehltArtikel extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteArtikelEmpfiehltArtikelStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Artikel_empfiehlt_Artikel "
+				+ "WHERE Artikel_ID1 = ? AND Artikel_ID2 = ?");
+		deleteArtikelEmpfiehltArtikelStatement.setInt
+			(1, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel1-Artikel_ID"))));
+		deleteArtikelEmpfiehltArtikelStatement.setInt
+			(2, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel2-Artikel_ID"))));
+		deleteArtikelEmpfiehltArtikelStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Artikel.Artikel1-Artikel_ID")) + "-"
+				+ String.valueOf(data.get("Artikel.Artikel2-Artikel_ID")));
 	}
 
 }
