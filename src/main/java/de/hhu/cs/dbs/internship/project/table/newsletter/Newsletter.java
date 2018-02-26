@@ -76,8 +76,15 @@ public class Newsletter extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteNewsletterStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Newsletter "
+				+ "WHERE Newsletter_ID = ?");
+		deleteNewsletterStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Newsletter.Newsletter_ID"))));
+		deleteNewsletterStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Newsletter.Newsletter_ID")));
 	}
 
 }
