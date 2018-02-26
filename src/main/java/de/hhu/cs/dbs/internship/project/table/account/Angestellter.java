@@ -24,6 +24,7 @@ public class Angestellter extends Table {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " WHERE E_Mail_Adresse LIKE '%" + filter + "%'";
 		}
+		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
 

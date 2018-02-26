@@ -18,6 +18,7 @@ public class Account extends Table {
 				+ "Strasse AS 'Straße', Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
 				+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '" 
 				+ Project.getInstance().getData().get("email") + "'";
+		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
 

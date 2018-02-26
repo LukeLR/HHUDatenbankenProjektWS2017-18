@@ -21,6 +21,7 @@ public class AlleAccounts extends Table {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " AND Kunde.E_Mail_Adresse LIKE '%" + filter + "%'";
 		}
+		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
 

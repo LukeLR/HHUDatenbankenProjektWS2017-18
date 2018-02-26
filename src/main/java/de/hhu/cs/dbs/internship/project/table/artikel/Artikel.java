@@ -22,6 +22,7 @@ public class Artikel extends Table {
 			selectQuery += " WHERE Bezeichnung LIKE '%" + filter + "%' "
 					+ "OR Beschreibung LIKE '%" + filter + "%'";
 		}
+		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
 

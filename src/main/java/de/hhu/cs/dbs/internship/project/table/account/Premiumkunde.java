@@ -23,6 +23,7 @@ public class Premiumkunde extends Table {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " AND E_Mail_Adresse LIKE '%" + filter + "%'";
 		}
+		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
 

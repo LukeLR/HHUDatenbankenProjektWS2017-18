@@ -37,7 +37,6 @@ public class ArtikelempfiehltArtikel extends Table {
 					+ "artikel2.Bezeichnung LIKE '%" + filter + "%'";
 		}
 		
-		//TODO: Use UnifiedLoggingHelper.logShowDone on other Tables
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}

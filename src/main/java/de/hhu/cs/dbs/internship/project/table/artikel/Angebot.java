@@ -23,6 +23,7 @@ public class Angebot extends Table {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " WHERE Bezeichnung LIKE '%" + filter + "%'";
 		}
+		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
 
