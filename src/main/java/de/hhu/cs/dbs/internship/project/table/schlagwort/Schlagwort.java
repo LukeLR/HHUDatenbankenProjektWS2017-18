@@ -65,8 +65,14 @@ public class Schlagwort extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Schlagwort WHERE Schlagwort = ?");
+		deleteSchlagwortStatement.setString(1, String.valueOf(data.get("Schlagwort.Schlagwort")));
+		deleteSchlagwortStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Schlagwort.Schlagwort")));
 	}
 
 }
