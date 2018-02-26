@@ -57,12 +57,12 @@ public class Newsletterabo extends Table {
 				"INSERT INTO Newsletterabo (E_Mail_Adresse, Newsletter_ID) "
 				+ "VALUES (?, ?)");
 		insertNewsletteraboStatement.setString(1, String.valueOf(data.get("Newsletterabo.E_Mail_Adresse")));
-		insertNewsletteraboStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Newsletter.Newsletter_ID"))));
+		insertNewsletteraboStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Newsletterabo.Newsletter_ID"))));
 		insertNewsletteraboStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data,
 				String.valueOf(data.get("Newsletterabo.E_Mail_Adresse")) + "-" +
-				String.valueOf(data.get("Newsletter.Newsletter_ID")));
+				String.valueOf(data.get("Newsletterabo.Newsletter_ID")));
 	}
 
 	@Override
@@ -76,14 +76,14 @@ public class Newsletterabo extends Table {
 				+ "WHERE E_Mail_Adresse = ? AND "
 					+ "Newsletter_ID = ?");
 		updateNewsletteraboStatement.setString(1, String.valueOf(newData.get("Newsletterabo.E_Mail_Adresse")));
-		updateNewsletteraboStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Newsletter.Newsletter_ID"))));
+		updateNewsletteraboStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Newsletterabo.Newsletter_ID"))));
 		updateNewsletteraboStatement.setString(3, String.valueOf(oldData.get("Newsletterabo.E_Mail_Adresse")));
-		updateNewsletteraboStatement.setInt(4, Integer.valueOf(String.valueOf(oldData.get("Newsletter.Newsletter_ID"))));
+		updateNewsletteraboStatement.setInt(4, Integer.valueOf(String.valueOf(oldData.get("Newsletterabo.Newsletter_ID"))));
 		updateNewsletteraboStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
 				String.valueOf(newData.get("Newsletterabo.E_Mail_Adresse")) + "-" +
-				String.valueOf(newData.get("Newsletter.Newsletter_ID")));
+				String.valueOf(newData.get("Newsletterabo.Newsletter_ID")));
 	}
 
 	@Override
@@ -95,12 +95,12 @@ public class Newsletterabo extends Table {
 				+ "WHERE E_Mail_Adresse = ? AND "
 					+ "Newsletter_ID = ?");
 		deleteNewsletteraboStatement.setString(3, String.valueOf(data.get("Newsletterabo.E_Mail_Adresse")));
-		deleteNewsletteraboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Newsletter.Newsletter_ID"))));
+		deleteNewsletteraboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Newsletterabo.Newsletter_ID"))));
 		deleteNewsletteraboStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
 				String.valueOf(data.get("Newsletterabo.E_Mail_Adresse")) + "-" +
-				String.valueOf(data.get("Newsletter.Newsletter_ID")));
+				String.valueOf(data.get("Newsletterabo.Newsletter_ID")));
 	}
 
 }
