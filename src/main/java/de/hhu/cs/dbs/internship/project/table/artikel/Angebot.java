@@ -60,7 +60,7 @@ public class Angebot extends Table {
 		PreparedStatement updateAngebotStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Angebot SET Artikel_ID = ?, Preis = ? WHERE Angebots_ID = ?");
 		updateAngebotStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Angebot.Artikel_ID"))));
-		updateAngebotStatement.setLong(2, Long.valueOf(String.valueOf(newData.get("Angebot.Preis"))));
+		updateAngebotStatement.setDouble(2, Double.valueOf(String.valueOf(newData.get("Angebot.Preis"))));
 		updateAngebotStatement.setInt(3, Integer.valueOf(String.valueOf(oldData.get("Angebot.Angebots_ID"))));
 		updateAngebotStatement.executeUpdate();
 		
