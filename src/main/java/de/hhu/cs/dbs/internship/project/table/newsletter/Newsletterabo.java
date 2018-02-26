@@ -34,8 +34,17 @@ public class Newsletterabo extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
+		
+		String selectQuery = "SELECT E_Mail_Adresse, Newsletter_ID "
+				+ "FROM Newsletterabo "
+				+ "WHERE E_Mail_Adresse = '"
+				+ String.valueOf(data.get("Newsletterabo.E_Mail_Adresse"))
+				+ "' AND Newsletter_ID = '"
+				+ String.valueOf(data.get("Newsletterabo.Newsletter_ID")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
+		return selectQuery;
 	}
 
 	@Override
