@@ -75,8 +75,28 @@ public class AnbieterBietetAn extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updateAnbieterBietetAnStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Anbieter_bietet_an "
+				+ "SET Anbieterbezeichnung = ?, "
+					+ "Angebots_ID = ?, "
+					+ "Bestand = ? "
+				+ "WHERE Anbieterbezeichnung = ?, "
+					+ "Angebots_ID = ?, "
+					+ "Bestand = ?");
+		updateAnbieterBietetAnStatement.setString(1, String.valueOf(newData.get("Anbieter_bietet_an.Anbieterbezeichnung")));
+		updateAnbieterBietetAnStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Anbieter_bietet_an.Angebots_ID"))));
+		updateAnbieterBietetAnStatement.setInt(3, Integer.valueOf(String.valueOf(newData.get("Anbieter_bietet_an.Bestand"))));
+		updateAnbieterBietetAnStatement.setString(4, String.valueOf(oldData.get("Anbieter_bietet_an.Anbieterbezeichnung")));
+		updateAnbieterBietetAnStatement.setInt(5, Integer.valueOf(String.valueOf(oldData.get("Anbieter_bietet_an.Angebots_ID"))));
+		updateAnbieterBietetAnStatement.setInt(6, Integer.valueOf(String.valueOf(oldData.get("Anbieter_bietet_an.Bestand"))));
+		updateAnbieterBietetAnStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
+				String.valueOf(newData.get("Anbieter_bietet_an.Anbieterbezeichnung")) + "-"
+				+ String.valueOf(newData.get("Anbieter_bietet_an.Angebots_ID")) + "-"
+				+ String.valueOf(newData.get("Anbieter_bietet_an.Bestand")));
 	}
 
 	@Override
