@@ -1,10 +1,12 @@
 package de.hhu.cs.dbs.internship.project.table.artikel;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class AnbieterBietetAn extends Table {
@@ -55,8 +57,20 @@ public class AnbieterBietetAn extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
+		
+		PreparedStatement insertAnbieterBietetAnStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Anbieter_bietet_an (Anbieterbezeichnung, Angebots_ID, Bestand) "
+				+ "VALUES (?, ?, ?)");
+		insertAnbieterBietetAnStatement.setString(1, String.valueOf(data.get("Anbieter_bietet_an.Anbieterbezeichnung")));
+		insertAnbieterBietetAnStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Anbieter_bietet_an.Angebots_ID"))));
+		insertAnbieterBietetAnStatement.setInt(3, Integer.valueOf(String.valueOf(data.get("Anbieter_bietet_an.Bestand"))));
+		insertAnbieterBietetAnStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Anbieter_bietet_an.Anbieterbezeichnung")) + "-"
+				+ String.valueOf(data.get("Anbieter_bietet_an.Angebots_ID")) + "-"
+				+ String.valueOf(data.get("Anbieter_bietet_an.Bestand")));
 	}
 
 	@Override
