@@ -57,8 +57,21 @@ public class Newsletter extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updateNewsletterStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Newsletter "
+				+ "SET Betreff = ?, "
+					+ "Text = ?, "
+					+ "E_Mail_Adresse = ? "
+				+ "WHERE Newsletter_ID = ?");
+		updateNewsletterStatement.setString(1, String.valueOf(newData.get("Newsletter.Betreff")));
+		updateNewsletterStatement.setString(2, String.valueOf(newData.get("Newsletter.Text")));
+		updateNewsletterStatement.setString(3, String.valueOf(newData.get("Newsletter.E_Mail_Adresse")));
+		updateNewsletterStatement.setInt(4, Integer.valueOf(String.valueOf(oldData.get("Newsletter.Newsletter_ID"))));
+		updateNewsletterStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Newsletter.Betreff")));
 	}
 
 	@Override
