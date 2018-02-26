@@ -10,6 +10,11 @@ public class UnifiedLoggingHelper {
 		logger.info("Showing " + tableName + ".");
 	}
 	
+	public static void logShowDone(String tableName, String query) {
+		Logger logger = Logger.getLogger(tableName);
+		logger.info("Returned the following Query for show on " + tableName + ":\n" + query);
+	}
+	
 	public static void logFilter(String tableName, String filter) {
 		Logger logger = Logger.getLogger(tableName);
 		logger.info("Searching for " + filter + " in " + tableName + " table.");
