@@ -1,10 +1,12 @@
 package de.hhu.cs.dbs.internship.project.table.schlagwort;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class Schlagwort extends Table {
@@ -38,8 +40,14 @@ public class Schlagwort extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
+		
+		PreparedStatement insertSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Schlagwort (Schlagwort) VALUES (?)");
+		insertSchlagwortStatement.setString(1, String.valueOf(data.get("Schlagwort.Schlagwort")));
+		insertSchlagwortStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Schlagwort.Schlagwort")));
 	}
 
 	@Override
