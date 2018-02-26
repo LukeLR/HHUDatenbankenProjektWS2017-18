@@ -94,12 +94,12 @@ public class Newsletterabo extends Table {
 				"DELETE FROM Newsletterabo "
 				+ "WHERE E_Mail_Adresse = ? AND "
 					+ "Newsletter_ID = ?");
-		deleteNewsletteraboStatement.setString(3, String.valueOf(data.get("Newsletterabo.E_Mail_Adresse")));
-		deleteNewsletteraboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Newsletterabo.Newsletter_ID"))));
+		deleteNewsletteraboStatement.setString(1, String.valueOf(data.get("Newsletterabo.Abonnent")));
+		deleteNewsletteraboStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Newsletterabo.Newsletter_ID"))));
 		deleteNewsletteraboStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
-				String.valueOf(data.get("Newsletterabo.E_Mail_Adresse")) + "-" +
+				String.valueOf(data.get("Newsletterabo.Abonnent")) + "-" +
 				String.valueOf(data.get("Newsletterabo.Newsletter_ID")));
 	}
 
