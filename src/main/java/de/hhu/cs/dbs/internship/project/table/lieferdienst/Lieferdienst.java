@@ -61,7 +61,7 @@ public class Lieferdienst extends Table {
 				"UPDATE Lieferdienst "
 				+ "SET Lieferdienst_Bezeichnung = ?, "
 					+ "Versandkosten = ? "
-				+ "WHERE Lieferdienstbezeichnung = ? AND "
+				+ "WHERE Lieferdienst_Bezeichnung = ? AND "
 					+ "Versandkosten = ?");
 		updateLieferdienstStatement.setString(1, String.valueOf(newData.get("Lieferdienst.Lieferdienst_Bezeichnung")));
 		updateLieferdienstStatement.setFloat(2, Float.valueOf(String.valueOf(newData.get("Lieferdienst.Versandkosten"))));
@@ -80,7 +80,7 @@ public class Lieferdienst extends Table {
 		
 		PreparedStatement deleteLieferdienstStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Lieferdienst "
-				+ "WHERE Lieferdienstbezeichnung = ?");
+				+ "WHERE Lieferdienst_Bezeichnung = ?");
 		deleteLieferdienstStatement.setString(1, String.valueOf(data.get("Lieferdienst.Lieferdienst_Bezeichnung")));
 		deleteLieferdienstStatement.executeUpdate();
 		
