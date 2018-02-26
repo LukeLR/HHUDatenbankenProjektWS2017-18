@@ -35,14 +35,19 @@ public class ArtikelempfiehltArtikel extends Table {
 					+ "artikel2.Bezeichnung LIKE '%" + filter + "%'";
 		}
 		
+		//TODO: Use UnifiedLoggingHelper.logShowDone on other Tables
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
+		
+		String selectQuery = "SELECT Artikel_ID1, Artikel_ID2 FROM Artikel_empfiehlt_Artikel "
+				+ "WHERE Artikel_ID1 = '" + String.valueOf(data.get("Artikel1-Artikel_ID")) + "' "
+				+ "AND Artikel_ID2 = '" + String.valueOf(data.get("Artikel2-Artikel_ID"));
+		return selectQuery;
 	}
 
 	@Override
