@@ -1,10 +1,12 @@
 package de.hhu.cs.dbs.internship.project.table.lieferdienst;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class Lieferdienst extends Table {
@@ -38,8 +40,17 @@ public class Lieferdienst extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
+		
+		PreparedStatement insertLieferdienstStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Lieferdienst (Lieferdienst_Bezeichnung, Versandkosten)"
+				+ "VALUES (?, ?)");
+		insertLieferdienstStatement.setString(1, String.valueOf(data.get("Lieferdienst.Lieferdienst_Bezeichnung")));
+		insertLieferdienstStatement.setFloat(2, Float.valueOf(String.valueOf(data.get("Lieferdienst.Versandkosten"))));
+		insertLieferdienstStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Lieferdienst.Lieferdienst_Bezeichnung"));
 	}
 
 	@Override
