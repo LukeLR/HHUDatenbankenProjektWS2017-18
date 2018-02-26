@@ -5,12 +5,24 @@ import java.sql.SQLException;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
+
 public class Lieferdienst extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logShow(this.getClass().getName());
+		
+		String selectQuery = "SELECT Lieferdienst_Bezeichnung, Versandkosten "
+				+ "FROM Lieferdienst";
+		
+		if (filter != null && !filter.isEmpty()) {
+			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
+			selectQuery += " WHERE Lieferdienst_Bezeichnung LIKE '%" + filter + "%'";
+		}
+		
+		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
+		return selectQuery;
 	}
 
 	@Override
