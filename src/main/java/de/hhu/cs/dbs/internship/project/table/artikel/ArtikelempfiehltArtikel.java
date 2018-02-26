@@ -100,14 +100,14 @@ public class ArtikelempfiehltArtikel extends Table {
 				"DELETE FROM Artikel_empfiehlt_Artikel "
 				+ "WHERE Artikel_ID1 = ? AND Artikel_ID2 = ?");
 		deleteArtikelEmpfiehltArtikelStatement.setInt
-			(1, Integer.valueOf(String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel_ID1"))));
+			(1, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel1-Artikel_ID"))));
 		deleteArtikelEmpfiehltArtikelStatement.setInt
-			(2, Integer.valueOf(String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel_ID2"))));
+			(2, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel2-Artikel_ID"))));
 		deleteArtikelEmpfiehltArtikelStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
-				String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel_ID1")) + "-"
-				+ String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel_ID2")));
+				String.valueOf(data.get("Artikel.Artikel1-Artikel_ID")) + "-"
+				+ String.valueOf(data.get("Artikel.Artikel2-Artikel_ID")));
 	}
 
 }
