@@ -31,8 +31,8 @@ public class ArtikelempfiehltArtikel extends Table {
 		
 		if (filter != null && !filter.isEmpty()) {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
-			selectQuery += " WHERE 'Artikel1-Bezeichnung' LIKE '%" + filter + "%' OR "
-					+ "'Artikel2-Bezeichnung' LIKE '%" + filter + "%'";
+			selectQuery += " WHERE artikel1.Bezeichnung LIKE '%" + filter + "%' OR "
+					+ "artikel2.Bezeichnung LIKE '%" + filter + "%'";
 		}
 		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
