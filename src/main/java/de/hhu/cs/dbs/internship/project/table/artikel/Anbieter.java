@@ -21,6 +21,7 @@ public class Anbieter extends Table {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " WHERE Anbieterbezeichnung LIKE '%" + filter + "%'";
 		}
+		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
@@ -31,6 +32,8 @@ public class Anbieter extends Table {
 		
 		String selectQuery = "SELECT * FROM Anbieter "
 				+ "WHERE Anbieterbezeichnung = '" +	String.valueOf(data.get("Anbieter.Anbieterbezeichnung")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
 	}
 

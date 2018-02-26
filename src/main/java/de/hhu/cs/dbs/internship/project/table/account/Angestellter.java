@@ -24,6 +24,7 @@ public class Angestellter extends Table {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " WHERE E_Mail_Adresse LIKE '%" + filter + "%'";
 		}
+		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
@@ -34,6 +35,8 @@ public class Angestellter extends Table {
 		
 		String selectQuery = "SELECT * FROM Angestellter "
 				+ "WHERE E_Mail_Adresse = '" + String.valueOf(data.get("Kunde.E_Mail_Adresse")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
 	}
 

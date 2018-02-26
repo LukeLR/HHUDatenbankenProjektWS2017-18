@@ -15,6 +15,7 @@ public class Premiumkunde extends Table {
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
+		
 		String selectQuery = "SELECT * FROM (SELECT Ablaufdatum, Studierendenausweis, Kunde.E_Mail_Adresse, "
 				+ "Vorname, Nachname, Passwort, Adressen_ID AS 'AID' FROM Premiumkunde "
 				+ "JOIN Kunde ON Premiumkunde.E_Mail_Adresse = Kunde.E_Mail_Adresse) "
@@ -23,6 +24,7 @@ public class Premiumkunde extends Table {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " AND E_Mail_Adresse LIKE '%" + filter + "%'";
 		}
+		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
@@ -30,8 +32,11 @@ public class Premiumkunde extends Table {
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
+		
 		String selectQuery = "SELECT * FROM Premiumkunde "
 				+ "WHERE E_Mail_Adresse = '" + String.valueOf(data.get("Kunde.E_Mail_Adresse")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
 	}
 

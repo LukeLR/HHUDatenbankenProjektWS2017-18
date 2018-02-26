@@ -48,6 +48,8 @@ public class ArtikelempfiehltArtikel extends Table {
 		String selectQuery = "SELECT Artikel_ID1, Artikel_ID2 FROM Artikel_empfiehlt_Artikel "
 				+ "WHERE Artikel_ID1 = '" + String.valueOf(data.get("Artikel.Artikel1-Artikel_ID")) + "' "
 				+ "AND Artikel_ID2 = '" + String.valueOf(data.get("Artikel.Artikel2-Artikel_ID")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
 	}
 

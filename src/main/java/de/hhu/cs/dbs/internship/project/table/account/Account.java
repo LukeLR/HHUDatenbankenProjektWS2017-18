@@ -14,10 +14,12 @@ public class Account extends Table {
 	@Override
 	public String getSelectQueryForTableWithFilter(String s) throws SQLException {
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
+		
 		String selectQuery = "SELECT E_Mail_Adresse AS 'E-Mail-Adresse', Vorname, Nachname, "
 				+ "Strasse AS 'Straße', Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
 				+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '" 
 				+ Project.getInstance().getData().get("email") + "'";
+		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
@@ -29,6 +31,8 @@ public class Account extends Table {
 				+ "Nachname, Strasse AS 'Straße', Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
 				+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '" 
 				+ data.get("Kunde.E-Mail-Adresse") + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
 	}
 

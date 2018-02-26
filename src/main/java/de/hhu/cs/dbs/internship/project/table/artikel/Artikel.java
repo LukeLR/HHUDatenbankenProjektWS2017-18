@@ -22,6 +22,7 @@ public class Artikel extends Table {
 			selectQuery += " WHERE Bezeichnung LIKE '%" + filter + "%' "
 					+ "OR Beschreibung LIKE '%" + filter + "%'";
 		}
+		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
@@ -32,6 +33,8 @@ public class Artikel extends Table {
 		
 		String selectQuery = "SELECT Bezeichnung, Beschreibung, Bild, Artikel_ID FROM Artikel "
 				+ "WHERE Artikel_ID = '" + String.valueOf(data.get("Artikel.Artikel_ID")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
 	}
 

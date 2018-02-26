@@ -23,6 +23,7 @@ public class Angebot extends Table {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " WHERE Bezeichnung LIKE '%" + filter + "%'";
 		}
+		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
 	}
@@ -33,6 +34,8 @@ public class Angebot extends Table {
 		
 		String selectQuery = "SELECT Artikel_ID, Preis, Angebots_ID FROM Angebot "
 				+ "WHERE Angebots_ID = '" + String.valueOf(data.get("Angebot.Angebots_ID")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
 	}
 
