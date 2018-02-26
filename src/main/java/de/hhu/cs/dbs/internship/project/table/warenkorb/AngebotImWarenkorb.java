@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
-public class ArtikelImWarenkorb extends Table {
+public class AngebotImWarenkorb extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
