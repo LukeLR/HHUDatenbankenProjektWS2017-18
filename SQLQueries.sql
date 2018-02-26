@@ -23,7 +23,15 @@ JOIN Artikel
 ON 'Artikel2-Artikel_ID' = Artikel.Artikel_ID
 
 --simpler version: (above doesn't work)
-SELECT *
+SELECT
+    a1.Bezeichnung AS 'Artikel1-Bezeichnung',
+    a1.Beschreibung AS 'Artikel1-Beschreibung',
+    a1.Bild AS 'Artikel1-Bild',
+    a1.Artikel_ID AS 'Artikel1-Artikel_ID',
+    a2.Artikel_ID AS 'Artikel2-Artikel_ID',
+    a2.Bezeichnung AS 'Artikel2-Bezeichnung',
+    a2.Beschreibung AS 'Artikel2-Beschreibung',
+    a2.Bild AS 'Artikel2-Bild'
 FROM Artikel_empfiehlt_Artikel a
 JOIN Artikel a1
 ON a.Artikel_ID1 = a1.Artikel_ID
