@@ -30,7 +30,7 @@ public class Premiumkunde extends Table {
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		String selectQuery = "SELECT * FROM Premiumkunde "
-				+ "WHERE E_Mail_Adresse = '" + (String) data.get("Kunde.E_Mail_Adresse") + "'";
+				+ "WHERE E_Mail_Adresse = '" + String.valueOf(data.get("Kunde.E_Mail_Adresse")) + "'";
 		return selectQuery;
 	}
 
@@ -44,20 +44,20 @@ public class Premiumkunde extends Table {
 			/*PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 					"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
 					+ "VALUES (?, ?, ?)");
-			insertPremiumkundeStatement.setString(1, (String) data.get("Premiumkunde.Ablaufdatum"));
-			insertPremiumkundeStatement.setString(2, (String) data.get("Premiumkunde.Studierendenausweis"));
-			insertPremiumkundeStatement.setString(3, (String) data.get("Premiumkunde.E_Mail_Adresse"));
+			insertPremiumkundeStatement.setString(1, String.valueOf(data.get("Premiumkunde.Ablaufdatum")));
+			insertPremiumkundeStatement.setString(2, String.valueOf(data.get("Premiumkunde.Studierendenausweis")));
+			insertPremiumkundeStatement.setString(3, String.valueOf(data.get("Premiumkunde.E_Mail_Adresse")));
 			insertPremiumkundeStatement.executeUpdate();*/
 		} else {
 			PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 					"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
 					+ "VALUES (?, NULL, ?)");
-			insertPremiumkundeStatement.setString(1, (String) data.get("Premiumkunde.Ablaufdatum"));
-			insertPremiumkundeStatement.setString(2, (String) data.get("Premiumkunde.E_Mail_Adresse"));
+			insertPremiumkundeStatement.setString(1, String.valueOf(data.get("Premiumkunde.Ablaufdatum")));
+			insertPremiumkundeStatement.setString(2, String.valueOf(data.get("Premiumkunde.E_Mail_Adresse")));
 			insertPremiumkundeStatement.executeUpdate();
 		}
 		
-		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, (String) data.get("Premiumkunde.E_Mail_Adresse"));
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Premiumkunde.E_Mail_Adresse")));
 	}
 
 	@Override
@@ -73,10 +73,10 @@ public class Premiumkunde extends Table {
 		
 		PreparedStatement deletePremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Premiumkunde WHERE E_Mail_Adresse = ?");
-		deletePremiumkundeStatement.setString(1, (String) data.get("Kunde.E_Mail_Adresse"));
+		deletePremiumkundeStatement.setString(1, String.valueOf(data.get("Kunde.E_Mail_Adresse")));
 		deletePremiumkundeStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, (String) data.get("Kunde.E_Mail_Adresse"));
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Kunde.E_Mail_Adresse")));
 	}
 
 }

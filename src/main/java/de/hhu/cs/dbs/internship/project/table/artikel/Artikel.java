@@ -30,7 +30,7 @@ public class Artikel extends Table {
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
 		String selectQuery = "SELECT Bezeichnung, Beschreibung, Bild, Artikel_ID FROM Artikel "
-				+ "WHERE Artikel_ID = '" + (String) data.get("Artikel.Artikel_ID") + "'";
+				+ "WHERE Artikel_ID = '" + String.valueOf(data.get("Artikel.Artikel_ID")) + "'";
 		return selectQuery;
 	}
 
@@ -41,12 +41,12 @@ public class Artikel extends Table {
 		PreparedStatement insertArtikelStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Artikel (Bezeichnung, Beschreibung, Bild, Artikel_ID) "
 				+ "VALUES (?, ?, ?, NULL)");
-		insertArtikelStatement.setString(1, (String) data.get("Artikel.Bezeichnung"));
-		insertArtikelStatement.setString(2, (String) data.get("Artikel.Beschreibung"));
-		insertArtikelStatement.setString(3, (String) data.get("Artikel.Bild"));
+		insertArtikelStatement.setString(1, String.valueOf(data.get("Artikel.Bezeichnung")));
+		insertArtikelStatement.setString(2, String.valueOf(data.get("Artikel.Beschreibung")));
+		insertArtikelStatement.setString(3, String.valueOf(data.get("Artikel.Bild")));
 		insertArtikelStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, (String) data.get("Artikel.Bezeichnung"));
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Artikel.Bezeichnung")));
 	}
 
 	@Override
@@ -56,13 +56,13 @@ public class Artikel extends Table {
 		PreparedStatement updateArtikelStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Artikel SET Bezeichnung = ?, Beschreibung = ?, Bild = ? "
 				+ "WHERE Artikel_ID = ?");
-		updateArtikelStatement.setString(1, (String) newData.get("Artikel.Bezeichnung"));
-		updateArtikelStatement.setString(2, (String) newData.get("Artikel.Beschreibung"));
-		updateArtikelStatement.setString(3, (String) newData.get("Artikel.Bild"));
+		updateArtikelStatement.setString(1, String.valueOf(newData.get("Artikel.Bezeichnung")));
+		updateArtikelStatement.setString(2, String.valueOf(newData.get("Artikel.Beschreibung")));
+		updateArtikelStatement.setString(3, String.valueOf(newData.get("Artikel.Bild")));
 		updateArtikelStatement.setInt(4, (int) oldData.get("Artikel.Artikel_ID"));
 		updateArtikelStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, (String) newData.get("Artikel.Bezeichnung"));
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Artikel.Bezeichnung")));
 	}
 
 	@Override
@@ -74,6 +74,6 @@ public class Artikel extends Table {
 		deleteArtikelStatement.setInt(1, (int) data.get("Artikel.Artikel_ID"));
 		deleteArtikelStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), (String) data.get("Artikel.Artikel_ID"));
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), String.valueOf(data.get("Artikel.Artikel_ID")));
 	}
 }

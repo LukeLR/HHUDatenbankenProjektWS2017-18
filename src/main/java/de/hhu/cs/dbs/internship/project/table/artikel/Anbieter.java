@@ -29,7 +29,7 @@ public class Anbieter extends Table {
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
 		String selectQuery = "SELECT * FROM Anbieter "
-				+ "WHERE Anbieterbezeichnung = '" +	(String) data.get("Anbieter.Anbieterbezeichnung") + "'";
+				+ "WHERE Anbieterbezeichnung = '" +	String.valueOf(data.get("Anbieter.Anbieterbezeichnung")) + "'";
 		return selectQuery;
 	}
 
@@ -39,10 +39,10 @@ public class Anbieter extends Table {
 		
 		PreparedStatement insertAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Anbieter (Anbieterbezeichnung) VALUES (?);");
-		insertAnbieterStatement.setString(1, (String) data.get("Anbieter.Anbieterbezeichnung"));
+		insertAnbieterStatement.setString(1, String.valueOf(data.get("Anbieter.Anbieterbezeichnung")));
 		insertAnbieterStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, (String) data.get("Anbieter.Anbieterbezeichnung"));
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Anbieter.Anbieterbezeichnung")));
 	}
 
 	@Override
@@ -51,11 +51,11 @@ public class Anbieter extends Table {
 		
 		PreparedStatement updateAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Anbieter SET Anbieterbezeichnung = ? WHERE Anbieterbezeichnung = ?");
-		updateAnbieterStatement.setString(1, (String) newData.get("Anbieter.Anbieterbezeichnung"));
-		updateAnbieterStatement.setString(2, (String) oldData.get("Anbieter.Anbieterbezeichnung"));
+		updateAnbieterStatement.setString(1, String.valueOf(newData.get("Anbieter.Anbieterbezeichnung")));
+		updateAnbieterStatement.setString(2, String.valueOf(oldData.get("Anbieter.Anbieterbezeichnung")));
 		updateAnbieterStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, (String) newData.get("Anbieter.Anbieterbezeichnung"));
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Anbieter.Anbieterbezeichnung")));
 	}
 
 	@Override
@@ -64,10 +64,10 @@ public class Anbieter extends Table {
 		
 		PreparedStatement deleteAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Anbieter WHERE Anbieterbezeichnung = ?");
-		deleteAnbieterStatement.setString(1, (String) data.get("Anbieter.Anbieterbezeichnung"));
+		deleteAnbieterStatement.setString(1, String.valueOf(data.get("Anbieter.Anbieterbezeichnung")));
 		deleteAnbieterStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, (String) data.get("Anbieter.Anbieterbezeichnung"));
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Anbieter.Anbieterbezeichnung")));
 	}
 
 }

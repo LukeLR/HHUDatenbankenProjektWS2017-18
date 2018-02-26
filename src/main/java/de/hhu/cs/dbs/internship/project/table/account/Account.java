@@ -46,6 +46,6 @@ public class Account extends Table {
 	@Override
 	//TODO: Enforce privileges
 	public void deleteRowWithData(Data data) throws SQLException {
-		AccountDataHelper.deleteAccountByEMail((String) data.get("Kunde.E-Mail-Adresse"));
+		AccountDataHelper.deleteAccountByEMail(String.valueOf(data.get("Kunde.E-Mail-Adresse")));
 	}
 }

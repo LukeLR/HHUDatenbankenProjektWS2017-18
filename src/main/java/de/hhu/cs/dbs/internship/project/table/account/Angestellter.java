@@ -32,7 +32,7 @@ public class Angestellter extends Table {
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
 		String selectQuery = "SELECT * FROM Angestellter "
-				+ "WHERE E_Mail_Adresse = '" + (String) data.get("Kunde.E_Mail_Adresse") + "'";
+				+ "WHERE E_Mail_Adresse = '" + String.valueOf(data.get("Kunde.E_Mail_Adresse")) + "'";
 		return selectQuery;
 	}
 
@@ -43,12 +43,12 @@ public class Angestellter extends Table {
 		PreparedStatement insertAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Angestellter (Jobbezeichnung, Gehalt, E_Mail_Adresse) "
 				+ "VALUES (?, ?, ?)");
-		insertAngestellterStatement.setString(1, (String) data.get("Angestellter.Jobbezeichnung"));
-		insertAngestellterStatement.setInt(2, Integer.valueOf((String) data.get("Angestellter.Gehalt")));
-		insertAngestellterStatement.setString(3, (String) data.get("Angestellter.E_Mail_Adresse"));
+		insertAngestellterStatement.setString(1, String.valueOf(data.get("Angestellter.Jobbezeichnung")));
+		insertAngestellterStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Angestellter.Gehalt"))));
+		insertAngestellterStatement.setString(3, String.valueOf(data.get("Angestellter.E_Mail_Adresse")));
 		insertAngestellterStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, (String) data.get("Angestellter.E_Mail_Adresse"));
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Angestellter.E_Mail_Adresse")));
 	}
 
 	@Override
@@ -58,13 +58,13 @@ public class Angestellter extends Table {
 		PreparedStatement updateAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Angestellter SET Jobbezeichnung = ?, Gehalt = ?, E_Mail_Adresse = ? "
 				+ "WHERE E_Mail_Adresse = ?");
-		updateAngestellterStatement.setString(1, (String) newData.get("Angestellter.Jobbezeichnung"));
-		updateAngestellterStatement.setInt(2, Integer.valueOf((String) newData.get("Angestellter.Gehalt")));
-		updateAngestellterStatement.setString(3, (String) newData.get("Angestellter.E_Mail_Adresse"));
-		updateAngestellterStatement.setString(4, (String) oldData.get("Angestellter.E_Mail_Adresse"));
+		updateAngestellterStatement.setString(1, String.valueOf(newData.get("Angestellter.Jobbezeichnung")));
+		updateAngestellterStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Angestellter.Gehalt"))));
+		updateAngestellterStatement.setString(3, String.valueOf(newData.get("Angestellter.E_Mail_Adresse")));
+		updateAngestellterStatement.setString(4, String.valueOf(oldData.get("Angestellter.E_Mail_Adresse")));
 		updateAngestellterStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, (String) newData.get("Angestellter.E_Mail_Adresse"));
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Angestellter.E_Mail_Adresse")));
 	}
 
 	@Override
@@ -73,10 +73,10 @@ public class Angestellter extends Table {
 		
 		PreparedStatement deleteAngestellterStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Angestellter WHERE E_Mail_Adresse = ?");
-		deleteAngestellterStatement.setString(1, (String) data.get("Kunde.E_Mail_Adresse"));
+		deleteAngestellterStatement.setString(1, String.valueOf(data.get("Kunde.E_Mail_Adresse")));
 		deleteAngestellterStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, (String) data.get("Kunde.E_Mail_Adresse"));
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Kunde.E_Mail_Adresse")));
 	}
 
 }
