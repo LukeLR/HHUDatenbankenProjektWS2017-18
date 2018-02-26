@@ -60,14 +60,14 @@ public class ArtikelempfiehltArtikel extends Table {
 				"INSERT INTO Artikel_empfiehlt_Artikel (Artikel_ID1, Artikel_ID2) "
 				+ "VALUES (?, ?)");
 		insertArtikelEmpfiehltArtikelStatement.setInt
-			(1, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel1-Artikel_ID"))));
+			(1, Integer.valueOf(String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel1-Artikel_ID"))));
 		insertArtikelEmpfiehltArtikelStatement.setInt
-			(2, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel2-Artikel_ID"))));
+			(2, Integer.valueOf(String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel2-Artikel_ID"))));
 		insertArtikelEmpfiehltArtikelStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data,
-				String.valueOf(data.get("Artikel.Artikel1-Artikel_ID")) + "-"
-				+ String.valueOf(data.get("Artikel.Artikel2-Artikel_ID")));
+				String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel1-Artikel_ID")) + "-"
+				+ String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel2-Artikel_ID")));
 	}
 
 	@Override
@@ -78,18 +78,18 @@ public class ArtikelempfiehltArtikel extends Table {
 				"UPDATE Artikel_empfiehlt_Artikel SET Artikel_ID1 = ?, Artikel_ID2 = ? "
 				+ "WHERE Artikel_ID1 = ? AND Artikel_ID2 = ?");
 		updateArtikelEmpfiehltArtikelStatement.setInt
-			(1, Integer.valueOf(String.valueOf(newData.get("Artikel.Artikel1-Artikel_ID"))));
+			(1, Integer.valueOf(String.valueOf(newData.get("Artikel_empfiehlt_Artikel.Artikel1-Artikel_ID"))));
 		updateArtikelEmpfiehltArtikelStatement.setInt
-			(2, Integer.valueOf(String.valueOf(newData.get("Artikel.Artikel2-Artikel_ID"))));
+			(2, Integer.valueOf(String.valueOf(newData.get("Artikel_empfiehlt_Artikel.Artikel2-Artikel_ID"))));
 		updateArtikelEmpfiehltArtikelStatement.setInt
-			(3, Integer.valueOf(String.valueOf(oldData.get("Artikel.Artikel1-Artikel_ID"))));
+			(3, Integer.valueOf(String.valueOf(oldData.get("Artikel_empfiehlt_Artikel.Artikel1-Artikel_ID"))));
 		updateArtikelEmpfiehltArtikelStatement.setInt
-			(4, Integer.valueOf(String.valueOf(oldData.get("Artikel.Artikel2-Artikel_ID"))));
+			(4, Integer.valueOf(String.valueOf(oldData.get("Artikel_empfiehlt_Artikel.Artikel2-Artikel_ID"))));
 		updateArtikelEmpfiehltArtikelStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
-				String.valueOf(newData.get("Artikel.Artikel1-Artikel_ID")) + "-"
-				+ String.valueOf(newData.get("Artikel.Artikel2-Artikel_ID")));
+				String.valueOf(newData.get("Artikel_empfiehlt_Artikel.Artikel1-Artikel_ID")) + "-"
+				+ String.valueOf(newData.get("Artikel_empfiehlt_Artikel.Artikel2-Artikel_ID")));
 	}
 
 	@Override
@@ -100,14 +100,14 @@ public class ArtikelempfiehltArtikel extends Table {
 				"DELETE FROM Artikel_empfiehlt_Artikel "
 				+ "WHERE Artikel_ID1 = ? AND Artikel_ID2 = ?");
 		deleteArtikelEmpfiehltArtikelStatement.setInt
-			(1, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel1-Artikel_ID"))));
+			(1, Integer.valueOf(String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel1-Artikel_ID"))));
 		deleteArtikelEmpfiehltArtikelStatement.setInt
-			(2, Integer.valueOf(String.valueOf(data.get("Artikel.Artikel2-Artikel_ID"))));
+			(2, Integer.valueOf(String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel2-Artikel_ID"))));
 		deleteArtikelEmpfiehltArtikelStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
-				String.valueOf(data.get("Artikel.Artikel1-Artikel_ID")) + "-"
-				+ String.valueOf(data.get("Artikel.Artikel2-Artikel_ID")));
+				String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel1-Artikel_ID")) + "-"
+				+ String.valueOf(data.get("Artikel_empfiehlt_Artikel.Artikel2-Artikel_ID")));
 	}
 
 }
