@@ -38,8 +38,17 @@ public class ArtikelImNewsletter extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
+		
+		String selectQuery = "SELECT "
+				+ "Artikel_im_Newsletter.Artikel_ID, "
+				+ "Artikel_im_Newsletter.Newsletter_ID "
+				+ "FROM Artikel_im_Newsletter "
+				+ "WHERE Artikel_im_Newsletter.Artikel_ID = '" + data.get("Artikel_im_Newsletter.Artikel_ID") + "' "
+				+ "AND Artikel_im_Newsletter.Newsletter_ID = '" + data.get("Artikel_im_Newsletter.Newsletter_ID") + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
+		return selectQuery;
 	}
 
 	@Override
