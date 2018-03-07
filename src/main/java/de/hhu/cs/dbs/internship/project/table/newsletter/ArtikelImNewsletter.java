@@ -77,21 +77,21 @@ public class ArtikelImNewsletter extends Table {
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
-		PreparedStatement insertArtikelImNewsletterStatement = Project.getInstance().getConnection().prepareStatement(
+		PreparedStatement updateArtikelImNewsletterStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Artikel_im_Newsletter SET "
 				+ "Artikel_im_Newsletter.Artikel_ID = ?, "
 				+ "Artikel_im_Newsletter.Newsletter_ID = ? "
 				+ "WHERE Artikel_im_Newsletter.Artikel_ID = ?, "
 				+ "Artikel_im_Newsletter.Newsletter_ID = ?");
-		insertArtikelImNewsletterStatement.setInt(1,
+		updateArtikelImNewsletterStatement.setInt(1,
 				Integer.valueOf(String.valueOf(newData.get("Artikel_im_Newsletter.Artikel_ID"))));
-		insertArtikelImNewsletterStatement.setInt(2,
+		updateArtikelImNewsletterStatement.setInt(2,
 				Integer.valueOf(String.valueOf(newData.get("Artikel_im_Newsletter.Newsletter_ID"))));
-		insertArtikelImNewsletterStatement.setInt(3,
+		updateArtikelImNewsletterStatement.setInt(3,
 				Integer.valueOf(String.valueOf(oldData.get("Artikel_im_Newsletter.Artikel_ID"))));
-		insertArtikelImNewsletterStatement.setInt(4,
+		updateArtikelImNewsletterStatement.setInt(4,
 				Integer.valueOf(String.valueOf(oldData.get("Artikel_im_Newsletter.Newsletter_ID"))));
-		insertArtikelImNewsletterStatement.executeUpdate();
+		updateArtikelImNewsletterStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
 				String.valueOf(newData.get("Artikel_im_Newsletter.Artikel_ID")) + "-"
@@ -100,8 +100,21 @@ public class ArtikelImNewsletter extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteArtikelImNewsletterStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Artikel_im_Newsletter "
+				+ "WHERE Artikel_im_Newsletter.Artikel_ID = ?, "
+				+ "Artikel_im_Newsletter.Newsletter_ID = ?");
+		deleteArtikelImNewsletterStatement.setInt(3,
+				Integer.valueOf(String.valueOf(data.get("Artikel_im_Newsletter.Artikel_ID"))));
+		deleteArtikelImNewsletterStatement.setInt(4,
+				Integer.valueOf(String.valueOf(data.get("Artikel_im_Newsletter.Newsletter_ID"))));
+		deleteArtikelImNewsletterStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Artikel_im_Newsletter.Artikel_ID")) + "-"
+				+ String.valueOf(data.get("Artikel_im_Newsletter.Newsletter_ID")));
 	}
 
 }
