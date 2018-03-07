@@ -44,8 +44,10 @@ public class ArtikelImNewsletter extends Table {
 				+ "Artikel_im_Newsletter.Artikel_ID, "
 				+ "Artikel_im_Newsletter.Newsletter_ID "
 				+ "FROM Artikel_im_Newsletter "
-				+ "WHERE Artikel_im_Newsletter.Artikel_ID = '" + data.get("Artikel_im_Newsletter.Artikel_ID") + "' "
-				+ "AND Artikel_im_Newsletter.Newsletter_ID = '" + data.get("Artikel_im_Newsletter.Newsletter_ID") + "'";
+				+ "WHERE Artikel_im_Newsletter.Artikel_ID = '"
+				+ String.valueOf(data.get("Artikel_im_Newsletter.Artikel_ID")) + "' "
+				+ "AND Artikel_im_Newsletter.Newsletter_ID = '"
+				+ String.valueOf(data.get("Artikel_im_Newsletter.Newsletter_ID")) + "'";
 		
 		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
