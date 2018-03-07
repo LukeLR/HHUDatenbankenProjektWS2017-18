@@ -75,8 +75,27 @@ public class ArtikelImNewsletter extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement insertArtikelImNewsletterStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Artikel_im_Newsletter SET "
+				+ "Artikel_im_Newsletter.Artikel_ID = ?, "
+				+ "Artikel_im_Newsletter.Newsletter_ID = ? "
+				+ "WHERE Artikel_im_Newsletter.Artikel_ID = ?, "
+				+ "Artikel_im_Newsletter.Newsletter_ID = ?");
+		insertArtikelImNewsletterStatement.setInt(1,
+				Integer.valueOf(String.valueOf(newData.get("Artikel_im_Newsletter.Artikel_ID"))));
+		insertArtikelImNewsletterStatement.setInt(2,
+				Integer.valueOf(String.valueOf(newData.get("Artikel_im_Newsletter.Newsletter_ID"))));
+		insertArtikelImNewsletterStatement.setInt(3,
+				Integer.valueOf(String.valueOf(oldData.get("Artikel_im_Newsletter.Artikel_ID"))));
+		insertArtikelImNewsletterStatement.setInt(4,
+				Integer.valueOf(String.valueOf(oldData.get("Artikel_im_Newsletter.Newsletter_ID"))));
+		insertArtikelImNewsletterStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
+				String.valueOf(newData.get("Artikel_im_Newsletter.Artikel_ID")) + "-"
+				+ String.valueOf(newData.get("Artikel_im_Newsletter.Newsletter_ID")));
 	}
 
 	@Override
