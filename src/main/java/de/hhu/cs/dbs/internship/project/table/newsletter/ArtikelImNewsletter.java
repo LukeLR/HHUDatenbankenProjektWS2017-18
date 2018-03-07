@@ -104,7 +104,7 @@ public class ArtikelImNewsletter extends Table {
 		
 		PreparedStatement deleteArtikelImNewsletterStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Artikel_im_Newsletter "
-				+ "WHERE Artikel_im_Newsletter.Artikel_ID = ?, "
+				+ "WHERE Artikel_im_Newsletter.Artikel_ID = ? AND "
 				+ "Artikel_im_Newsletter.Newsletter_ID = ?");
 		deleteArtikelImNewsletterStatement.setInt(3,
 				Integer.valueOf(String.valueOf(data.get("Artikel_im_Newsletter.Artikel_ID"))));
