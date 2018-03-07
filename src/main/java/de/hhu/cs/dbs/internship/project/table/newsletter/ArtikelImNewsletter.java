@@ -79,10 +79,10 @@ public class ArtikelImNewsletter extends Table {
 		
 		PreparedStatement updateArtikelImNewsletterStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Artikel_im_Newsletter SET "
-				+ "Artikel_im_Newsletter.Artikel_ID = ?, "
-				+ "Artikel_im_Newsletter.Newsletter_ID = ? "
-				+ "WHERE Artikel_im_Newsletter.Artikel_ID = ?, "
-				+ "Artikel_im_Newsletter.Newsletter_ID = ?");
+				+ "Artikel_ID = ?, "
+				+ "Newsletter_ID = ? "
+				+ "WHERE Artikel_ID = ? AND "
+				+ "Newsletter_ID = ?");
 		updateArtikelImNewsletterStatement.setInt(1,
 				Integer.valueOf(String.valueOf(newData.get("Artikel_im_Newsletter.Artikel_ID"))));
 		updateArtikelImNewsletterStatement.setInt(2,
