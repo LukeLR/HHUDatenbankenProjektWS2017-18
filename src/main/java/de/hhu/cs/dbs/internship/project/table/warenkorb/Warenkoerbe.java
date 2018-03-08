@@ -37,8 +37,7 @@ public class Warenkoerbe extends Table {
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
-		String selectQuery = "SELECT Warenkorb.Warenkorb_ID, "
-				+ "Warenkorb.E_Mail_Adresse, "
+		String selectQuery = "SELECT Warenkorb.E_Mail_Adresse, "
 				+ "Warenkorb.Bestelldatum, "
 				+ "Warenkorb.Bestellstatus, "
 				+ "Warenkorb.Lieferdienst_Bezeichnung, "
