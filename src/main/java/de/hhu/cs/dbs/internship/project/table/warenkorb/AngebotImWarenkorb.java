@@ -5,12 +5,41 @@ import java.sql.SQLException;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
+
 public class AngebotImWarenkorb extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logShow(this.getClass().getName());
+		
+		String selectQuery = "SELECT Artikel_im_Warenkorb.Warenkorb_ID, "
+				+ "Warenkorb.Bestelldatum, "
+				+ "Warenkorb.Bestellstatus, "
+				+ "Warenkorb.E_Mail_Adresse, "
+				+ "Warenkorb.Lieferdienst_Bezeichnung, "
+				+ "Warenkorb.Lieferdatum, "
+				+ "Artikel_im_Warenkorb.Angebots_ID, "
+				+ "Angebot.Artikel_ID, "
+				+ "Angebot.Preis, "
+				+ "Artikel.Bezeichnung, "
+				+ "Artikel.Beschreibung, "
+				+ "Artikel.Bild, "
+				+ "Artikel_im_Warenkorb.Anbieterbezeichnung, "
+				+ "Artikel_im_Warenkorb.Anzahl "
+				+ "FROM Artikel_im_Warenkorb "
+				+ "JOIN Angebot on Artikel_im_Warenkorb.Angebots_ID = Angebot.Angebots_ID "
+				+ "JOIN Artikel on Artikel_im_Warenkorb.Artikel_ID = Artikel.Artikel_ID "
+				+ "JOIN Warenkorb on Artikel_im_Warenkorb.Warenkorb_ID = Warenkorb.Warenkorb_ID";
+		
+		if (filter != null && !filter.isEmpty()) {
+			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
+			selectQuery += " WHERE Warenkorb.E_Mail_Adresse LIKE '%" + filter + "%' OR "
+					+ "Artikel.Bezeichnung LIKE '%" + filter + "%'";
+		}
+		
+		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
+		return selectQuery;
 	}
 
 	@Override
