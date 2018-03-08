@@ -281,13 +281,12 @@ END;
 
 CREATE TRIGGER ausreichender_lagerbestand
 BEFORE INSERT ON Angebot_im_Warenkorb
-WHEN NOT EXISTS (
-    SELECT Angebots_ID, Anbieterbezeichnung, Bestand
+WHEN((
+    SELECT Bestand
     FROM Anbieter_bietet_an
     WHERE Angebots_ID = NEW.Angebots_ID
     AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
-    AND NEW.Anzahl < Bestand
-)
+) > NEW.Anzahl)
 BEGIN
     SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!');
 END;
@@ -785,19 +784,29 @@ INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (3, 'Super-beschissen-Export, Inc.', 5, 5);
 
-/* Die folgenden Tests sollten fehlschlagen:
+/* Die folgenden vier Tests sollten fehlschlagen:
  * - Der erste Test enthält eine negative Anzahl
  * - Der zweite Test versucht einem Warenkorb Angebote eines Anbieters
- * - hinzuzüfügen, der bereits dasselbe Angebot dieses Anbieters enthält.
+ *   hinzuzüfügen, der bereits dasselbe Angebot dieses Anbieters enthält.
+ * - Der dritte Test versucht, ein Angebot in den Warenkorb zu legen,
+ *   welches von keinem Anbieter angeboten wird.
+ * - Der vierte Test versucht, ein Angebot in einer höheren Stückzahl
+ *   in den Warenkorb zu legen, als der Anbieter es anbietet.
  */
 
-SELECT 'Testing: 2 fehlschlagende Tests: Angebot_im_Warenkorb';
+SELECT 'Testing: 4 fehlschlagende Tests: Angebot_im_Warenkorb';
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (1, 'Super-beschissen-Export, Inc.', 5, -5);
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (3, 'Super-beschissen-Export, Inc.', 5, 5);
+INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
+    Warenkorb_ID, Anzahl)
+        VALUES (4, 'Helge Schneider Fanshop', 5, 5);
+INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
+    Warenkorb_ID, Anzahl)
+        VALUES (1, 'Helge Schneider Fanshop', 5, 900);
 
 ---------------------------------------------
 ------------- Anbieter_bietet_an ------------

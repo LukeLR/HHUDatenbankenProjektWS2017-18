@@ -61,4 +61,17 @@ SELECT Angebots_ID, SUM(Bestand)
 FROM Anbieter_bietet_an
 GROUP BY Angebots_ID
 HAVING Angebots_ID = 5 AND
-SUM(Bestand) > 400
+SUM(Bestand) > 400;
+
+SELECT Angebots_ID, Anbieterbezeichnung, Bestand
+FROM Anbieter_bietet_an
+WHERE Angebots_ID = 1
+AND Anbieterbezeichnung = 'Helge Schneider Fanshop'
+AND 5 < Bestand;
+
+SELECT (
+    SELECT Bestand
+    FROM Anbieter_bietet_an
+    WHERE Angebots_ID = 1
+    AND Anbieterbezeichnung = 'Helge Schneider Fanshop'
+) > 900 IS 1;

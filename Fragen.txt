@@ -1,3 +1,4 @@
 Fragen:
 - Muss die Mindestanzahl an Artikeln im Newsletter (3) überprüft werden?
 - Wenn ein Angebot in den Warenkorb gelegt wird, muss die gewünschte Anzahl kleiner gleich dem Bestand dieses Angebotes bei allen Anbietern sein, oder kleiner gleich dem Bestand dieses Angebotes bei einem spezifischen Anbieter?
+- Müssen Anzahlen von Angeboten, die bereits in anderen Warenkörben liegen, vom Bestand subtrahiert werden?
