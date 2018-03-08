@@ -1,10 +1,12 @@
 package de.hhu.cs.dbs.internship.project.table.warenkorb;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class Lieferabo extends Table {
@@ -48,8 +50,18 @@ public class Lieferabo extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
+		
+		PreparedStatement insertLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Lieferabo (Intervall, Beginn, Ende, Warenkorb_ID) "
+				+ "VALUES (?, ?, ?, ?)");
+		insertLieferaboStatement.setString(1, String.valueOf(data.get("Lieferabo.Intervall")));
+		insertLieferaboStatement.setString(2, String.valueOf(data.get("Lieferabo.Beginn")));
+		insertLieferaboStatement.setString(3, String.valueOf(data.get("Lieferabo.Ende")));
+		insertLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Lieferabo.Warenkorb_ID"))));
+		insertLieferaboStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Lieferabo.Warenkorb_ID")));
 	}
 
 	@Override
