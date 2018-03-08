@@ -62,6 +62,8 @@ public class AngebotImWarenkorb extends Table {
 		return selectQuery;
 	}
 
+	//TODO: Überprüfen, ob der Anbieter das Angebot überhaupt anbietet!
+	
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
