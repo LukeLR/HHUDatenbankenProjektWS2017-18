@@ -1,10 +1,12 @@
 package de.hhu.cs.dbs.internship.project.table.warenkorb;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class Warenkoerbe extends Table {
@@ -50,8 +52,20 @@ public class Warenkoerbe extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
+		
+		PreparedStatement insertWarenkoerbeStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Warenkorb (Bestelldatum, Bestellstatus, Warenkorb_ID, "
+				+ "E_Mail_Adresse, Lieferdienst_Bezeichnung, Lieferdatum) "
+				+ "VALUES (?, ?, NULL, ?, ?, ?)");
+		insertWarenkoerbeStatement.setString(1, String.valueOf(data.get("Warenkorb.Bestelldatum")));
+		insertWarenkoerbeStatement.setString(2, String.valueOf(data.get("Warenkorb.Bestellstatus")));
+		insertWarenkoerbeStatement.setString(3, String.valueOf(data.get("Warenkorb.E_Mail_Adresse")));
+		insertWarenkoerbeStatement.setString(4, String.valueOf(data.get("Warenkorb.Lieferdienst_Bezeichnung")));
+		insertWarenkoerbeStatement.setString(5, String.valueOf(data.get("Warenkorb.Lieferdatum")));
+		insertWarenkoerbeStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Warenkorb.E_Mail_Adresse")));
 	}
 
 	@Override
