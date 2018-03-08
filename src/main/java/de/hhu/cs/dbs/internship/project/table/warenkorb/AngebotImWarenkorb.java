@@ -44,8 +44,20 @@ public class AngebotImWarenkorb extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
+		
+		String selectQuery = "SELECT Angebot_im_Warenkorb.Warenkorb_ID, "
+				+ "Angebot_im_Warenkorb.Angebots_ID, "
+				+ "Angebot_im_Warenkorb.Anbieterbezeichnung, "
+				+ "Angebot_im_Warenkorb.Anzahl "
+				+ "FROM Angebot_im_Warenkorb "
+				+ "WHERE Angebot_im_Warenkorb.Warenkorb_ID = '" + String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID")) + "' AND "
+				+ "Angebot_im_Warenkorb.Angebots_ID = '" + String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) + "' AND "
+				+ "Angebot_im_Warenkorb.Anbieterbezeichnung = '" + String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")) + "' AND "
+				+ "Angebot_im_Warenkorb.Anzahl = '" + String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
+		return selectQuery;
 	}
 
 	@Override
