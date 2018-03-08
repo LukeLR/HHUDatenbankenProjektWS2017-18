@@ -13,24 +13,24 @@ public class AngebotImWarenkorb extends Table {
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
-		String selectQuery = "SELECT Artikel_im_Warenkorb.Warenkorb_ID, "
+		String selectQuery = "SELECT Angebot_im_Warenkorb.Warenkorb_ID, "
 				+ "Warenkorb.Bestelldatum, "
 				+ "Warenkorb.Bestellstatus, "
 				+ "Warenkorb.E_Mail_Adresse, "
 				+ "Warenkorb.Lieferdienst_Bezeichnung, "
 				+ "Warenkorb.Lieferdatum, "
-				+ "Artikel_im_Warenkorb.Angebots_ID, "
+				+ "Angebot_im_Warenkorb.Angebots_ID, "
 				+ "Angebot.Artikel_ID, "
 				+ "Angebot.Preis, "
 				+ "Artikel.Bezeichnung, "
 				+ "Artikel.Beschreibung, "
 				+ "Artikel.Bild, "
-				+ "Artikel_im_Warenkorb.Anbieterbezeichnung, "
-				+ "Artikel_im_Warenkorb.Anzahl "
-				+ "FROM Artikel_im_Warenkorb "
-				+ "JOIN Angebot on Artikel_im_Warenkorb.Angebots_ID = Angebot.Angebots_ID "
-				+ "JOIN Artikel on Artikel_im_Warenkorb.Artikel_ID = Artikel.Artikel_ID "
-				+ "JOIN Warenkorb on Artikel_im_Warenkorb.Warenkorb_ID = Warenkorb.Warenkorb_ID";
+				+ "Angebot_im_Warenkorb.Anbieterbezeichnung, "
+				+ "Angebot_im_Warenkorb.Anzahl "
+				+ "FROM Angebot_im_Warenkorb "
+				+ "JOIN Angebot on Angebot_im_Warenkorb.Angebots_ID = Angebot.Angebots_ID "
+				+ "JOIN Artikel on Angebot_im_Warenkorb.Artikel_ID = Artikel.Artikel_ID "
+				+ "JOIN Warenkorb on Angebot_im_Warenkorb.Warenkorb_ID = Warenkorb.Warenkorb_ID";
 		
 		if (filter != null && !filter.isEmpty()) {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
