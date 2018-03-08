@@ -29,7 +29,7 @@ public class AngebotImWarenkorb extends Table {
 				+ "Angebot_im_Warenkorb.Anzahl "
 				+ "FROM Angebot_im_Warenkorb "
 				+ "JOIN Angebot on Angebot_im_Warenkorb.Angebots_ID = Angebot.Angebots_ID "
-				+ "JOIN Artikel on Angebot_im_Warenkorb.Artikel_ID = Artikel.Artikel_ID "
+				+ "JOIN Artikel on Angebot.Artikel_ID = Artikel.Artikel_ID "
 				+ "JOIN Warenkorb on Angebot_im_Warenkorb.Warenkorb_ID = Warenkorb.Warenkorb_ID";
 		
 		if (filter != null && !filter.isEmpty()) {
