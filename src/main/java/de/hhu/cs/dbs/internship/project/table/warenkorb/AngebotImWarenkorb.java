@@ -69,9 +69,9 @@ public class AngebotImWarenkorb extends Table {
 		PreparedStatement insertAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung, Warenkorb_ID, Anzahl) "
 				+ "VALUES (?, ?, ?, ?)");
-		insertAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))));
-		insertAngebotImWarenkorbStatement.setString(3, String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
-		insertAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
+		insertAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))));
+		insertAngebotImWarenkorbStatement.setString(2, String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
+		insertAngebotImWarenkorbStatement.setInt(3, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
 		insertAngebotImWarenkorbStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl"))));
 		insertAngebotImWarenkorbStatement.executeUpdate();
 		
