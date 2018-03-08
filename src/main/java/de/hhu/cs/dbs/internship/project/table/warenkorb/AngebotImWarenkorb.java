@@ -88,7 +88,8 @@ public class AngebotImWarenkorb extends Table {
 		
 		PreparedStatement updateAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Angebot_im_Warenkorb "
-				+ "SET Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ? ");
+				+ "SET Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ? "
+				+ "WHERE Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ?");
 				
 		updateAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
 		updateAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID"))));
