@@ -73,7 +73,7 @@ public class Warenkoerbe extends Table {
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
 		PreparedStatement updateWarenkoerbeStatement = Project.getInstance().getConnection().prepareStatement(
-				"UPDATE Warenkoerbe SET "
+				"UPDATE Warenkorb SET "
 				+ "Bestelldatum = ?, Bestellstatus = ?, E_Mail_Adresse = ?, "
 				+ "Lieferdienst_Bezeichnung = ?, Lieferdatum = ? "
 				+ "WHERE Warenkorb_ID = ?");
@@ -93,7 +93,7 @@ public class Warenkoerbe extends Table {
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
 		PreparedStatement insertWarenkoerbeStatement = Project.getInstance().getConnection().prepareStatement(
-				"DELETE FROM Warenkoerbe WHERE Warenkorb_ID = ?");
+				"DELETE FROM Warenkorb WHERE Warenkorb_ID = ?");
 		insertWarenkoerbeStatement.setString(1, String.valueOf(data.get("Warenkorb.Warenkorb_ID")));
 		insertWarenkoerbeStatement.executeUpdate();
 		
