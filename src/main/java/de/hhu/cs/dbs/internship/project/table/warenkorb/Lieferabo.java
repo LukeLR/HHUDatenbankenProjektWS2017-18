@@ -66,8 +66,22 @@ public class Lieferabo extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updateLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Lieferabo SET Intervall = ?, Beginn = ?, Ende = ?, Warenkorb_ID = ? "
+				+ "WHERE Intervall = ? AND Beginn = ? AND Ende = ? AND Warenkorb_ID = ?");
+		updateLieferaboStatement.setString(1, String.valueOf(newData.get("Lieferabo.Intervall")));
+		updateLieferaboStatement.setString(2, String.valueOf(newData.get("Lieferabo.Beginn")));
+		updateLieferaboStatement.setString(3, String.valueOf(newData.get("Lieferabo.Ende")));
+		updateLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(newData.get("Lieferabo.Warenkorb_ID"))));
+		updateLieferaboStatement.setString(5, String.valueOf(oldData.get("Lieferabo.Intervall")));
+		updateLieferaboStatement.setString(6, String.valueOf(oldData.get("Lieferabo.Beginn")));
+		updateLieferaboStatement.setString(7, String.valueOf(oldData.get("Lieferabo.Ende")));
+		updateLieferaboStatement.setInt(8, Integer.valueOf(String.valueOf(oldData.get("Lieferabo.Warenkorb_ID"))));
+		updateLieferaboStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Lieferabo.Warenkorb_ID")));
 	}
 
 	@Override
