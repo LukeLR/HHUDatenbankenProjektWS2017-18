@@ -93,8 +93,15 @@ CREATE TABLE Lieferdienst(
     );
 
 CREATE TABLE Warenkorb (
-    Bestelldatum VARCHAR CONSTRAINT Bestelldatum CHECK (
-        DATE(Bestelldatum) IS NOT NULL),
+    Bestelldatum VARCHAR
+        CONSTRAINT Bestelldatum CHECK (
+            (
+                Bestelldatum IS NOT NULL AND
+                DATE(Bestelldatum) IS NOT NULL
+            ) OR (
+                Bestelldatum IS NULL
+            )
+        ),
     Bestellstatus VARCHAR(20) NOT NULL CONSTRAINT Bestellstatus CHECK (
         Bestellstatus IN (
             'In Bearbeitung', 'Storniert', 'Bezahlt', 'Versandfertig',
@@ -104,8 +111,16 @@ CREATE TABLE Warenkorb (
     Warenkorb_ID INTEGER PRIMARY KEY NOT NULL,
     E_Mail_Adresse VARCHAR(320) NOT NULL,
     Lieferdienst_Bezeichnung VARCHAR(40) NOT NULL,
-    Lieferdatum VARCHAR CONSTRAINT Lieferdatum CHECK (
-        DATE(Lieferdatum) IS NOT NULL),
+    Lieferdatum VARCHAR
+        CONSTRAINT Lieferdatum CHECK (
+            (
+                Lieferdatum IS NOT NULL AND
+                DATE(Lieferdatum) IS NOT NULL AND
+                Lieferdatum > CURRENT_DATE
+            ) OR (
+                Lieferdatum IS NULL
+            )
+        ),
     FOREIGN KEY (E_Mail_Adresse) REFERENCES Kunde (E_Mail_Adresse),
     FOREIGN KEY (Lieferdienst_Bezeichnung)
         REFERENCES Lieferdienst (Lieferdienst_Bezeichnung)
