@@ -263,7 +263,7 @@ BEGIN
 END;
 
 CREATE TRIGGER newsletter_anzahl_artikel
-BEFORE INSERT ON Newsletter
+BEFORE INSERT ON Artikel_im_Newsletter
 WHEN EXISTS (
     SELECT COUNT(*) FROM Artikel_im_Newsletter
     GROUP BY Artikel_im_Newsletter.Newsletter_ID
