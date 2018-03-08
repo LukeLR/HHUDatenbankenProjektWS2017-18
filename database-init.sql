@@ -24,16 +24,7 @@ SELECT '';
 
 CREATE TABLE Adresse (
     Strasse VARCHAR(70) NOT NULL CONSTRAINT Strassenname CHECK (
-        INSTR(Strasse, '0') == 0 AND
-        INSTR(Strasse, '1') == 0 AND
-        INSTR(Strasse, '2') == 0 AND
-        INSTR(Strasse, '3') == 0 AND
-        INSTR(Strasse, '4') == 0 AND
-        INSTR(Strasse, '5') == 0 AND
-        INSTR(Strasse, '6') == 0 AND
-        INSTR(Strasse, '7') == 0 AND
-        INSTR(Strasse, '8') == 0 AND
-        INSTR(Strasse, '9') == 0 AND
+        Strasse NOT GLOB ('*[0-9]*') AND
         LENGTH(CAST(Strasse AS VARCHAR)) > 0),
     Hausnummer VARCHAR(10) NOT NULL CONSTRAINT Hausnummer CHECK(
         CAST (substr(Hausnummer, 1, LENGTH(Hausnummer) - 1) AS INTEGER)
@@ -44,16 +35,7 @@ CREATE TABLE Adresse (
     PLZ DECIMAL(5,0) NOT NULL CONSTRAINT PLZ CHECK(
         LENGTH(CAST(PLZ AS VARCHAR)) == 5),
     Ort VARCHAR(40) NOT NULL CONSTRAINT Ort CHECK (
-        INSTR(Ort, '0') == 0 AND
-        INSTR(Ort, '1') == 0 AND
-        INSTR(Ort, '2') == 0 AND
-        INSTR(Ort, '3') == 0 AND
-        INSTR(Ort, '4') == 0 AND
-        INSTR(Ort, '5') == 0 AND
-        INSTR(Ort, '6') == 0 AND
-        INSTR(Ort, '7') == 0 AND
-        INSTR(Ort, '8') == 0 AND
-        INSTR(Ort, '9') == 0 AND
+        Ort NOT GLOB ('*[0-9]*') AND
         LENGTH(CAST(Ort AS VARCHAR)) > 0),
     Adressen_ID INTEGER PRIMARY KEY NOT NULL
     );
@@ -62,28 +44,10 @@ CREATE TABLE Kunde (
     E_Mail_Adresse VARCHAR(320) NOT NULL CONSTRAINT E_Mail_Adresse CHECK (
         E_Mail_Adresse LIKE '%_@_%.__%'),
     Vorname VARCHAR(50) NOT NULL CONSTRAINT Vorname CHECK (
-        INSTR(Vorname, '0') == 0 AND
-        INSTR(Vorname, '1') == 0 AND
-        INSTR(Vorname, '2') == 0 AND
-        INSTR(Vorname, '3') == 0 AND
-        INSTR(Vorname, '4') == 0 AND
-        INSTR(Vorname, '5') == 0 AND
-        INSTR(Vorname, '6') == 0 AND
-        INSTR(Vorname, '7') == 0 AND
-        INSTR(Vorname, '8') == 0 AND
-        INSTR(Vorname, '9') == 0 AND
+        Vorname NOT GLOB ('*[0-9]*') AND
         LENGTH(CAST(Vorname AS VARCHAR)) > 0),
     Nachname VARCHAR(30) NOT NULL CONSTRAINT Nachname CHECK (
-        INSTR(Nachname, '0') == 0 AND
-        INSTR(Nachname, '1') == 0 AND
-        INSTR(Nachname, '2') == 0 AND
-        INSTR(Nachname, '3') == 0 AND
-        INSTR(Nachname, '4') == 0 AND
-        INSTR(Nachname, '5') == 0 AND
-        INSTR(Nachname, '6') == 0 AND
-        INSTR(Nachname, '7') == 0 AND
-        INSTR(Nachname, '8') == 0 AND
-        INSTR(Nachname, '9') == 0 AND
+        Nachname NOT GLOB ('*[0-9]*') AND
         LENGTH(CAST(Nachname AS VARCHAR)) > 0),
     Passwort VARCHAR(64) NOT NULL CONSTRAINT Passwort CHECK (
         LENGTH(CAST(Passwort AS VARCHAR)) >= 6),
