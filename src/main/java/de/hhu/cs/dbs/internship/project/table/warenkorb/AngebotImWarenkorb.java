@@ -84,8 +84,27 @@ public class AngebotImWarenkorb extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updateAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Angebot_im_Warenkorb "
+				+ "SET Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ? "
+				+ "WHERE Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ?");
+		updateAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
+		updateAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID"))));
+		updateAngebotImWarenkorbStatement.setString(3, String.valueOf(newData.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
+		updateAngebotImWarenkorbStatement.setInt(4, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Anzahl"))));
+		updateAngebotImWarenkorbStatement.setInt(5, Integer.valueOf(String.valueOf(oldData.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
+		updateAngebotImWarenkorbStatement.setInt(6, Integer.valueOf(String.valueOf(oldData.get("Angebot_im_Warenkorb.Angebots_ID"))));
+		updateAngebotImWarenkorbStatement.setString(7, String.valueOf(oldData.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
+		updateAngebotImWarenkorbStatement.setInt(8, Integer.valueOf(String.valueOf(oldData.get("Angebot_im_Warenkorb.Anzahl"))));
+		updateAngebotImWarenkorbStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
+				String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID")) + "-"
+				+ String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID"))
+				+ String.valueOf(newData.get("Angebot_im_Warenkorb.Anbieterbezeichnung")) + "-"
+				+ String.valueOf(newData.get("Angebot_im_Warenkorb.Anzahl")));
 	}
 
 	@Override
