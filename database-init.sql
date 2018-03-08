@@ -94,11 +94,7 @@ CREATE TABLE Kunde (
 
 CREATE TABLE Premiumkunde (
     Ablaufdatum VARCHAR NOT NULL CONSTRAINT Ablaufdatum CHECK (
-        Ablaufdatum LIKE '%%%%-%%-%%' AND
-        CAST(SUBSTR(Ablaufdatum, 1, 4) AS INTEGER) == SUBSTR(Ablaufdatum, 1, 4) AND
-        CAST(SUBSTR(Ablaufdatum, 6, 2) AS INTEGER) == SUBSTR(Ablaufdatum, 6, 2) AND
-        CAST(SUBSTR(Ablaufdatum, 9, 2) AS INTEGER) == SUBSTR(Ablaufdatum, 9, 2) AND
-        Ablaufdatum >= CURRENT_DATE),
+        DATE(Ablaufdatum) IS NOT NULL),
     Studierendenausweis BLOB,
     E_Mail_Adresse VARCHAR(320) NOT NULL,
     PRIMARY KEY (E_Mail_Adresse),
@@ -134,10 +130,7 @@ CREATE TABLE Lieferdienst(
 
 CREATE TABLE Warenkorb (
     Bestelldatum VARCHAR CONSTRAINT Bestelldatum CHECK (
-        Bestelldatum LIKE '%%%%-%%-%%' AND
-        CAST(SUBSTR(Bestelldatum, 1, 4) AS INTEGER) == SUBSTR(Bestelldatum, 1, 4) AND
-        CAST(SUBSTR(Bestelldatum, 6, 2) AS INTEGER) == SUBSTR(Bestelldatum, 6, 2) AND
-        CAST(SUBSTR(Bestelldatum, 9, 2) AS INTEGER) == SUBSTR(Bestelldatum, 9, 2)),
+        DATE(Bestelldatum) IS NOT NULL),
     Bestellstatus VARCHAR(20) NOT NULL CONSTRAINT Bestellstatus CHECK (
         Bestellstatus IN (
             'In Bearbeitung', 'Storniert', 'Bezahlt', 'Versandfertig',
@@ -148,11 +141,7 @@ CREATE TABLE Warenkorb (
     E_Mail_Adresse VARCHAR(320) NOT NULL,
     Lieferdienst_Bezeichnung VARCHAR(40) NOT NULL,
     Lieferdatum VARCHAR CONSTRAINT Lieferdatum CHECK (
-        Lieferdatum LIKE '%%%%-%%-%%' AND
-        CAST(SUBSTR(Lieferdatum, 1, 4) AS INTEGER) == SUBSTR(Lieferdatum, 1, 4) AND
-        CAST(SUBSTR(Lieferdatum, 6, 2) AS INTEGER) == SUBSTR(Lieferdatum, 6, 2) AND
-        CAST(SUBSTR(Lieferdatum, 9, 2) AS INTEGER) == SUBSTR(Lieferdatum, 9, 2) AND
-        Lieferdatum >= CURRENT_DATE),
+        DATE(Lieferdatum) IS NOT NULL),
     FOREIGN KEY (E_Mail_Adresse) REFERENCES Kunde (E_Mail_Adresse),
     FOREIGN KEY (Lieferdienst_Bezeichnung)
         REFERENCES Lieferdienst (Lieferdienst_Bezeichnung)
@@ -163,15 +152,9 @@ CREATE TABLE Lieferabo (
         TYPEOF(Intervall) == 'integer' AND
         Intervall > 0),
     Beginn VARCHAR NOT NULL CONSTRAINT Beginn_Datum CHECK (
-        Beginn LIKE '%%%%-%%-%%' AND
-        CAST(SUBSTR(Beginn, 1, 4) AS INTEGER) == SUBSTR(Beginn, 1, 4) AND
-        CAST(SUBSTR(Beginn, 6, 2) AS INTEGER) == SUBSTR(Beginn, 6, 2) AND
-        CAST(SUBSTR(Beginn, 9, 2) AS INTEGER) == SUBSTR(Beginn, 9, 2)),
+        DATE(Beginn) IS NOT NULL),
     Ende VARCHAR NOT NULL CONSTRAINT Ende_Datum CHECK (
-        Ende LIKE '%%%%-%%-%%' AND
-        CAST(SUBSTR(Beginn, 1, 4) AS INTEGER) == SUBSTR(Beginn, 1, 4) AND
-        CAST(SUBSTR(Beginn, 6, 2) AS INTEGER) == SUBSTR(Beginn, 6, 2) AND
-        CAST(SUBSTR(Beginn, 9, 2) AS INTEGER) == SUBSTR(Beginn, 9, 2)),
+        DATE(Ende) IS NOT NULL),
     Warenkorb_ID INTEGER NOT NULL,
     PRIMARY KEY (Warenkorb_ID),
     FOREIGN KEY (Warenkorb_ID) REFERENCES Warenkorb (Warenkorb_ID),
@@ -187,11 +170,7 @@ CREATE TABLE Newsletter (
         DEFAULT CURRENT_DATE
         --ON UPDATE CURRENT_DATE
         CONSTRAINT Newsletter_Datum CHECK (
-            Datum LIKE '%%%%-%%-%%' AND
-            CAST(SUBSTR(Datum, 1, 4) AS INTEGER) == SUBSTR(Datum, 1, 4) AND
-            CAST(SUBSTR(Datum, 6, 2) AS INTEGER) == SUBSTR(Datum, 6, 2) AND
-            CAST(SUBSTR(Datum, 9, 2) AS INTEGER) == SUBSTR(Datum, 9, 2)
-        ),
+            DATE(Newsletter_Datum) IS NOT NULL),
     Newsletter_ID INTEGER PRIMARY KEY NOT NULL,
     E_Mail_Adresse VARCHAR(320) NOT NULL,
     FOREIGN KEY (E_Mail_Adresse) REFERENCES Angestellter (E_Mail_Adresse)
