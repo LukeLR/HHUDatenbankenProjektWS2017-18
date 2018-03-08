@@ -114,7 +114,7 @@ public class AngebotImWarenkorb extends Table {
 		
 		PreparedStatement deleteAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Angebot_im_Warenkorb"
-				+ "WHERE Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ?");
+				+ "WHERE Warenkorb_ID = ? AND Angebots_ID = ? AND Anbieterbezeichnung = ? AND Anzahl = ?");
 		deleteAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
 		deleteAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))));
 		deleteAngebotImWarenkorbStatement.setString(3, String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
