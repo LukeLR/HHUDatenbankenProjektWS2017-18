@@ -1,5 +1,5 @@
 --Show-Artikel_empfielt_Artikel-Query
-SELECT
+/*SELECT
     'Artikel1-Bezeichnung',
     'Artikel1-Beschreibung',
     'Artikel1-Bild',
@@ -20,10 +20,10 @@ FROM (
     ON Artikel_empfiehlt_Artikel.Artikel_ID1 = Artikel.Artikel_ID
 )
 JOIN Artikel
-ON 'Artikel2-Artikel_ID' = Artikel.Artikel_ID
+ON 'Artikel2-Artikel_ID' = Artikel.Artikel_ID */
 
 --simpler version: (above doesn't work)
-SELECT
+/* SELECT
     a1.Bezeichnung AS 'Artikel1-Bezeichnung',
     a1.Beschreibung AS 'Artikel1-Beschreibung',
     a1.Bild AS 'Artikel1-Bild',
@@ -37,10 +37,10 @@ JOIN Artikel a1
 ON a.Artikel_ID1 = a1.Artikel_ID
 JOIN Artikel a2
 ON a.Artikel_ID2 = a2.Artikel_ID
-WHERE a1.Bezeichnung LIKE '%Su%'
+WHERE a1.Bezeichnung LIKE '%Su%'*/
 
 --Show-Anbieter-bietet-an-Query
-SELECT
+/*SELECT
     Anbieter_bietet_an.Anbieterbezeichnung,
     Anbieter_bietet_an.Angebots_ID,
     Anbieter_bietet_an.Bestand,
@@ -54,4 +54,7 @@ FROM Anbieter_bietet_an
 JOIN Angebot
 ON Anbieter_bietet_an.Angebots_ID = Angebot.Angebots_ID
 JOIN Artikel
-ON Angebot.Artikel_ID = Artikel.Artikel_ID
+ON Angebot.Artikel_ID = Artikel.Artikel_ID*/
+
+--Check-Lagerbestand-Query für Trigger
+
