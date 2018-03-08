@@ -262,7 +262,7 @@ BEGIN
         WHERE E_Mail_Adresse = NEW.E_Mail_Adresse;
 END;
 
-CREATE TRIGGER newsletter_anzahl_artikel
+CREATE TRIGGER newsletter_zu_viele_artikel
 BEFORE INSERT ON Artikel_im_Newsletter
 WHEN EXISTS (
     SELECT COUNT(*) FROM Artikel_im_Newsletter
@@ -272,6 +272,12 @@ WHEN EXISTS (
 BEGIN
     SELECT RAISE (ABORT, 'Maximal 10 Artikel im Newsletter!');
 END;
+
+/* TODO: newsletter_zu_wenig_artikel? Aber wie lässt sich das realisieren,
+ *       wenn die Artikel dem Newsletter nacheinander hinzugefügt werden,
+ *       außer mit COMMIT? Und das würde bedeuten, dass man die UI um-
+ *       programmieren müsste.
+ */
 
 /*==========================================
  *================ INSERTS =================
