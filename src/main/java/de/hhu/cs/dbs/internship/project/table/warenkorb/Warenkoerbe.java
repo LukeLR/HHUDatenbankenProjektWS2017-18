@@ -37,7 +37,8 @@ public class Warenkoerbe extends Table {
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
-		String selectQuery = "SELECT Warenkorb.E_Mail_Adresse, "
+		String selectQuery = "SELECT Warenkorb.Warenkorb_ID"
+				+ "Warenkorb.E_Mail_Adresse, "
 				+ "Warenkorb.Bestelldatum, "
 				+ "Warenkorb.Bestellstatus, "
 				+ "Warenkorb.Lieferdienst_Bezeichnung, "
@@ -69,8 +70,22 @@ public class Warenkoerbe extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updateWarenkoerbeStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Warenkoerbe SET "
+				+ "Bestelldatum = ?, Bestellstatus = ?, E_Mail_Adresse = ?, "
+				+ "Lieferdienst_Bezeichnung = ?, Lieferdatum = ? "
+				+ "WHERE Warenkorb_ID = ?");
+		updateWarenkoerbeStatement.setString(1, String.valueOf(newData.get("Warenkorb.Bestelldatum")));
+		updateWarenkoerbeStatement.setString(2, String.valueOf(newData.get("Warenkorb.Bestellstatus")));
+		updateWarenkoerbeStatement.setString(3, String.valueOf(newData.get("Warenkorb.E_Mail_Adresse")));
+		updateWarenkoerbeStatement.setString(4, String.valueOf(newData.get("Warenkorb.Lieferdienst_Bezeichnung")));
+		updateWarenkoerbeStatement.setString(5, String.valueOf(newData.get("Warenkorb.Lieferdatum")));
+		updateWarenkoerbeStatement.setString(6, String.valueOf(oldData.get("Warenkorb.Warenkorb_ID")));
+		updateWarenkoerbeStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(oldData.get("Warenkorb.Warenkorb_ID")));
 	}
 
 	@Override
