@@ -134,7 +134,7 @@ CREATE TABLE Newsletter (
         DEFAULT CURRENT_DATE
         --ON UPDATE CURRENT_DATE
         CONSTRAINT Newsletter_Datum CHECK (
-            DATE(Newsletter_Datum) IS NOT NULL),
+            DATE(Datum) IS NOT NULL),
     Newsletter_ID INTEGER PRIMARY KEY NOT NULL,
     E_Mail_Adresse VARCHAR(320) NOT NULL,
     FOREIGN KEY (E_Mail_Adresse) REFERENCES Angestellter (E_Mail_Adresse)
