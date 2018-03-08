@@ -115,7 +115,7 @@ public class AngebotImWarenkorb extends Table {
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
 		PreparedStatement deleteAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
-				"DELETE FROM Angebot_im_Warenkorb"
+				"DELETE FROM Angebot_im_Warenkorb "
 				+ "WHERE Warenkorb_ID = ? AND Angebots_ID = ? AND Anbieterbezeichnung = ? AND Anzahl = ?");
 		deleteAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
 		deleteAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))));
