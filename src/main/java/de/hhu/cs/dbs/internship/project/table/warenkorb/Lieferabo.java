@@ -55,7 +55,7 @@ public class Lieferabo extends Table {
 		PreparedStatement insertLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Lieferabo (Intervall, Beginn, Ende, Warenkorb_ID) "
 				+ "VALUES (?, ?, ?, ?)");
-		insertLieferaboStatement.setString(1, String.valueOf(data.get("Lieferabo.Intervall")));
+		insertLieferaboStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Lieferabo.Intervall"))));
 		insertLieferaboStatement.setString(2, String.valueOf(data.get("Lieferabo.Beginn")));
 		insertLieferaboStatement.setString(3, String.valueOf(data.get("Lieferabo.Ende")));
 		insertLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Lieferabo.Warenkorb_ID"))));
@@ -71,11 +71,11 @@ public class Lieferabo extends Table {
 		PreparedStatement updateLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Lieferabo SET Intervall = ?, Beginn = ?, Ende = ?, Warenkorb_ID = ? "
 				+ "WHERE Intervall = ? AND Beginn = ? AND Ende = ? AND Warenkorb_ID = ?");
-		updateLieferaboStatement.setString(1, String.valueOf(newData.get("Lieferabo.Intervall")));
+		updateLieferaboStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Lieferabo.Intervall"))));
 		updateLieferaboStatement.setString(2, String.valueOf(newData.get("Lieferabo.Beginn")));
 		updateLieferaboStatement.setString(3, String.valueOf(newData.get("Lieferabo.Ende")));
 		updateLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(newData.get("Lieferabo.Warenkorb_ID"))));
-		updateLieferaboStatement.setString(5, String.valueOf(oldData.get("Lieferabo.Intervall")));
+		updateLieferaboStatement.setInt(5, Integer.valueOf(String.valueOf(oldData.get("Lieferabo.Intervall"))));
 		updateLieferaboStatement.setString(6, String.valueOf(oldData.get("Lieferabo.Beginn")));
 		updateLieferaboStatement.setString(7, String.valueOf(oldData.get("Lieferabo.Ende")));
 		updateLieferaboStatement.setInt(8, Integer.valueOf(String.valueOf(oldData.get("Lieferabo.Warenkorb_ID"))));
@@ -91,7 +91,7 @@ public class Lieferabo extends Table {
 		PreparedStatement deleteLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Lieferabo "
 				+ "WHERE Intervall = ? AND Beginn = ? AND Ende = ? AND Warenkorb_ID = ?");
-		deleteLieferaboStatement.setString(1, String.valueOf(data.get("Lieferabo.Intervall")));
+		deleteLieferaboStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Lieferabo.Intervall"))));
 		deleteLieferaboStatement.setString(2, String.valueOf(data.get("Lieferabo.Beginn")));
 		deleteLieferaboStatement.setString(3, String.valueOf(data.get("Lieferabo.Ende")));
 		deleteLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Lieferabo.Warenkorb_ID"))));
