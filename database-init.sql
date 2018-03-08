@@ -279,6 +279,19 @@ END;
  *       programmieren müsste.
  */
 
+CREATE TRIGGER ausreichender_lagerbestand
+BEFORE INSERT ON Angebot_im_Warenkorb
+WHEN NOT EXISTS (
+    SELECT Angebots_ID, Anbieterbezeichnung, Bestand
+    FROM Anbieter_bietet_an
+    WHERE Angebots_ID = NEW.Angebots_ID
+    AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+    AND NEW.Anzahl < Bestand
+)
+BEGIN
+    SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!');
+END;
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
