@@ -217,3 +217,5 @@ gradle.properties
 
 *.sqlite
 *.sqlite*
+
+test.db
