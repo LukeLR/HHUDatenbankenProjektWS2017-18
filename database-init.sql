@@ -267,7 +267,7 @@ BEFORE INSERT ON Artikel_im_Newsletter
 WHEN EXISTS (
     SELECT COUNT(*) FROM Artikel_im_Newsletter
     GROUP BY Artikel_im_Newsletter.Newsletter_ID
-    HAVING COUNT(*) > 10
+    HAVING COUNT(*) > 9
 )
 BEGIN
     SELECT RAISE (ABORT, 'Maximal 10 Artikel im Newsletter!');
