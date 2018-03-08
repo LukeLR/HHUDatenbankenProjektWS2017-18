@@ -90,8 +90,14 @@ public class Warenkoerbe extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement insertWarenkoerbeStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Warenkoerbe WHERE Warenkorb_ID = ?");
+		insertWarenkoerbeStatement.setString(1, String.valueOf(data.get("Warenkorb.Warenkorb_ID")));
+		insertWarenkoerbeStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Warenkorb.Warenkorb_ID")));
 	}
 
 }
