@@ -33,8 +33,19 @@ public class Warenkoerbe extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
+		
+		String selectQuery = "SELECT Warenkorb.Warenkorb_ID, "
+				+ "Warenkorb.E_Mail_Adresse, "
+				+ "Warenkorb.Bestelldatum, "
+				+ "Warenkorb.Bestellstatus, "
+				+ "Warenkorb.Lieferdienst_Bezeichnung, "
+				+ "Warenkorb.Lieferdatum "
+				+ "FROM Warenkorb "
+				+ "WHERE Warenkorb.Warenkorb_ID = '" + String.valueOf(data.get("Warenkorb.Warenkorb_ID")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
+		return selectQuery;
 	}
 
 	@Override
