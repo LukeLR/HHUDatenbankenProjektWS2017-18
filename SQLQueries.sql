@@ -57,4 +57,8 @@ JOIN Artikel
 ON Angebot.Artikel_ID = Artikel.Artikel_ID*/
 
 --Check-Lagerbestand-Query für Trigger
-
+SELECT Angebots_ID, SUM(Bestand)
+FROM Anbieter_bietet_an
+GROUP BY Angebots_ID
+HAVING Angebots_ID = 5 AND
+SUM(Bestand) > 400
