@@ -33,8 +33,17 @@ public class Lieferabo extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
+		
+		String selectQuery = "SELECT Lieferabo.Warenkorb_ID, "
+				+ "Lieferabo.Intervall, "
+				+ "Lieferabo.Beginn, "
+				+ "Lieferabo.Ende "
+				+ "FROM Lieferabo "
+				+ "WHERE Lieferabo.Warenkorb_ID = '" + String.valueOf(data.get("Lieferabo.Warenkorb_ID")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
+		return selectQuery;
 	}
 
 	@Override
