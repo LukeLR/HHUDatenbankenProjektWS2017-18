@@ -86,8 +86,18 @@ public class Lieferabo extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Lieferabo "
+				+ "WHERE Intervall = ? AND Beginn = ? AND Ende = ? AND Warenkorb_ID = ?");
+		deleteLieferaboStatement.setString(1, String.valueOf(data.get("Lieferabo.Intervall")));
+		deleteLieferaboStatement.setString(2, String.valueOf(data.get("Lieferabo.Beginn")));
+		deleteLieferaboStatement.setString(3, String.valueOf(data.get("Lieferabo.Ende")));
+		deleteLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Lieferabo.Warenkorb_ID"))));
+		deleteLieferaboStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Lieferabo.Warenkorb_ID")));
 	}
 
 }
