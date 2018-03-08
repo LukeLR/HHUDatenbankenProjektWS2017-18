@@ -11,7 +11,7 @@ public class Lieferabo extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
-		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
+		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
 		String selectQuery = "SELECT Warenkorb.E_Mail_Adresse, "
 				+ "Lieferabo.Warenkorb_ID, "
