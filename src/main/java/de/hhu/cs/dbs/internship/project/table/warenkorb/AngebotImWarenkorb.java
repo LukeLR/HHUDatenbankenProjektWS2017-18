@@ -89,7 +89,7 @@ public class AngebotImWarenkorb extends Table {
 		PreparedStatement updateAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Angebot_im_Warenkorb "
 				+ "SET Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ? "
-				+ "WHERE Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ?");
+				
 		updateAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
 		updateAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID"))));
 		updateAngebotImWarenkorbStatement.setString(3, String.valueOf(newData.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
@@ -109,8 +109,22 @@ public class AngebotImWarenkorb extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Angebot_im_Warenkorb"
+				+ "WHERE Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ?");
+		deleteAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
+		deleteAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))));
+		deleteAngebotImWarenkorbStatement.setString(3, String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
+		deleteAngebotImWarenkorbStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl"))));
+		deleteAngebotImWarenkorbStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID")) + "-"
+				+ String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))
+				+ String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")) + "-"
+				+ String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl")));
 	}
 
 }
