@@ -52,7 +52,7 @@ CREATE TABLE Kunde (
         LENGTH(CAST(Nachname AS VARCHAR)) > 0),
     Passwort VARCHAR(64) NOT NULL CONSTRAINT Passwort CHECK (
         LENGTH(CAST(Passwort AS VARCHAR)) >= 6),
-    Adressen_ID CONSTRAINT Kunde_Adressen_ID INTEGER NOT NULL,
+    Adressen_ID INTEGER CONSTRAINT Kunde_Adressen_ID NOT NULL,
     CONSTRAINT Kunde_E_Mail_Adresse_Primary_Key
         PRIMARY KEY(E_Mail_Adresse),
     CONSTRAINT Kunde_Adressen_ID_Foreign_Key
