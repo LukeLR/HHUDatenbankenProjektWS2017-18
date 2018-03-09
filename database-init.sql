@@ -304,7 +304,9 @@ END;
  * überprüft, ob diese Anzahl dieses Angebotes bei diesem Anbieter
  * überhaupt vorhanden ist, da der dafür zuständige andere Trigger nicht
  * mehr ausgeführt wurde. Deshalb kombiniert dieser Trigger beide Trigger
- * in einem.
+ * in einem. Zusätzlich wurde noch ein dritter Trigger eingefügt, welcher
+ * überprüft, ob das Angebot überhaupt von dem gewünschten Anbieter
+ * angeboten wird.
  */
 CREATE TRIGGER angebot_im_warenkorb
 BEFORE INSERT ON Angebot_im_Warenkorb
@@ -334,6 +336,15 @@ OR EXISTS (
     WHERE Angebots_ID = NEW.Angebots_ID
     AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
     AND Warenkorb_ID = NEW.Warenkorb_ID
+)
+/* Diese dritte WHEN-Klausel überprüft, ob das Angebot überhaupt von dem
+ * gewünschten Anbieter angeboten wird.
+ */
+OR NOT EXISTS (
+    SELECT Bestand
+    FROM Anbieter_bietet_an
+    WHERE Angebots_ID = NEW.Angebots_ID
+    AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
 )
 BEGIN
     /* Dieses erste SELECT-Statement bricht die Transaktion ab, wenn
@@ -389,9 +400,16 @@ BEGIN
         AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
         AND Warenkorb_ID = NEW.Warenkorb_ID
     );
+    SELECT RAISE (ABORT, 'Anbieter bietet dieses Angebot nicht an!')
+    WHERE NOT EXISTS (
+        SELECT Bestand
+        FROM Anbieter_bietet_an
+        WHERE Angebots_ID = NEW.Angebots_ID
+        AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+    );
 END;
 
-CREATE TRIGGER anbieter_bietet_angebot_nicht_an
+/*CREATE TRIGGER anbieter_bietet_angebot_nicht_an
 BEFORE INSERT ON Angebot_im_Warenkorb
 WHEN NOT EXISTS (
     SELECT Bestand
@@ -401,7 +419,7 @@ WHEN NOT EXISTS (
 )
 BEGIN
     SELECT RAISE (ABORT, 'Anbieter bietet dieses Angebot nicht an!');
-END;
+END;*/
 
 /*==========================================
  *================ INSERTS =================
