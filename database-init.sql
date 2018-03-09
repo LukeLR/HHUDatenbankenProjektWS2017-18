@@ -349,7 +349,7 @@ BEGIN
             )
         ) <= NEW.Anzahl
         THEN
-            SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!');
+            SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!')
     END;
 END;
 
