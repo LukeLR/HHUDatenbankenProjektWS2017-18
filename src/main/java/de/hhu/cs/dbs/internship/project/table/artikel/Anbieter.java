@@ -65,11 +65,7 @@ public class Anbieter extends Table {
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
-		/*
-		 * TODO: Auch hier gilt (Analog zum Angebot): Was ist mit Anbietern, die noch Angebote anbieten? Sollen diese
-		 * Anbieter auch gelöscht werden können? Dann müssten auch alle Angebote gelöscht werden, die sie noch anbieten,
-		 * und diese auch aus allen Warenkörben, etc. (Da sonst der FOREIGN KEY CONSTRAINT fehlschlägt.)
-		 */
+		
 		PreparedStatement deleteAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Anbieter WHERE Anbieterbezeichnung = ?");
 		deleteAnbieterStatement.setString(1, String.valueOf(data.get("Anbieter.Anbieterbezeichnung")));
