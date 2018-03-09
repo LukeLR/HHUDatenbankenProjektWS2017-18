@@ -536,6 +536,19 @@ BEGIN
     WHERE Lieferdienst_Bezeichnung = OLD.Lieferdienst_Bezeichnung;*/
 END;
 
+CREATE TRIGGER delete_warenkorb
+BEFORE DELETE ON Warenkorb
+BEGIN
+    DELETE FROM Angebot_im_Warenkorb
+    WHERE Warenkorb_ID = OLD.Warenkorb_ID;
+    
+    DELETE FROM Lieferabo
+    WHERE Warenkorb_ID = OLD.Warenkorb_ID;
+    
+    /*DELETE FROM Warenkorb
+    WHERE Warenkorb_ID = OLD.Warenkorb_ID;*/
+END;
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
