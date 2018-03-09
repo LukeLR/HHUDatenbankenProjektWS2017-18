@@ -653,6 +653,10 @@ BEGIN
     WHERE Schlagwort = OLD.Schlagwort;*/
 END;
 
+/* Wenn ein Premiumkunde gelöscht werden soll, müssen zunächst alle
+ * Lieferabos entfernt werden, die Warenkörbe dieses Premiumkunden
+ * referenzieren.
+ */
 CREATE TRIGGER delete_premiumkunde
 BEFORE DELETE ON Premiumkunde
 BEGIN
