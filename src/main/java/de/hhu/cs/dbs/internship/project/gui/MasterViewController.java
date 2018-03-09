@@ -57,7 +57,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 		
 		if (permissionLevel >= Permission.READ_ONLY) {
 			logger.info("User is at least of permission level read only.");
-			GUIHelpers.addTableOfClassToTree(new Account(), "Account", treeItems);
+			TreeItem<TableViewController> accounts = GUIHelpers.addTableOfClassToTree(new Account(), "Account", treeItems);
 			
 			if (permissionLevel >= Permission.CUSTOMER) {
 				logger.info("User is at least of permission level customer.");
@@ -83,9 +83,9 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 					
 					if (permissionLevel >= Permission.SHOP_ASSISTANT) {
 						logger.info("User is at least of permission level shop assistant.");
-						TreeItem<TableViewController> alleAccounts = GUIHelpers.addTableOfClassToTree(new AlleAccounts(), "Alle Accounts", treeItems);
-						GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", alleAccounts);
-						GUIHelpers.addTableOfClassToTreeItem(new Angestellter(), "Angestellte", alleAccounts);
+						GUIHelpers.addTableOfClassToTreeItem(new AlleAccounts(), "Alle Accounts", accounts);
+						GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", accounts);
+						GUIHelpers.addTableOfClassToTreeItem(new Angestellter(), "Angestellte", accounts);
 						
 						TreeItem<TableViewController> schlagwort = GUIHelpers.addTableOfClassToTree(new Schlagwort(), "Schlagworte", treeItems);
 						GUIHelpers.addTableOfClassToTreeItem(new ArtikelGehoertZuSchlagwort(), "Artikel hat Schlagwort", schlagwort);
