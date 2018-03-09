@@ -324,6 +324,9 @@ BEGIN
         WHERE E_Mail_Adresse = NEW.E_Mail_Adresse;
 END;
 
+/* Dieser Trigger stellt sicher, dass jeder Newsletter maximal 10
+ * Artikel enthält.
+ */
 CREATE TRIGGER newsletter_zu_viele_artikel
 BEFORE INSERT ON Artikel_im_Newsletter
 WHEN EXISTS (
