@@ -284,25 +284,6 @@ END;
  * Trigger, ob der gewählte Anbieter dieses Angebot noch in der
  * gewünschten Anzahl anbietet.
  */
-/*CREATE TRIGGER ausreichender_lagerbestand
-BEFORE INSERT ON Angebot_im_Warenkorb
-WHEN(
-    SELECT (
-        SELECT Bestand
-        FROM Anbieter_bietet_an
-        WHERE Angebots_ID = NEW.Angebots_ID
-        AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
-    ) -
-    (
-        SELECT SUM(Anzahl)
-        FROM Angebot_im_Warenkorb
-        WHERE Angebots_ID = NEW.Angebots_ID
-        AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
-    )
-) <= NEW.Anzahl
-BEGIN
-    SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!');
-END;*/
 
 /* Wenn ein Angebot eines Anbieters in einen Warenkorb gelegt werden soll,
  * der schon das Angebot dieses Anbieters enthält, dann soll die Anzahl
@@ -310,25 +291,6 @@ END;*/
  * ein zweites Mal in den Warenkorb zu legen, da der Warenkorb nicht
  * zweimal dasselbe Angebot desselben Anbieters enthalten kann.
  */
-
-/*CREATE TRIGGER warenkorb_enthaelt_angebot_bereits
-BEFORE INSERT ON Angebot_im_Warenkorb
-WHEN EXISTS (
-    SELECT Anzahl
-    FROM Angebot_im_Warenkorb
-    WHERE Angebots_ID = NEW.Angebots_ID
-    AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
-    AND Warenkorb_ID = NEW.Warenkorb_ID
-)
-BEGIN
-    --SELECT RAISE (ABORT, 'Dieser Warenkorb enthält das Angebot dieses Anbieters bereits!');
-    UPDATE Angebot_im_Warenkorb
-    SET Anzahl = Anzahl + NEW.Anzahl
-    WHERE Angebots_ID = NEW.Angebots_ID
-    AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
-    AND Warenkorb_ID = NEW.Warenkorb_ID;
-    --SELECT RAISE (IGNORE);
-END;*/
 
 CREATE TRIGGER angebot_im_warenkorb
 BEFORE INSERT ON Angebot_im_Warenkorb
