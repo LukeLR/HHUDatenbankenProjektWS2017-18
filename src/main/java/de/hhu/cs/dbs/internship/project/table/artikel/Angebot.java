@@ -70,12 +70,7 @@ public class Angebot extends Table {
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
-		/*
-		 * TODO: Wenn Angebote noch in einem Warenkorb oder in einer anderen Tabelle liegen, können diese nicht gelöscht
-		 * werden (Foreign Key Constraint). Zu entscheiden: Sollen diese Angebote dann auch aus allen Warenkörben gelöscht
-		 * werden können, damit sie aus der Datenbank gelöscht werden können? Oder sollen solche Angebote einfach nicht
-		 * gelöscht werden können?
-		 */
+		
 		PreparedStatement deleteAngebotStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Angebot WHERE Angebots_ID = ?");
 		deleteAngebotStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot.Angebots_ID"))));
