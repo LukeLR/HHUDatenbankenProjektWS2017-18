@@ -507,6 +507,15 @@ BEGIN
     WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
 END;
 
+/*==========================================
+ *============ DELETE-TRIGGER ==============
+ *==========================================*/
+
+SELECT '==========================================';
+SELECT '============ DELETE-TRIGGER ==============';
+SELECT '==========================================';
+SELECT '';
+
 /* Wenn ein Kunde seinen Account löscht, müssen zunächst alle Referenzen
  * auf diesen Account aus allen anderen Tabellen entfernt werden. Auch
  * hier droht sonst ein FOREIGN KEY CONSTRAINT-error.
