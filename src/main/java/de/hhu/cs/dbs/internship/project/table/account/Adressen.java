@@ -30,8 +30,14 @@ public class Adressen extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
+		
+		String selectQuery = "SELECT Strasse, Hausnummer, PLZ, Ort, Adressen_ID "
+				+ "FROM Adresse "
+				+ "WHERE Adressen_ID = '" + String.valueOf(data.get("Adresse.Adressen_ID")) + "'";
+		
+		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
+		return selectQuery;
 	}
 
 	@Override
