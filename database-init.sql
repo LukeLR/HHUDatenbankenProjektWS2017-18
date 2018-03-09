@@ -577,7 +577,16 @@ BEGIN
     /*DELETE FROM Artikel
     WHERE Artikel_ID = OLD.Artikel_ID;*/
 END;
-   
+
+CREATE TRIGGER delete_schlagwort
+BEFORE DELETE ON Schlagwort
+BEGIN
+    DELETE FROM Artikel_gehoert_zu_Schlagwort
+    WHERE Schlagwort = OLD.Schlagwort;
+    
+    /*DELETE FROM Schlagwort
+    WHERE Schlagwort = OLD.Schlagwort;*/
+END;
 
 /*==========================================
  *================ INSERTS =================
