@@ -335,6 +335,9 @@ BEGIN
     SELECT RAISE (ABORT, 'Maximal 10 Artikel im Newsletter!');
 END;
 
+/* Dieser Trigger stellt sicher, dass jeder Artikel maximal 3 andere
+ * Artikel empfiehlt.
+ */
 CREATE TRIGGER artikel_empfiehlt_zu_viele_artikel
 BEFORE INSERT ON Artikel_empfiehlt_Artikel
 WHEN EXISTS (
