@@ -26,47 +26,17 @@ public class AccountDataHelper {
 					String.valueOf(oldData.get("Adresse.Ort")), String.valueOf(newData.get("Adresse.Straße")),
 					String.valueOf(newData.get("Adresse.Hausnummer")), Integer.valueOf(String.valueOf(newData.get("Adresse.PLZ"))),
 					String.valueOf(newData.get("Adresse.Ort")), con);
-
-			/* Check if E-Mail-Address has changed. Re-Insert and delete customer if it did, to ensure
-			 * foreign key constraints on occurrence of that customer in other tables during the update.
-			 */
-			PreparedStatement updateKundeStatement;
-			if (!(String.valueOf(oldData.get("Kunde.E-Mail-Adresse"))).equals(String.valueOf(newData.get("Kunde.E-Mail-Adresse")))) {
-				logger.info("E-Mail-Address changed!");
-				updateKundeStatement = con.prepareStatement(
-						"INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID)"
-								+ "VALUES (?, ?, ?, ?, ?)");
-				updateKundeStatement.setString(1, String.valueOf(newData.get("Kunde.E-Mail-Adresse")));
-				updateKundeStatement.setString(2, String.valueOf(newData.get("Kunde.Vorname")));
-				updateKundeStatement.setString(3, String.valueOf(newData.get("Kunde.Nachname")));
-				updateKundeStatement.setString(4, String.valueOf(newData.get("Kunde.Passwort")));
-				updateKundeStatement.setInt(5, addressID);
-				updateKundeStatement.executeUpdate();
-
-				String eMailOld = String.valueOf(oldData.get("Kunde.E-Mail-Adresse"));
-				String eMailNew = String.valueOf(newData.get("Kunde.E-Mail-Adresse"));
-
-				for (String tablename:DatabaseInfo.TABLES_WITH_E_MAIL_ADDRESS_WITHOUT_KUNDE) {
-					AccountDataHelper.updateEMailAddressInTable(tablename, eMailOld, eMailNew, con);
-				}
-
-				PreparedStatement removeOldKundeStatement = con.prepareStatement(
-						"DELETE FROM Kunde WHERE E_Mail_Adresse = ?");
-				removeOldKundeStatement.setString(1, eMailOld);
-				removeOldKundeStatement.executeUpdate();
-				Project.getInstance().getData().replace("email", String.valueOf(newData.get("Kunde.E-Mail-Adresse")));
-			} else {
-				logger.info("E-Mail-Address unchanged!");
-				updateKundeStatement = con.prepareStatement(
-						"UPDATE Kunde SET Passwort = ?, Vorname = ?, Nachname = ?, Adressen_ID = ? "
-								+ "WHERE E_Mail_Adresse = ?");
-				updateKundeStatement.setString(1, String.valueOf(newData.get("Kunde.Passwort")));
-				updateKundeStatement.setString(2, String.valueOf(newData.get("Kunde.Vorname")));
-				updateKundeStatement.setString(3, String.valueOf(newData.get("Kunde.Nachname")));
-				updateKundeStatement.setInt(4, addressID);
-				updateKundeStatement.setString(5, String.valueOf(oldData.get("Kunde.E-Mail-Adresse")));
-				updateKundeStatement.executeUpdate();
-			}
+			
+			PreparedStatement updateKundeStatement = con.prepareStatement(
+					"UPDATE Kunde SET E_Mail_Adresse = ?, Passwort = ?, Vorname = ?, Nachname = ?, Adressen_ID = ? "
+							+ "WHERE E_Mail_Adresse = ?");
+			updateKundeStatement.setString(1, String.valueOf(newData.get("Kunde.E_Mail_Adresse")));
+			updateKundeStatement.setString(2, String.valueOf(newData.get("Kunde.Passwort")));
+			updateKundeStatement.setString(3, String.valueOf(newData.get("Kunde.Vorname")));
+			updateKundeStatement.setString(4, String.valueOf(newData.get("Kunde.Nachname")));
+			updateKundeStatement.setInt(5, addressID);
+			updateKundeStatement.setString(6, String.valueOf(oldData.get("Kunde.E-Mail-Adresse")));
+			updateKundeStatement.executeUpdate();
 
 			con.getRawConnection().commit();
 			con.getRawConnection().setAutoCommit(true);
