@@ -409,18 +409,6 @@ BEGIN
     );
 END;
 
-/*CREATE TRIGGER anbieter_bietet_angebot_nicht_an
-BEFORE INSERT ON Angebot_im_Warenkorb
-WHEN NOT EXISTS (
-    SELECT Bestand
-    FROM Anbieter_bietet_an
-    WHERE Angebots_ID = NEW.Angebots_ID
-    AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
-)
-BEGIN
-    SELECT RAISE (ABORT, 'Anbieter bietet dieses Angebot nicht an!');
-END;*/
-
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
