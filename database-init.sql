@@ -578,6 +578,9 @@ BEGIN
     WHERE Artikel_ID = OLD.Artikel_ID;*/
 END;
 
+/* Bevor ein Schlagwort gelöscht werden kann, müssen alle Referenzen auf
+ * dieses Schlagwort in Artikeln ebenfalls entfernt werden.
+ */
 CREATE TRIGGER delete_schlagwort
 BEFORE DELETE ON Schlagwort
 BEGIN
