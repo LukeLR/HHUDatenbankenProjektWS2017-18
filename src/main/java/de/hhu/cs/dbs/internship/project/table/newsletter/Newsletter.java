@@ -77,11 +77,7 @@ public class Newsletter extends Table {
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
-		/*
-		 * TODO: Auch hier wieder zu klären: Was ist mit Newslettern, die noch von Kunden abboniert sind?
-		 * Diese können nicht gelöscht werden, da sonst ein FOREIGN KEY CONSTRAINT fehlschlägt. Sollen also
-		 * Newsletter, die gelöscht werden sollen, automatisch bei allen Kunden entfernt werden?
-		 */
+		
 		PreparedStatement deleteNewsletterStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Newsletter "
 				+ "WHERE Newsletter_ID = ?");
