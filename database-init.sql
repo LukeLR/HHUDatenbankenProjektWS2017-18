@@ -506,6 +506,10 @@ BEGIN
     WHERE Newsletter_ID = OLD.Newsletter_ID;*/
 END;
 
+/* Wenn ein Angebot entfernt werden soll, müssen auch alle Vorkommnisse
+ * dieses Angebots in Warenkörben und alle Angebote für dieses Angebot
+ * entfernt werden.
+ */
 CREATE TRIGGER delete_angebot
 BEFORE DELETE ON Angebot
 BEGIN
