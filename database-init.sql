@@ -304,6 +304,13 @@ BEGIN
     SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!');
 END;
 
+/* Wenn ein Angebot eines Anbieters in einen Warenkorb gelegt werden soll,
+ * der schon das Angebot dieses Anbieters enthält, dann soll die Anzahl
+ * dieses Angebotes in diesem Warenkorb erhöht werden, statt das Angebot
+ * ein zweites Mal in den Warenkorb zu legen, da der Warenkorb nicht
+ * zweimal dasselbe Angebot desselben Anbieters enthalten kann.
+ */
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
