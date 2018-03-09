@@ -553,6 +553,29 @@ BEGIN
     WHERE Warenkorb_ID = OLD.Warenkorb_ID;*/
 END;
 
+/* Angebot Artikel_empfiehlt_Artikel Artikel_im_Newsletter Artikel_gehoert_zu_Schlagwort*/
+
+CREATE TRIGGER delete_artikel
+BEFORE DELETE ON Artikel
+BEGIN
+    DELETE FROM Angebot
+    WHERE Artikel_ID = OLD.Artikel_ID;
+    
+    DELETE FROM Artikel_empfiehlt_Artikel
+    WHERE Artikel_ID1 = OLD.Artikel_ID
+    OR Artikel_ID2 = OLD.Artikel_ID;
+    
+    DELETE FROM Artikel_im_Newsletter
+    WHERE Artikel_ID = OLD.Artikel_ID;
+    
+    DELETE FROM Artikel_gehoert_zu_Schlagwort
+    WHERE Artikel_ID = OLD.Artikel_ID;
+    
+    /*DELETE FROM Artikel
+    WHERE Artikel_ID = OLD.Artikel_ID;*/
+END;
+   
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
