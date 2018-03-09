@@ -470,6 +470,20 @@ BEGIN
     WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;*/
 END;
 
+
+CREATE TRIGGER delete_anbieter
+BEFORE DELETE ON Anbieter
+BEGIN
+    DELETE FROM Angebot_im_Warenkorb
+    WHERE Anbieterbezeichnung = OLD.Anbieterbezeichnung;
+    
+    DELETE FROM Anbieter_bietet_an
+    WHERE Anbieterbezeichnung = OLD.Anbieterbezeichnung;
+    
+    /*DELETE FROM Anbieter
+    WHERE Anbieterbezeichnung = OLD.Anbieterbezeichnung;*/
+END;
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
