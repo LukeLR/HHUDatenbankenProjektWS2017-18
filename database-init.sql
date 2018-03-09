@@ -335,6 +335,18 @@ BEGIN
     SELECT RAISE (ABORT, 'Maximal 10 Artikel im Newsletter!');
 END;
 
+CREATE TRIGGER artikel_empfiehlt_zu_viele_artikel
+BEFORE INSERT ON Artikel_empfiehlt_Artikel
+WHEN EXISTS (
+    SELECT COUNT(*) FROM Artikel_empfiehlt_Artikel
+    GROUP BY Artikel_empfiehlt_Artikel.Artikel_ID1
+    HAVING COUNT(*) >= 3
+)
+BEGIN
+    SELECT RAISE (ABORT, 'Maximal 3 Artikelempfehlungen pro Artikel!');
+END;
+
+
 /* TODO: newsletter_zu_wenig_artikel? Aber wie lässt sich das realisieren,
  *       wenn die Artikel dem Newsletter nacheinander hinzugefügt werden,
  *       außer mit COMMIT? Und das würde bedeuten, dass man die UI um-
