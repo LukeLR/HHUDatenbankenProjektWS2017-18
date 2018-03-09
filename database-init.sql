@@ -523,6 +523,19 @@ BEGIN
     WHERE Angebots_ID = OLD.Angebots_ID;*/
 END;
 
+/* Wenn ein Lieferdienst entfernt werden soll, müssen auch alle Waren-
+ * körbe, die diesen Lieferdienst enthalten, entfernt werden.
+ */
+CREATE TRIGGER delete_lieferdienst
+BEFORE DELETE ON Lieferdienst
+BEGIN
+    DELETE FROM Warenkorb
+    WHERE Lieferdienst_Bezeichnung = OLD.Lieferdienst_Bezeichnung;
+    
+    /*DELETE FROM Lieferdienst
+    WHERE Lieferdienst_Bezeichnung = OLD.Lieferdienst_Bezeichnung;*/
+END;
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
