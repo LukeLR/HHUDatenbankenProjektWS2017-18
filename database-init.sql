@@ -489,6 +489,19 @@ BEGIN
     WHERE Anbieterbezeichnung = OLD.Anbieterbezeichnung;*/
 END;
 
+CREATE TRIGGER delete_newsletter
+BEFORE DELETE ON Newsletter
+BEGIN
+    DELETE FROM Newsletterabo
+    WHERE Newsletter_ID = OLD.Newsletter_ID;
+    
+    DELETE FROM Artikel_im_Newsletter
+    WHERE Newsletter_ID = OLD.Newsletter_ID;
+    
+    /*DELETE FROM Newsletter
+    WHERE Newsletter_ID = OLD.Newsletter_ID;*/
+END;
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
