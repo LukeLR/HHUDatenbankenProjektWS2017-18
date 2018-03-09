@@ -356,7 +356,6 @@ BEGIN
     SELECT RAISE (ABORT, 'Maximal 3 Artikelempfehlungen pro Artikel!');
 END;
 
-
 /* TODO: newsletter_zu_wenig_artikel? Aber wie lässt sich das realisieren,
  *       wenn die Artikel dem Newsletter nacheinander hinzugefügt werden,
  *       außer mit COMMIT? Und das würde bedeuten, dass man die UI um-
