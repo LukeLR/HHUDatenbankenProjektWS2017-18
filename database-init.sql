@@ -292,8 +292,25 @@ END;
  * zweimal dasselbe Angebot desselben Anbieters enthalten kann.
  */
 
+/* Dieser Trigger kombiniert die Aufgaben der beiden oben beschriebenen
+ * Trigger in einem, da für die Ausführung des zweiten Triggers das
+ * RAISE(IGNORE)-Statement benötigt wird, um zu verhindern, dass der
+ * ursprüngliche, fehlschlagende INSERT, der ja durch den Trigger ersetzt
+ * wird, dennoch zu einem Fehler führt. Dies führt aber auch dazu, dass
+ * andere Trigger ignoriert werden, wenn dieser Trigger ausgelöst wurde.
+ * Konkret: Wurde also ein zweites Mal dasselbe Angebot desselben
+ * Anbieters in denselben Warenkorb gelegt, wurde zwar die Anzahl dieses
+ * Angebots dieses Anbieters in diesem Warenkorb erhöht, aber nicht mehr
+ * überprüft, ob diese Anzahl dieses Angebotes bei diesem Anbieter
+ * überhaupt vorhanden ist, da der dafür zuständige andere Trigger nicht
+ * mehr ausgeführt wurde. Deshalb kombiniert dieser Trigger beide Trigger
+ * in einem.
+ */
 CREATE TRIGGER angebot_im_warenkorb
 BEFORE INSERT ON Angebot_im_Warenkorb
+/* Diese erste WHEN-Klausel überprüft, ob das Angebot noch in der ge-
+ * wünschten Anzahl bei diesem Anbieter vorhanden ist.
+ */
 WHEN(
     SELECT (
         SELECT Bestand
@@ -308,6 +325,9 @@ WHEN(
         AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
     )
 ) <= NEW.Anzahl
+/* Diese zweite WHEN-Klausel überprüft, ob der Warenkorb bereits eine
+ * bestimmte Anzahl dieses Angebotes dieses Anbieters enthält.
+ */
 OR EXISTS (
     SELECT Anzahl
     FROM Angebot_im_Warenkorb
@@ -316,6 +336,13 @@ OR EXISTS (
     AND Warenkorb_ID = NEW.Warenkorb_ID
 )
 BEGIN
+    /* Dieses erste SELECT-Statement bricht die Transaktion ab, wenn
+     * das Angebot nicht mehr in der gewünschten Anzahl beim Anbieter
+     * vorhanden ist. Dazu muss erneut die erste WHEN-Bedingung als
+     * WHERE-Klausel dieses SELECT-Statements überprüft werden, damit
+     * dieses SELECT-Statement nicht ausgeführt wird, wenn der Trigger
+     * aufgrund der zweiten WHEN-Klausel ausgelöst wurde.
+     */
     SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!')
     WHERE(
         SELECT (
@@ -331,6 +358,13 @@ BEGIN
             AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
         )
     ) <= NEW.Anzahl;
+    /* Dieses zweite UPDATE-Statement erhöht die Anzahl des Angebotes
+     * des Anbieters im Warenkorb um die gewünschte Anzahl, wenn dieses
+     * bereits im Warenkorb enthalten wird. Auch hier muss erneut die
+     * entsprechende WHEN-Bedingung als WHERE-Klausel geprüft werden,
+     * damit dies nicht geschieht, wenn der Trigger oben aufgrund der
+     * ersten WHEN-Klausel ausgelöst wurde.
+     */
     UPDATE Angebot_im_Warenkorb
     SET Anzahl = Anzahl + NEW.Anzahl
     WHERE Angebots_ID = NEW.Angebots_ID
@@ -343,6 +377,10 @@ BEGIN
         AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
         AND Warenkorb_ID = NEW.Warenkorb_ID
     );
+    /* Gleiches gilt für dieses RAISE-Statement, welches ebenfalls nur
+     * ausgeführt werden soll, wenn die zweite WHEN-Klausel zur
+     * Auslösung des Triggers geführt hat.
+     */
     SELECT RAISE (IGNORE)
     WHERE EXISTS (
         SELECT Anzahl
