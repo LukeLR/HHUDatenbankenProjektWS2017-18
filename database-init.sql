@@ -276,9 +276,14 @@ END;
 /* TODO: newsletter_zu_wenig_artikel? Aber wie lässt sich das realisieren,
  *       wenn die Artikel dem Newsletter nacheinander hinzugefügt werden,
  *       außer mit COMMIT? Und das würde bedeuten, dass man die UI um-
- *       programmieren müsste.
+ *       programmieren müsste. -- Aussage des Korrektors: Muss nicht
+ *       implementiert werden.
  */
 
+/* Wenn ein Angebot in den Warenkorb gelegt werden soll, überprüft dieser
+ * Trigger, ob der gewählte Anbieter dieses Angebot noch in der
+ * gewünschten Anzahl anbietet.
+ */
 CREATE TRIGGER ausreichender_lagerbestand
 BEFORE INSERT ON Angebot_im_Warenkorb
 WHEN(
