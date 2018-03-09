@@ -332,26 +332,6 @@ END;*/
 
 CREATE TRIGGER angebot_im_warenkorb
 BEFORE INSERT ON Angebot_im_Warenkorb
-BEGIN
-    CASE
-        WHEN(
-            SELECT (
-                SELECT Bestand
-                FROM Anbieter_bietet_an
-                WHERE Angebots_ID = NEW.Angebots_ID
-                AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
-            ) -
-            (
-                SELECT SUM(Anzahl)
-                FROM Angebot_im_Warenkorb
-                WHERE Angebots_ID = NEW.Angebots_ID
-                AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
-            )
-        ) <= NEW.Anzahl
-        THEN
-            SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!')
-    END;
-END;
 
 /*==========================================
  *================ INSERTS =================
