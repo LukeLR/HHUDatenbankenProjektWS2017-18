@@ -418,7 +418,7 @@ END;
  * aktualisiert, muss zunächst jede Referenz auf diesen Kunden anhand
  * der alten E-Mail-Adresse auf die neue E-Mail-Adresse geändert werden
  * (in allen Tabellen, in denen der Kunde mittels seiner E-Mail-Adresse
- * referenziert wird).
+ * referenziert wird). Sonst gibt es einen FOREIGN KEY CONSTRAINT-error.
  */
 CREATE TRIGGER e_mail_adressen_wechsel
 BEFORE UPDATE ON Kunde
@@ -446,7 +446,8 @@ BEGIN
 END;
 
 /* Wenn ein Kunde seinen Account löscht, müssen zunächst alle Referenzen
- * auf diesen Account aus allen anderen Tabellen entfernt werden.
+ * auf diesen Account aus allen anderen Tabellen entfernt werden. Auch
+ * hier droht sonst ein FOREIGN KEY CONSTRAINT-error.
  */
 CREATE TRIGGER delete_account
 BEFORE DELETE ON Kunde
