@@ -86,8 +86,18 @@ public class Adressen extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		// Deletion fails if Customers with this address still exist.
+		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
+		
+		PreparedStatement deleteAdresseStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Adresse WHERE Adressen_ID = ?");
+		deleteAdresseStatement.setInt(5, Integer.valueOf(String.valueOf(data.get("Adresse.Adressen_ID"))));
+		
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Adresse.Strasse")) + " "
+				+ String.valueOf(data.get("Adresse.Hausnummer")) + ", "
+				+ String.valueOf(data.get("Adresse.PLZ")) + " "
+				+ String.valueOf(data.get("Adresse.Ort")));
 	}
 
 }
