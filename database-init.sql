@@ -400,6 +400,11 @@ BEGIN
         AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
         AND Warenkorb_ID = NEW.Warenkorb_ID
     );
+    /* Dieses vierte RAISE-Statement hat die Aufgabe, eine Fehlermeldung
+     * auszugeben und die Transaktion abzubrechen, wenn ein Angebot von
+     * einem Anbieter in den Warenkorb gelegt werden soll, der dieses
+     * Angebot nicht anbietet.
+     */
     SELECT RAISE (ABORT, 'Anbieter bietet dieses Angebot nicht an!')
     WHERE NOT EXISTS (
         SELECT Bestand
