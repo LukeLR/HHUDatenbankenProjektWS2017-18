@@ -445,6 +445,31 @@ BEGIN
     WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
 END;
 
+/* Wenn ein Kunde seinen Account löscht, müssen zunächst alle Referenzen
+ * auf diesen Account aus allen anderen Tabellen entfernt werden.
+ */
+CREATE TRIGGER delete_account
+BEFORE DELETE ON Kunde
+BEGIN
+    DELETE FROM Premiumkunde
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
+    
+    DELETE FROM Angestellter
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
+    
+    DELETE FROM Warenkorb
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
+    
+    DELETE FROM Newsletter
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
+    
+    DELETE FROM Newsletterabo
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
+    
+    /*DELETE FROM Kunde
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;*/
+END;
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
