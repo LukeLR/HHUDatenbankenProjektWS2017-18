@@ -356,6 +356,17 @@ BEGIN
     SELECT RAISE (ABORT, 'Maximal 3 Artikelempfehlungen pro Artikel!');
 END;
 
+CREATE TRIGGER delete_angebot_ohne_anbieter
+AFTER DELETE ON Anbieter_bietet_an
+BEGIN
+    DELETE FROM Angebot
+    WHERE NOT EXISTS (
+        SELECT *
+        FROM Anbieter_bietet_an
+        WHERE Anbieter_bietet_an.Angebots_ID = Angebot.Angebots_ID
+    );
+END;
+
 /* TODO: newsletter_zu_wenig_artikel? Aber wie lässt sich das realisieren,
  *       wenn die Artikel dem Newsletter nacheinander hinzugefügt werden,
  *       außer mit COMMIT? Und das würde bedeuten, dass man die UI um-
