@@ -356,6 +356,19 @@ BEGIN
     SELECT RAISE (ABORT, 'Maximal 3 Artikelempfehlungen pro Artikel!');
 END;
 
+/* Dieser Trigger stellt sicher, dass nachdem ein Anbieter ein Angebot
+ * nicht mehr anbietet, überprüft wird, dass keine Angebote ohne Anbieter
+ * existieren. Das Bereinigen der Angebote wird also durch ein Löschen
+ * in der Tabelle "Anbieter_bietet_an" ausgelöst, und sonst nicht.
+ * Dies ist erforderlich, da beim Anlegen eines Angebotes vorrübergehend
+ * keine Anbieter zu diesem Angebot existieren, was sich (ohne Verwendung
+ * von COMMITS, was in der GUI nicht vorgesehen ist) nicht vermeiden lässt.
+ * Sonst würde ein solches neu angelegtes Angebot sofort wieder entfernt
+ * werden. Sofern zu einem neu angelegten Angebot auch immer ein Anbieter
+ * hinzugefügt wird, kann es, außer nach einem Löschvorgang in der
+ * Tabelle Anbieter_bietet_an, auch gar keine Angebote ohne Anbieter
+ * geben.
+ */
 CREATE TRIGGER delete_angebot_ohne_anbieter
 AFTER DELETE ON Anbieter_bietet_an
 BEGIN
