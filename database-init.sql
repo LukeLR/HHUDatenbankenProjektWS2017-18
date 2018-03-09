@@ -1299,7 +1299,8 @@ INSERT INTO Artikel_im_Newsletter (Artikel_ID, Newsletter_ID) VALUES (4, 1);
 INSERT INTO Artikel_im_Newsletter (Artikel_ID, Newsletter_ID) VALUES (5, 2);
 
 /* Der folgende Test sollte fehlschlagen, da mehr als 10 Artikel im
- * selben Newsletter referenziert werden sollen.*/
+ * selben Newsletter referenziert werden sollen.
+ */
 SELECT 'Testing: 1 fehlschlagender Test: Artikel_im_Newsletter';
 INSERT INTO Artikel_im_Newsletter (Artikel_ID, Newsletter_ID) VALUES (5, 1);
 INSERT INTO Artikel_im_Newsletter (Artikel_ID, Newsletter_ID) VALUES (6, 1);
