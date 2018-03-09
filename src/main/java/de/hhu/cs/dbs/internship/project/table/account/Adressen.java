@@ -92,6 +92,7 @@ public class Adressen extends Table {
 		PreparedStatement deleteAdresseStatement = Project.getInstance().getConnection().prepareStatement(
 				"DELETE FROM Adresse WHERE Adressen_ID = ?");
 		deleteAdresseStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Adresse.Adressen_ID"))));
+		deleteAdresseStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
 				String.valueOf(data.get("Adresse.Strasse")) + " "
