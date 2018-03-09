@@ -1,3 +1,4 @@
+.headers ON
 --Show-Artikel_empfielt_Artikel-Query
 /*SELECT
     'Artikel1-Bezeichnung',
@@ -74,4 +75,10 @@ SELECT (
     FROM Anbieter_bietet_an
     WHERE Angebots_ID = 1
     AND Anbieterbezeichnung = 'Helge Schneider Fanshop'
-) > 900 IS 1;
+) -
+(
+    SELECT SUM(Anzahl)
+    FROM Angebot_im_Warenkorb
+    WHERE Angebots_ID = 1
+    AND Anbieterbezeichnung = 'Helge Schneider Fanshop'
+) AS Anzahl;

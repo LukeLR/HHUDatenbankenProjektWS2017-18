@@ -801,12 +801,12 @@ INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (3, 'Super-beschissen-Export, Inc.', 5, 5);
-INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
+/*INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (4, 'Helge Schneider Fanshop', 5, 5);
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
-        VALUES (1, 'Helge Schneider Fanshop', 5, 900);
+        VALUES (1, 'Helge Schneider Fanshop', 5, 900);*/
 
 ---------------------------------------------
 ------------- Anbieter_bietet_an ------------
