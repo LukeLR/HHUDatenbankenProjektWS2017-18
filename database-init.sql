@@ -471,7 +471,11 @@ BEGIN
     WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;*/
 END;
 
-
+/* Wenn ein Anbieter gelöscht werden muss, müssen auch alle Angebote,
+ * die dieser Anbieter anbietet, und deren Vorkommnisse in Warenkörben
+ * zunächst gelöscht werden, da sonst ein FOREIGN KEY CONSTRAINT-error
+ * droht.
+ */
 CREATE TRIGGER delete_anbieter
 BEFORE DELETE ON Anbieter
 BEGIN
