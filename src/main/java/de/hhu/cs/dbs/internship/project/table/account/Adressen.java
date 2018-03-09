@@ -5,12 +5,27 @@ import java.sql.SQLException;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
+
 public class Adressen extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		UnifiedLoggingHelper.logShow(this.getClass().getName());
+		
+		String selectQuery = "SELECT Strasse, Hausnummer, PLZ, Ort, Adressen_ID "
+				+ "FROM Adresse";
+		
+		if (filter != null && !filter.isEmpty()) {
+			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
+			selectQuery += " WHERE Strasse LIKE '%" + filter + "%' OR "
+					+ "Hausnummer LIKE '%" + filter + "%' OR "
+					+ "PLZ LIKE '%" + filter + "%' OR "
+					+ "ORT LIKE '%" + filter + "%'";
+		}
+		
+		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
+		return selectQuery;
 	}
 
 	@Override
