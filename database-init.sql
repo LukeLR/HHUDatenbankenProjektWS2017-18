@@ -553,8 +553,11 @@ BEGIN
     WHERE Warenkorb_ID = OLD.Warenkorb_ID;*/
 END;
 
-/* Angebot Artikel_empfiehlt_Artikel Artikel_im_Newsletter Artikel_gehoert_zu_Schlagwort*/
-
+/* Bevor ein Artikel gelöscht werden kann, müssen alle Angebote dieses
+ * Artikels, alle Referenzen auf Artikel, die dieser Artikel empfiehlt,
+ * oder die diesen Artikel empfehlen, alle Referenzen auf diesen Artikel
+ * in Newslettern und alle Schlagworte dieses Artikels entfernt werden.
+ */
 CREATE TRIGGER delete_artikel
 BEFORE DELETE ON Artikel
 BEGIN
