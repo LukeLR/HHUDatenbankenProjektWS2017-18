@@ -326,7 +326,7 @@ BEGIN
     SET Anzahl = Anzahl + NEW.Anzahl
     WHERE Angebots_ID = NEW.Angebots_ID
     AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
-    AND Warenkorb_ID = NEW.Warenkorb_ID
+    AND Warenkorb_ID = NEW.Warenkorb_ID;
 END;
 
 /*==========================================
