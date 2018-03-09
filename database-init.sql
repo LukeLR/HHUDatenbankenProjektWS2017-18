@@ -414,6 +414,12 @@ BEGIN
     );
 END;
 
+/* Wenn ein Kunde beim Bearbeiten der Accountdaten seine E-Mail-Adresse
+ * aktualisiert, muss zunächst jede Referenz auf diesen Kunden anhand
+ * der alten E-Mail-Adresse auf die neue E-Mail-Adresse geändert werden
+ * (in allen Tabellen, in denen der Kunde mittels seiner E-Mail-Adresse
+ * referenziert wird).
+ */
 CREATE TRIGGER e_mail_adressen_wechsel
 BEFORE UPDATE ON Kunde
 WHEN OLD.E_Mail_Adresse != NEW.E_Mail_Adresse
