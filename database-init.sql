@@ -1321,6 +1321,15 @@ INSERT INTO Artikel_empfiehlt_Artikel (Artikel_ID1, Artikel_ID2) VALUES (3, 2);
 INSERT INTO Artikel_empfiehlt_Artikel (Artikel_ID1, Artikel_ID2) VALUES (4, 2);
 INSERT INTO Artikel_empfiehlt_Artikel (Artikel_ID1, Artikel_ID2) VALUES (5, 1);
 
+/* Der folgende Test sollte fehlschlagen, da ein Artikel mehr als 3
+ * Artikel empfehlen würde.
+ */
+SELECT ''
+SELECT 'Testing: 1 fehlschlagender Test: Artikel_empfiehlt_Artikel';
+INSERT INTO Artikel_empfiehlt_Artikel (Artikel_ID1, Artikel_ID2) VALUES (5, 2);
+INSERT INTO Artikel_empfiehlt_Artikel (Artikel_ID1, Artikel_ID2) VALUES (5, 3);
+INSERT INTO Artikel_empfiehlt_Artikel (Artikel_ID1, Artikel_ID2) VALUES (5, 4);
+
 ---------------------------------------------
 ---------------- Schlagwort -----------------
 ---------------------------------------------
