@@ -506,6 +506,19 @@ BEGIN
     WHERE Newsletter_ID = OLD.Newsletter_ID;*/
 END;
 
+CREATE TRIGGER delete_angebot
+BEFORE DELETE ON Angebot
+BEGIN
+    DELETE FROM Angebot_im_Warenkorb
+    WHERE Angebots_ID = OLD.Angebots_ID;
+    
+    DELETE FROM Anbieter_bietet_an
+    WHERE Angebots_ID = OLD.Angebots_ID;
+    
+    /*DELETE FROM Angebot
+    WHERE Angebots_ID = OLD.Angebots_ID;*/
+END;
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
