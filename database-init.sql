@@ -299,7 +299,7 @@ WHEN(
         WHERE Angebots_ID = NEW.Angebots_ID
         AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
     )
-) < NEW.Anzahl
+) <= NEW.Anzahl
 BEGIN
     SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!');
 END;
@@ -327,7 +327,7 @@ BEGIN
     WHERE Angebots_ID = NEW.Angebots_ID
     AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
     AND Warenkorb_ID = NEW.Warenkorb_ID;
-    SELECT RAISE (IGNORE);
+    --SELECT RAISE (IGNORE);
 END;
 
 /*==========================================
