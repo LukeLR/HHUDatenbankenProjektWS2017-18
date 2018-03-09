@@ -400,7 +400,7 @@ WHEN NOT EXISTS (
     AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
 )
 BEGIN
-    RAISE (ABORT, 'Anbieter bietet dieses Angebot nicht an!');
+    SELECT RAISE (ABORT, 'Anbieter bietet dieses Angebot nicht an!');
 END;
 
 /*==========================================
