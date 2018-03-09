@@ -653,6 +653,20 @@ BEGIN
     WHERE Schlagwort = OLD.Schlagwort;*/
 END;
 
+CREATE TRIGGER delete_premiumkunde
+BEFORE DELETE ON Premiumkunde
+BEGIN
+    DELETE FROM Lieferabo
+    WHERE Warenkorb_ID IN (
+        SELECT Warenkorb_ID
+        FROM Warenkorb
+        WHERE E_Mail_Adresse = OLD.E_Mail_Adresse
+    );
+    
+    /*DELETE FROM Premiumkunde
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;*/
+END;
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
