@@ -294,7 +294,7 @@ WHEN(
         WHERE Angebots_ID = NEW.Angebots_ID
         AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
     )
-) > 0
+) < NEW.Anzahl
 BEGIN
     SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!');
 END;
@@ -863,6 +863,18 @@ INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (4, 'Helge Schneider Fanshop', 5, 5);
+SELECT (
+    SELECT Bestand
+    FROM Anbieter_bietet_an
+    WHERE Angebots_ID = 1
+    AND Anbieterbezeichnung = 'Helge Schneider Fanshop'
+) -
+(
+    SELECT SUM(Anzahl)
+    FROM Angebot_im_Warenkorb
+    WHERE Angebots_ID = 1
+    AND Anbieterbezeichnung = 'Helge Schneider Fanshop'
+) AS Anzahl;
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (1, 'Helge Schneider Fanshop', 5, 900);
