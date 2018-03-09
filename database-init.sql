@@ -321,12 +321,13 @@ WHEN EXISTS (
     AND Warenkorb_ID = NEW.Warenkorb_ID
 )
 BEGIN
-    SELECT RAISE (ABORT, 'Dieser Warenkorb enthält das Angebot dieses Anbieters bereits!');
+    --SELECT RAISE (ABORT, 'Dieser Warenkorb enthält das Angebot dieses Anbieters bereits!');
     UPDATE Angebot_im_Warenkorb
     SET Anzahl = Anzahl + NEW.Anzahl
     WHERE Angebots_ID = NEW.Angebots_ID
     AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
     AND Warenkorb_ID = NEW.Warenkorb_ID;
+    SELECT RAISE (IGNORE);
 END;
 
 /*==========================================
