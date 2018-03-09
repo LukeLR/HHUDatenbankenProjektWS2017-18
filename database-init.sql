@@ -489,6 +489,10 @@ BEGIN
     WHERE Anbieterbezeichnung = OLD.Anbieterbezeichnung;*/
 END;
 
+/* Wenn ein Newsletter gelöscht werden soll, müssen auch alle Abonnements
+ * dieses Newsletters, sowie alle Referenzen auf Artikel in diesem News-
+ * letter entfernt werden.
+ */
 CREATE TRIGGER delete_newsletter
 BEFORE DELETE ON Newsletter
 BEGIN
