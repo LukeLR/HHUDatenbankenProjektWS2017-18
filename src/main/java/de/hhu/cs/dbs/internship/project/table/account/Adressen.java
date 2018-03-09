@@ -66,16 +66,16 @@ public class Adressen extends Table {
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
-		PreparedStatement insertAdresseStatement = Project.getInstance().getConnection().prepareStatement(
+		PreparedStatement updateAdresseStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Adresse "
 				+ "SET Strasse = ?, Hausnummer = ?, PLZ = ?, Ort = ? "
 				+ "WHERE Adressen_ID = ?");
-		insertAdresseStatement.setString(1, String.valueOf(newData.get("Adresse.Strasse")));
-		insertAdresseStatement.setString(2, String.valueOf(newData.get("Adresse.Hausnummer")));
-		insertAdresseStatement.setInt(3, Integer.valueOf(String.valueOf(newData.get("Adresse.PLZ"))));
-		insertAdresseStatement.setString(4, String.valueOf(newData.get("Adresse.Ort")));
-		insertAdresseStatement.setInt(5, Integer.valueOf(String.valueOf(oldData.get("Adresse.Adressen_ID"))));
-		insertAdresseStatement.executeUpdate();
+		updateAdresseStatement.setString(1, String.valueOf(newData.get("Adresse.Strasse")));
+		updateAdresseStatement.setString(2, String.valueOf(newData.get("Adresse.Hausnummer")));
+		updateAdresseStatement.setInt(3, Integer.valueOf(String.valueOf(newData.get("Adresse.PLZ"))));
+		updateAdresseStatement.setString(4, String.valueOf(newData.get("Adresse.Ort")));
+		updateAdresseStatement.setInt(5, Integer.valueOf(String.valueOf(oldData.get("Adresse.Adressen_ID"))));
+		updateAdresseStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
 				String.valueOf(newData.get("Adresse.Strasse")) + " "
