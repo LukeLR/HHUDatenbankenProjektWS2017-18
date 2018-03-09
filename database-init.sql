@@ -322,7 +322,7 @@ WHEN EXISTS (
 )
 BEGIN
     SELECT RAISE (ABORT, 'Dieser Warenkorb enthält das Angebot dieses Anbieters bereits!');
-END:
+END;
 
 /*==========================================
  *================ INSERTS =================
