@@ -536,6 +536,10 @@ BEGIN
     WHERE Lieferdienst_Bezeichnung = OLD.Lieferdienst_Bezeichnung;*/
 END;
 
+/* Bevor ein Warenkorb gelöscht werden kann, müssen alle Lieferabos, die
+ * diesen Warenkorb referenzieren, und alle Referenzen auf Angebote in
+ * diesem Warenkorb ebenfalls entfernt werden.
+ */
 CREATE TRIGGER delete_warenkorb
 BEFORE DELETE ON Warenkorb
 BEGIN
