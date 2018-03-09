@@ -671,6 +671,9 @@ BEGIN
     WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;*/
 END;
 
+/* Bevor ein Angestellter entfernt werden kann, müssen zunächst alle
+ * Newsletter entfernt werden, die dieser Angestellte herausgibt.
+ */
 CREATE TRIGGER delete_angestellter
 BEFORE DELETE ON Angestellter
 BEGIN
