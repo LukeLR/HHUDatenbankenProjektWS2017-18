@@ -414,6 +414,31 @@ BEGIN
     );
 END;
 
+CREATE TRIGGER e_mail_adressen_wechsel
+BEFORE UPDATE ON Kunde
+WHEN OLD.E_Mail_Adresse != NEW.E_Mail_Adresse
+BEGIN
+    UPDATE Premiumkunde
+    SET E_Mail_Adresse = NEW.E_Mail_Adresse
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
+    
+    UPDATE Angestellter
+    SET E_Mail_Adresse = NEW.E_Mail_Adresse
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
+    
+    UPDATE Warenkorb
+    SET E_Mail_Adresse = NEW.E_Mail_Adresse
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
+    
+    UPDATE Newsletter
+    SET E_Mail_Adresse = NEW.E_Mail_Adresse
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
+    
+    UPDATE Newsletterabo
+    SET E_Mail_Adresse = NEW.E_Mail_Adresse
+    WHERE E_Mail_Adresse = OLD.E_Mail_Adresse;
+END;
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
