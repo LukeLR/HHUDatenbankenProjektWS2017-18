@@ -37,7 +37,8 @@ CREATE TABLE Adresse (
     Ort VARCHAR(40) NOT NULL CONSTRAINT Ort CHECK (
         Ort NOT GLOB ('*[0-9]*') AND
         LENGTH(CAST(Ort AS VARCHAR)) > 0),
-    Adressen_ID INTEGER PRIMARY KEY NOT NULL
+    Adressen_ID INTEGER CONSTRAINT Adresse_Adressen_ID_Primary_Key
+        PRIMARY KEY NOT NULL
     );
 
 CREATE TABLE Kunde (
@@ -51,9 +52,12 @@ CREATE TABLE Kunde (
         LENGTH(CAST(Nachname AS VARCHAR)) > 0),
     Passwort VARCHAR(64) NOT NULL CONSTRAINT Passwort CHECK (
         LENGTH(CAST(Passwort AS VARCHAR)) >= 6),
-    Adressen_ID INTEGER NOT NULL,
-    PRIMARY KEY(E_Mail_Adresse),
-    FOREIGN KEY (Adressen_ID) REFERENCES Adresse (Adressen_ID)
+    Adressen_ID CONSTRAINT Kunde_Adressen_ID INTEGER NOT NULL,
+    CONSTRAINT Kunde_E_Mail_Adresse_Primary_Key
+        PRIMARY KEY(E_Mail_Adresse),
+    CONSTRAINT Kunde_Adressen_ID_Foreign_Key
+        FOREIGN KEY (Adressen_ID)
+        REFERENCES Adresse (Adressen_ID)
     );
 
 CREATE TABLE Premiumkunde (
@@ -61,8 +65,11 @@ CREATE TABLE Premiumkunde (
         DATE(Ablaufdatum) IS NOT NULL),
     Studierendenausweis BLOB,
     E_Mail_Adresse VARCHAR(320) NOT NULL,
-    PRIMARY KEY (E_Mail_Adresse),
-    FOREIGN KEY (E_Mail_Adresse) REFERENCES Kunde (E_Mail_Adresse)
+    CONSTRAINT Premiumkunde_E_Mail_Adresse_Primary_Key
+        PRIMARY KEY (E_Mail_Adresse),
+    CONSTRAINT Premiumkunde_E_Mail_Adresse_Foreign_Key
+        FOREIGN KEY (E_Mail_Adresse)
+        REFERENCES Kunde (E_Mail_Adresse)
     );
 
 CREATE TABLE Angestellter (
@@ -75,8 +82,10 @@ CREATE TABLE Angestellter (
         )
     ),
     E_Mail_Adresse VARCHAR(320) NOT NULL,
-    PRIMARY KEY (E_Mail_Adresse),
-    FOREIGN KEY (E_Mail_Adresse) REFERENCES Kunde (E_Mail_Adresse)
+    CONSTRAINT Angestellter_E_Mail_Adresse_Primary_Key
+        PRIMARY KEY (E_Mail_Adresse),
+    CONSTRAINT Angestellter_E_Mail_Adresse_Foreign_Key
+        FOREIGN KEY (E_Mail_Adresse) REFERENCES Kunde (E_Mail_Adresse)
     );
 
 CREATE TABLE Lieferdienst(
@@ -89,7 +98,8 @@ CREATE TABLE Lieferdienst(
             TYPEOF(Versandkosten) == 'integer'
         )
     ),
-    PRIMARY KEY (Lieferdienst_Bezeichnung)
+    CONSTRAINT Lieferdienst_Lieferdienst_Bezeichnung_Primary_Key
+        PRIMARY KEY (Lieferdienst_Bezeichnung)
     );
 
 CREATE TABLE Warenkorb (
@@ -108,7 +118,8 @@ CREATE TABLE Warenkorb (
             'Versendet', 'Abgeschlossen'
         )
     ),
-    Warenkorb_ID INTEGER PRIMARY KEY NOT NULL,
+    Warenkorb_ID INTEGER CONSTRAINT Warenkorb_Warenkorb_ID_Primary_Key
+        PRIMARY KEY NOT NULL,
     E_Mail_Adresse VARCHAR(320) NOT NULL,
     Lieferdienst_Bezeichnung VARCHAR(40) NOT NULL,
     Lieferdatum VARCHAR
@@ -121,8 +132,10 @@ CREATE TABLE Warenkorb (
                 Lieferdatum IS NULL
             )
         ),
-    FOREIGN KEY (E_Mail_Adresse) REFERENCES Kunde (E_Mail_Adresse),
-    FOREIGN KEY (Lieferdienst_Bezeichnung)
+    CONSTRAINT Warenkorb_E_Mail_Adresse_Foreign_Key
+        FOREIGN KEY (E_Mail_Adresse) REFERENCES Kunde (E_Mail_Adresse),
+    CONSTRAINT Warenkorb_Lieferdienst_Bezeichnung_Foreign_Key
+        FOREIGN KEY (Lieferdienst_Bezeichnung)
         REFERENCES Lieferdienst (Lieferdienst_Bezeichnung)
     );
 
@@ -134,10 +147,12 @@ CREATE TABLE Lieferabo (
         DATE(Beginn) IS NOT NULL),
     Ende VARCHAR NOT NULL CONSTRAINT Ende_Datum CHECK (
         DATE(Ende) IS NOT NULL),
-    Warenkorb_ID INTEGER NOT NULL,
-    PRIMARY KEY (Warenkorb_ID),
-    FOREIGN KEY (Warenkorb_ID) REFERENCES Warenkorb (Warenkorb_ID),
-    check (Beginn < Ende)
+    Warenkorb_ID INTEGER CONSTRAINT Lieferabo_Warenkorb_ID NOT NULL,
+    CONSTRAINT Lieferabo_Warenkorb_ID_Primary_Key
+        PRIMARY KEY (Warenkorb_ID),
+    CONSTRAINT Lieferabo_Warenkorb_ID_Foreign_Key
+        FOREIGN KEY (Warenkorb_ID) REFERENCES Warenkorb (Warenkorb_ID),
+    CHECK (Beginn < Ende)
     );
 
 CREATE TABLE Newsletter (
@@ -145,22 +160,30 @@ CREATE TABLE Newsletter (
         LENGTH(CAST(Betreff AS VARCHAR)) > 0),
     Text TEXT NOT NULL CONSTRAINT Text CHECK (
         LENGTH(CAST(Text AS TEXT)) > 0),
-    Datum VARCHAR NOT NULL
+    Datum VARCHAR CONSTRAINT Newsletter_Datum_Not_Null NOT NULL
         DEFAULT CURRENT_DATE
         --ON UPDATE CURRENT_DATE
         CONSTRAINT Newsletter_Datum CHECK (
             DATE(Datum) IS NOT NULL),
-    Newsletter_ID INTEGER PRIMARY KEY NOT NULL,
-    E_Mail_Adresse VARCHAR(320) NOT NULL,
-    FOREIGN KEY (E_Mail_Adresse) REFERENCES Angestellter (E_Mail_Adresse)
+    Newsletter_ID INTEGER CONSTRAINT Newsletter_Newsletter_ID_Primary_Key
+        PRIMARY KEY NOT NULL,
+    E_Mail_Adresse VARCHAR(320) CONSTRAINT Newsletter_E_Mail_Adresse
+        NOT NULL,
+    CONSTRAINT Newsletter_E_Mail_Adresse_Foreign_Key
+        FOREIGN KEY (E_Mail_Adresse) REFERENCES Angestellter (E_Mail_Adresse)
     );
 
 CREATE TABLE Newsletterabo (
-    E_Mail_Adresse VARCHAR(320) NOT NULL,
-    Newsletter_ID INTEGER NOT NULL,
-    PRIMARY KEY (E_Mail_Adresse, Newsletter_ID),
-    FOREIGN KEY (E_Mail_Adresse) REFERENCES Kunde (E_Mail_Adresse),
-    FOREIGN KEY (Newsletter_ID) REFERENCES Newsletter (Newsletter_ID)
+    E_Mail_Adresse VARCHAR(320) CONSTRAINT Newsletterabo_E_Mail_Adresse
+        NOT NULL,
+    Newsletter_ID INTEGER CONSTRAINT Newsletterabo_Newsletter_ID
+        NOT NULL,
+    CONSTRAINT Newsletterabo_Primary_Key
+        PRIMARY KEY (E_Mail_Adresse, Newsletter_ID),
+    CONSTRAINT Newsletterabo_E_Mail_Adresse_Foreign_Key
+        FOREIGN KEY (E_Mail_Adresse) REFERENCES Kunde (E_Mail_Adresse),
+    CONSTRAINT Newsletterabo_Newsletter_ID_Foreign_Key
+        FOREIGN KEY (Newsletter_ID) REFERENCES Newsletter (Newsletter_ID)
     );
 
 CREATE TABLE Artikel (
@@ -169,80 +192,119 @@ CREATE TABLE Artikel (
     Beschreibung TEXT NOT NULL CONSTRAINT Beschreibung CHECK (
         LENGTH(CAST(Beschreibung AS TEXT)) > 0),
     Bild BLOB DEFAULT NULL,
-    Artikel_ID INTEGER PRIMARY KEY NOT NULL
+    Artikel_ID INTEGER CONSTRAINT Artikel_Artikel_ID_Primary_Key
+        PRIMARY KEY NOT NULL
     );
 
 CREATE TABLE Angebot (
-    Angebots_ID INTEGER PRIMARY KEY NOT NULL,
-    Artikel_ID INTEGER NOT NULL,
+    Angebots_ID INTEGER CONSTRAINT Angebot_Angebots_ID_Primary_Key
+        PRIMARY KEY NOT NULL,
+    Artikel_ID INTEGER CONSTRAINT Angebot_Artikel_ID NOT NULL,
     Preis DECIMAL(10,2) NOT NULL CONSTRAINT Preis CHECK (
         Preis >= 0 AND (
             TYPEOF(Preis) == 'real' OR
             TYPEOF(Preis) == 'integer'
         )
     ),
-    FOREIGN KEY (Artikel_ID) REFERENCES Artikel (Artikel_ID)
+    CONSTRAINT Angebot_Artikel_ID_Foreign_Key
+        FOREIGN KEY (Artikel_ID) REFERENCES Artikel (Artikel_ID)
     );
 
 CREATE TABLE Anbieter (
-    Anbieterbezeichnung VARCHAR(40) NOT NULL CONSTRAINT Anbieterbezeichnung CHECK (
-        LENGTH(CAST(Anbieterbezeichnung AS VARCHAR)) > 0),
-    PRIMARY KEY (Anbieterbezeichnung)
+    Anbieterbezeichnung VARCHAR(40) NOT NULL
+        CONSTRAINT Anbieterbezeichnung
+        CHECK (
+            LENGTH(CAST(Anbieterbezeichnung AS VARCHAR)) > 0
+        ),
+    CONSTRAINT Anbieter_Anbieterbezeichnung_Primary_Key
+        PRIMARY KEY (Anbieterbezeichnung)
     );
 
 CREATE TABLE Angebot_im_Warenkorb (
-    Angebots_ID INTEGER NOT NULL,
-    Anbieterbezeichnung VARCHAR(40) NOT NULL,
-    Warenkorb_ID INTEGER NOT NULL,
+    Angebots_ID INTEGER CONSTRAINT Angebot_im_Warenkorb_Angebots_ID
+        NOT NULL,
+    Anbieterbezeichnung VARCHAR(40)
+        CONSTRAINT Angebot_im_Warenkorb_Anbieterbezeichnung
+        NOT NULL,
+    Warenkorb_ID INTEGER CONSTRAINT Angebot_im_Warenkorb_Warenkorb_ID
+        NOT NULL,
     Anzahl INTEGER NOT NULL CONSTRAINT Anzahl CHECK (
         TYPEOF(Anzahl) == 'integer' AND
         Anzahl >= 1),
-    PRIMARY KEY (Angebots_ID, Anbieterbezeichnung, Warenkorb_ID),
-    FOREIGN KEY (Angebots_ID) REFERENCES Angebot (Angebots_ID),
-    FOREIGN KEY (Anbieterbezeichnung) REFERENCES Anbieter (Anbieterbezeichnung),
-    FOREIGN KEY (Warenkorb_ID) REFERENCES Warenkorb (Warenkorb_ID)
+    CONSTRAINT Angebot_im_Warenkorb_Primary_Key
+        PRIMARY KEY (Angebots_ID, Anbieterbezeichnung, Warenkorb_ID),
+    CONSTRAINT Angebot_im_Warenkorb_Angebots_ID_Foreign_Key
+        FOREIGN KEY (Angebots_ID) REFERENCES Angebot (Angebots_ID),
+    CONSTRAINT Angebot_im_Warenkorb_Anbieterbezeichnung_Foreign_Key
+        FOREIGN KEY (Anbieterbezeichnung)
+        REFERENCES Anbieter (Anbieterbezeichnung),
+    CONSTRAINT Angebot_im_Warenkorb_Warenkorb_ID_Foreign_Key
+        FOREIGN KEY (Warenkorb_ID) REFERENCES Warenkorb (Warenkorb_ID)
     );
 
 CREATE TABLE Anbieter_bietet_an (
-    Anbieterbezeichnung VARCHAR(40) NOT NULL,
-    Angebots_ID INTEGER NOT NULL,
+    Anbieterbezeichnung VARCHAR(40)
+        CONSTRAINT Anbieter_bietet_an_Anbieterbezeichnung NOT NULL,
+    Angebots_ID INTEGER CONSTRAINT Anbieter_bietet_an_Angebots_ID
+        NOT NULL,
     Bestand INTEGER NOT NULL CONSTRAINT Bestand CHECK (
         TYPEOF(Bestand) == 'integer' AND
         Bestand >= 0),
-    PRIMARY KEY (Anbieterbezeichnung, Angebots_ID),
-    FOREIGN KEY (Anbieterbezeichnung) REFERENCES Anbieter (Anbieterbezeichnung),
-    FOREIGN KEY (Angebots_ID) REFERENCES Angebot (Angebots_ID)
+    CONSTRAINT Anbieter_bietet_an_Primary_Key
+        PRIMARY KEY (Anbieterbezeichnung, Angebots_ID),
+    CONSTRAINT Anbieter_bietet_an_Anbieterbezeichnung_Foreign_Key
+        FOREIGN KEY (Anbieterbezeichnung)
+        REFERENCES Anbieter (Anbieterbezeichnung),
+    CONSTRAINT Anbieter_bietet_an_Angebots_ID_Foreign_Key
+        FOREIGN KEY (Angebots_ID) REFERENCES Angebot (Angebots_ID)
     );
 
 CREATE TABLE Artikel_im_Newsletter (
-    Newsletter_ID INTEGER NOT NULL,
-    Artikel_ID INTEGER NOT NULL,
-    PRIMARY KEY(Newsletter_ID, Artikel_ID),
-    FOREIGN KEY(Newsletter_ID) REFERENCES Newsletter (Newsletter_ID),
-    FOREIGN KEY(Artikel_ID) REFERENCES Artikel (Artikel_ID)
+    Newsletter_ID INTEGER CONSTRAINT Artikel_im_Newsletter_Newsletter_ID
+        NOT NULL,
+    Artikel_ID INTEGER CONSTRAINT Artikel_im_Newsletter_Artikel_ID
+        NOT NULL,
+    CONSTRAINT Artikel_im_Newsletter_Primary_Key
+        PRIMARY KEY(Newsletter_ID, Artikel_ID),
+    CONSTRAINT Artikel_im_Newsletter_Newsletter_ID_Foreign_Key
+        FOREIGN KEY(Newsletter_ID) REFERENCES Newsletter (Newsletter_ID),
+    CONSTRAINT Artikel_im_Newsletter_Artikel_ID_Foreign_Key
+        FOREIGN KEY(Artikel_ID) REFERENCES Artikel (Artikel_ID)
     );
 
 CREATE TABLE Artikel_empfiehlt_Artikel (
-    Artikel_ID1 INTEGER NOT NULL,
-    Artikel_ID2 INTEGER NOT NULL,
-    PRIMARY KEY (Artikel_ID1, Artikel_ID2),
-    FOREIGN KEY (Artikel_ID1) REFERENCES Artikel (Artikel_ID),
-    FOREIGN KEY (Artikel_ID2) REFERENCES Artikel (Artikel_ID)
+    Artikel_ID1 INTEGER CONSTRAINT Artikel_empfiehlt_Artikel_Artikel_ID1
+        NOT NULL,
+    Artikel_ID2 INTEGER CONSTRAINT Artikel_empfiehlt_Artikel_Artikel_ID2
+        NOT NULL,
+    CONSTRAINT Artikel_empfiehlt_Artikel_Primary_Key
+        PRIMARY KEY (Artikel_ID1, Artikel_ID2),
+    CONSTRAINT Artikel_empfiehlt_Artikel_Artikel_ID1_Foreign_Key
+        FOREIGN KEY (Artikel_ID1) REFERENCES Artikel (Artikel_ID),
+    CONSTRAINT Artikel_empfiehlt_Artikel_Artikel_ID2_Foreign_Key
+        FOREIGN KEY (Artikel_ID2) REFERENCES Artikel (Artikel_ID)
     );
 
 CREATE TABLE Schlagwort (
     Schlagwort VARCHAR(30) NOT NULL CONSTRAINT Schlagwort CHECK (
         LENGTH(CAST(Schlagwort AS VARCHAR)) > 0),
-    PRIMARY KEY (Schlagwort),
-    UNIQUE (Schlagwort COLLATE NOCASE)
+    CONSTRAINT Schlagwort_Schlagwort_Primary_Key
+        PRIMARY KEY (Schlagwort),
+    CONSTRAINT Schlagwort_Schlagwort_No_Case
+        UNIQUE (Schlagwort COLLATE NOCASE)
     );
 
 CREATE TABLE Artikel_gehoert_zu_Schlagwort (
-    Artikel_ID INTEGER NOT NULL,
-    Schlagwort VARCHAR(30) NOT NULL,
-    PRIMARY KEY (Artikel_ID, Schlagwort),
-    FOREIGN KEY (Artikel_ID) REFERENCES Artikel(Artikel_ID),
-    FOREIGN KEY (Schlagwort) REFERENCES Schlagwort(Schlagwort)
+    Artikel_ID INTEGER CONSTRAINT Artikel_gehoert_zu_Schlagwort_Artikel_ID
+        NOT NULL,
+    Schlagwort VARCHAR(30)
+        CONSTRAINT Artikel_gehoert_zu_Schlagwort_Schlagwort NOT NULL,
+    CONSTRAINT Artikel_gehoert_zu_Schlagwort_Primary_Key
+        PRIMARY KEY (Artikel_ID, Schlagwort),
+    CONSTRAINT Artikel_gehoert_zu_Schlagwort_Artikel_ID_Foreign_Key
+        FOREIGN KEY (Artikel_ID) REFERENCES Artikel(Artikel_ID),
+    CONSTRAINT Artikel_gehoert_zu_Schlagwort_Schlagwort_Foreign_Key
+        FOREIGN KEY (Schlagwort) REFERENCES Schlagwort(Schlagwort)
     );
 
 /*==========================================
