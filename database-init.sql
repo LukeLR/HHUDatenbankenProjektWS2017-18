@@ -281,12 +281,20 @@ END;
 
 CREATE TRIGGER ausreichender_lagerbestand
 BEFORE INSERT ON Angebot_im_Warenkorb
-WHEN((
-    SELECT Bestand
-    FROM Anbieter_bietet_an
-    WHERE Angebots_ID = NEW.Angebots_ID
-    AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
-) > NEW.Anzahl)
+WHEN(
+    SELECT (
+        SELECT Bestand
+        FROM Anbieter_bietet_an
+        WHERE Angebots_ID = NEW.Angebots_ID
+        AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+    ) -
+    (
+        SELECT SUM(Anzahl)
+        FROM Angebot_im_Warenkorb
+        WHERE Angebots_ID = NEW.Angebots_ID
+        AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+    )
+) > 0
 BEGIN
     SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!');
 END;
@@ -801,12 +809,12 @@ INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (3, 'Super-beschissen-Export, Inc.', 5, 5);
-/*INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
+INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (4, 'Helge Schneider Fanshop', 5, 5);
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
-        VALUES (1, 'Helge Schneider Fanshop', 5, 900);*/
+        VALUES (1, 'Helge Schneider Fanshop', 5, 900);
 
 ---------------------------------------------
 ------------- Anbieter_bietet_an ------------
