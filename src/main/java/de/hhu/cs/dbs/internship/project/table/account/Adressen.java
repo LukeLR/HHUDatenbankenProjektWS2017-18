@@ -1,10 +1,12 @@
 package de.hhu.cs.dbs.internship.project.table.account;
 
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class Adressen extends Table {
@@ -42,8 +44,22 @@ public class Adressen extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		// TODO Auto-generated method stub
-
+		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
+		
+		PreparedStatement insertAdresseStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID) "
+				+ "VALUES (?, ?, ?, ?, NULL)");
+		insertAdresseStatement.setString(1, String.valueOf(data.get("Adresse.Strasse")));
+		insertAdresseStatement.setString(2, String.valueOf(data.get("Adresse.Hausnummer")));
+		insertAdresseStatement.setInt(3, Integer.valueOf(String.valueOf(data.get("Adresse.PLZ"))));
+		insertAdresseStatement.setString(4, String.valueOf(data.get("Adresse.Ort")));
+		insertAdresseStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data,
+				String.valueOf(data.get("Adresse.Strasse")) + " "
+				+ String.valueOf(data.get("Adresse.Hausnummer")) + ", "
+				+ String.valueOf(data.get("Adresse.PLZ")) + " "
+				+ String.valueOf(data.get("Adresse.Ort")));
 	}
 
 	@Override
