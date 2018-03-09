@@ -311,6 +311,19 @@ END;
  * zweimal dasselbe Angebot desselben Anbieters enthalten kann.
  */
 
+CREATE TRIGGER warenkorb_enthaelt_angebot_bereits
+BEFORE INSERT ON Angebot_im_Warenkorb
+WHEN EXISTS (
+    SELECT Anzahl
+    FROM Angebot_im_Warenkorb
+    WHERE Angebots_ID = NEW.Angebots_ID
+    AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+    AND Warenkorb_ID = NEW.Warenkorb_ID
+)
+BEGIN
+    SELECT RAISE (ABORT, 'Dieser Warenkorb enthält das Angebot dieses Anbieters bereits!');
+END:
+
 /*==========================================
  *================ INSERTS =================
  *==========================================*/
