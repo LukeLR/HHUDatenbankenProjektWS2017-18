@@ -332,6 +332,64 @@ END;*/
 
 CREATE TRIGGER angebot_im_warenkorb
 BEFORE INSERT ON Angebot_im_Warenkorb
+WHEN(
+    SELECT (
+        SELECT Bestand
+        FROM Anbieter_bietet_an
+        WHERE Angebots_ID = NEW.Angebots_ID
+        AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+    ) -
+    (
+        SELECT SUM(Anzahl)
+        FROM Angebot_im_Warenkorb
+        WHERE Angebots_ID = NEW.Angebots_ID
+        AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+    )
+) <= NEW.Anzahl
+OR EXISTS (
+    SELECT Anzahl
+    FROM Angebot_im_Warenkorb
+    WHERE Angebots_ID = NEW.Angebots_ID
+    AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+    AND Warenkorb_ID = NEW.Warenkorb_ID
+)
+BEGIN
+    SELECT RAISE (ABORT, 'Gewünschte Anzahl dieses Angebots bei diesem Anbieter nicht verfügbar!')
+    WHERE(
+        SELECT (
+            SELECT Bestand
+            FROM Anbieter_bietet_an
+            WHERE Angebots_ID = NEW.Angebots_ID
+            AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+        ) -
+        (
+            SELECT SUM(Anzahl)
+            FROM Angebot_im_Warenkorb
+            WHERE Angebots_ID = NEW.Angebots_ID
+            AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+        )
+    ) <= NEW.Anzahl;
+    UPDATE Angebot_im_Warenkorb
+    SET Anzahl = Anzahl + NEW.Anzahl
+    WHERE Angebots_ID = NEW.Angebots_ID
+    AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+    AND Warenkorb_ID = NEW.Warenkorb_ID;
+    AND EXISTS (
+        SELECT Anzahl
+        FROM Angebot_im_Warenkorb
+        WHERE Angebots_ID = NEW.Angebots_ID
+        AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+        AND Warenkorb_ID = NEW.Warenkorb_ID
+    )
+    SELECT RAISE (IGNORE)
+    WHERE EXISTS (
+        SELECT Anzahl
+        FROM Angebot_im_Warenkorb
+        WHERE Angebots_ID = NEW.Angebots_ID
+        AND Anbieterbezeichnung = NEW.Anbieterbezeichnung
+        AND Warenkorb_ID = NEW.Warenkorb_ID
+    );
+END;
 
 /*==========================================
  *================ INSERTS =================
