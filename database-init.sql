@@ -316,6 +316,10 @@ SELECT '================ TRIGGER =================';
 SELECT '==========================================';
 SELECT '';
 
+/* Dieser Trigger aktualisiert das Datum des Newsletters, sobald eine
+ * Veränderung in einem Newsletter vorgenommen wurde (entspricht dem
+ * Publizieren einer neuen Ausgabe dieses Newsletters).
+ */
 CREATE TRIGGER update_newsletter_datum
 AFTER UPDATE ON Newsletter
 WHEN NEW.Datum < CURRENT_DATE
