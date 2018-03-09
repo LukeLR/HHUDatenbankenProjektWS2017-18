@@ -1238,7 +1238,7 @@ INSERT INTO Anbieter_bietet_an (Anbieterbezeichnung, Angebots_ID, Bestand)
 ---------------------------------------------
 
 SELECT '';
-SELECT 'Testing: 6 funktionierende Tests: Angebot_im_Warenkorb';
+SELECT 'Testing: 7 funktionierende Tests: Angebot_im_Warenkorb';
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (1, 'Helge Schneider Fanshop', 1, 5);
@@ -1257,24 +1257,25 @@ INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (3, 'Super-beschissen-Export, Inc.', 5, 5);
-
-/* Die folgenden vier Tests sollten fehlschlagen:
- * - Der erste Test enthält eine negative Anzahl
- * - Der zweite Test versucht einem Warenkorb Angebote eines Anbieters
- *   hinzuzüfügen, der bereits dasselbe Angebot dieses Anbieters enthält.
- * - Der dritte Test versucht, ein Angebot in den Warenkorb zu legen,
- *   welches von keinem Anbieter angeboten wird.
- * - Der vierte Test versucht, ein Angebot in einer höheren Stückzahl
- *   in den Warenkorb zu legen, als der Anbieter es anbietet.
+/* Fügt einem Warenkorb ein Angebot eines Anbieters hinzu, der bereits
+ * dasselbe Angebot desselben Anbieters enthält.
  */
-
-SELECT 'Testing: 4 fehlschlagende Tests: Angebot_im_Warenkorb';
-INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
-    Warenkorb_ID, Anzahl)
-        VALUES (1, 'Super-beschissen-Export, Inc.', 5, -5);
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (3, 'Super-beschissen-Export, Inc.', 5, 5);
+
+/* Die folgenden drei Tests sollten fehlschlagen:
+ * - Der erste Test enthält eine negative Anzahl
+ * - Der zweite Test versucht, ein Angebot in den Warenkorb zu legen,
+ *   welches von keinem Anbieter angeboten wird.
+ * - Der dritte Test versucht, ein Angebot in einer höheren Stückzahl
+ *   in den Warenkorb zu legen, als der Anbieter es anbietet.
+ */
+
+SELECT 'Testing: 3 fehlschlagende Tests: Angebot_im_Warenkorb';
+INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
+    Warenkorb_ID, Anzahl)
+        VALUES (1, 'Super-beschissen-Export, Inc.', 5, -5);
 INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung,
     Warenkorb_ID, Anzahl)
         VALUES (4, 'Helge Schneider Fanshop', 5, 5);
