@@ -42,13 +42,22 @@ public class Artikel extends Table {
 	public void insertRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
-		PreparedStatement insertArtikelStatement = Project.getInstance().getConnection().prepareStatement(
-				"INSERT INTO Artikel (Bezeichnung, Beschreibung, Bild, Artikel_ID) "
-				+ "VALUES (?, ?, ?, NULL)");
-		insertArtikelStatement.setString(1, String.valueOf(data.get("Artikel.Bezeichnung")));
-		insertArtikelStatement.setString(2, String.valueOf(data.get("Artikel.Beschreibung")));
-		insertArtikelStatement.setObject(3, data.get("Artikel.Bild"));
-		insertArtikelStatement.executeUpdate();
+		if (data.get("Artikel.Bild") != null) {
+			PreparedStatement insertArtikelStatement = Project.getInstance().getConnection().prepareStatement(
+					"INSERT INTO Artikel (Bezeichnung, Beschreibung, Bild, Artikel_ID) "
+					+ "VALUES (?, ?, ?, NULL)");
+			insertArtikelStatement.setString(1, String.valueOf(data.get("Artikel.Bezeichnung")));
+			insertArtikelStatement.setString(2, String.valueOf(data.get("Artikel.Beschreibung")));
+			insertArtikelStatement.setObject(3, data.get("Artikel.Bild"));
+			insertArtikelStatement.executeUpdate();
+		} else {
+			PreparedStatement insertArtikelStatement = Project.getInstance().getConnection().prepareStatement(
+					"INSERT INTO Artikel (Bezeichnung, Beschreibung, Bild, Artikel_ID) "
+					+ "VALUES (?, ?, NULL, NULL)");
+			insertArtikelStatement.setString(1, String.valueOf(data.get("Artikel.Bezeichnung")));
+			insertArtikelStatement.setString(2, String.valueOf(data.get("Artikel.Beschreibung")));
+			insertArtikelStatement.executeUpdate();
+		}
 		
 		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Artikel.Bezeichnung")));
 	}
@@ -57,14 +66,24 @@ public class Artikel extends Table {
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
-		PreparedStatement updateArtikelStatement = Project.getInstance().getConnection().prepareStatement(
-				"UPDATE Artikel SET Bezeichnung = ?, Beschreibung = ?, Bild = ? "
-				+ "WHERE Artikel_ID = ?");
-		updateArtikelStatement.setString(1, String.valueOf(newData.get("Artikel.Bezeichnung")));
-		updateArtikelStatement.setString(2, String.valueOf(newData.get("Artikel.Beschreibung")));
-		updateArtikelStatement.setObject(3, newData.get("Artikel.Bild"));
-		updateArtikelStatement.setInt(4, (int) oldData.get("Artikel.Artikel_ID"));
-		updateArtikelStatement.executeUpdate();
+		if (newData.get("Artikel.Bild") != null) {
+			PreparedStatement updateArtikelStatement = Project.getInstance().getConnection().prepareStatement(
+					"UPDATE Artikel SET Bezeichnung = ?, Beschreibung = ?, Bild = ? "
+					+ "WHERE Artikel_ID = ?");
+			updateArtikelStatement.setString(1, String.valueOf(newData.get("Artikel.Bezeichnung")));
+			updateArtikelStatement.setString(2, String.valueOf(newData.get("Artikel.Beschreibung")));
+			updateArtikelStatement.setObject(3, newData.get("Artikel.Bild"));
+			updateArtikelStatement.setInt(4, (int) oldData.get("Artikel.Artikel_ID"));
+			updateArtikelStatement.executeUpdate();
+		} else {
+			PreparedStatement updateArtikelStatement = Project.getInstance().getConnection().prepareStatement(
+					"UPDATE Artikel SET Bezeichnung = ?, Beschreibung = ?, Bild = NULL "
+					+ "WHERE Artikel_ID = ?");
+			updateArtikelStatement.setString(1, String.valueOf(newData.get("Artikel.Bezeichnung")));
+			updateArtikelStatement.setString(2, String.valueOf(newData.get("Artikel.Beschreibung")));
+			updateArtikelStatement.setInt(3, (int) oldData.get("Artikel.Artikel_ID"));
+			updateArtikelStatement.executeUpdate();
+		}
 		
 		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Artikel.Bezeichnung")));
 	}
