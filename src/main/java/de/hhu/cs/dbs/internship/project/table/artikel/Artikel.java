@@ -47,7 +47,7 @@ public class Artikel extends Table {
 				+ "VALUES (?, ?, ?, NULL)");
 		insertArtikelStatement.setString(1, String.valueOf(data.get("Artikel.Bezeichnung")));
 		insertArtikelStatement.setString(2, String.valueOf(data.get("Artikel.Beschreibung")));
-		insertArtikelStatement.setString(3, String.valueOf(data.get("Artikel.Bild")));
+		insertArtikelStatement.setObject(3, String.valueOf(data.get("Artikel.Bild"));
 		insertArtikelStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Artikel.Bezeichnung")));
@@ -62,7 +62,7 @@ public class Artikel extends Table {
 				+ "WHERE Artikel_ID = ?");
 		updateArtikelStatement.setString(1, String.valueOf(newData.get("Artikel.Bezeichnung")));
 		updateArtikelStatement.setString(2, String.valueOf(newData.get("Artikel.Beschreibung")));
-		updateArtikelStatement.setString(3, String.valueOf(newData.get("Artikel.Bild")));
+		updateArtikelStatement.setObject(3, String.valueOf(newData.get("Artikel.Bild"));
 		updateArtikelStatement.setInt(4, (int) oldData.get("Artikel.Artikel_ID"));
 		updateArtikelStatement.executeUpdate();
 		
