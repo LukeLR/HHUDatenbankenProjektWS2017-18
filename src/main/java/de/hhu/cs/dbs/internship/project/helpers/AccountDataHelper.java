@@ -14,7 +14,6 @@ public class AccountDataHelper {
 
 	public static void changeAccountData(Data oldData, Data newData) throws SQLException {
 		UnifiedLoggingHelper.logUpdate("Account", oldData, newData);
-		Logger logger = Logger.getLogger("Account");
 		
 		Connection con = Project.getInstance().getConnection();
 		con.getRawConnection().setAutoCommit(false);
