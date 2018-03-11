@@ -67,9 +67,6 @@ public class Premiumkunde extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		// TODO Premiumkunde updateRowWithData implementieren
-		// TODO: Aktualisierung mit Bildern implementieren
-		
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
 		if (newData.get("Premiumkunde.Studierendenausweis") != null) {
