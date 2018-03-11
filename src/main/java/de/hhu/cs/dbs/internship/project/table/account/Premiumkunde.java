@@ -42,9 +42,11 @@ public class Premiumkunde extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
+		Logger logger = Logger.getLogger(this.getClass().getName());
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
 		if (data.get("Premiumkunde.Studierendenausweis") != null) {
+			logger.info("Inserting Non-Null Studierendenausweis into Premiumkunde!");
 			PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 					"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
 					+ "VALUES (?, ?, ?)");
@@ -53,6 +55,7 @@ public class Premiumkunde extends Table {
 			insertPremiumkundeStatement.setString(3, String.valueOf(data.get("Premiumkunde.E_Mail_Adresse")));
 			insertPremiumkundeStatement.executeUpdate();
 		} else {
+			logger.info("Premiumkunde.Studierendenausweis is NULL on insert.");
 			PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 					"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
 					+ "VALUES (?, NULL, ?)");
@@ -66,9 +69,11 @@ public class Premiumkunde extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
+		Logger logger = Logger.getLogger(this.getClass().getName());
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
 		if (newData.get("Premiumkunde.Studierendenausweis") != null) {
+			logger.info("Updating Non-Null Studierendenausweis in Premiumkunde!");
 			PreparedStatement updatePremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Premiumkunde "
 				+ "SET Ablaufdatum = ?, Studierendenausweis = ?, E_Mail_Adresse = ? "
@@ -79,14 +84,15 @@ public class Premiumkunde extends Table {
 			updatePremiumkundeStatement.setString(4, String.valueOf(oldData.get("Premiumkunde.E_Mail_Adresse")));
 			updatePremiumkundeStatement.executeUpdate();
 		} else {
+			logger.info("Premiumkunde.Studierendenausweis is NULL on update.");
 			PreparedStatement updatePremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 					"UPDATE Premiumkunde "
 					+ "SET Ablaufdatum = ?, Studierendenausweis = NULL, E_Mail_Adresse = ? "
 					+ "WHERE E_Mail_Adresse = ?");
-				updatePremiumkundeStatement.setString(1, String.valueOf(newData.get("Premiumkunde.Ablaufdatum")));
-				updatePremiumkundeStatement.setString(2, String.valueOf(newData.get("Premiumkunde.E_Mail_Adresse")));
-				updatePremiumkundeStatement.setString(3, String.valueOf(oldData.get("Premiumkunde.E_Mail_Adresse")));
-				updatePremiumkundeStatement.executeUpdate();
+			updatePremiumkundeStatement.setString(1, String.valueOf(newData.get("Premiumkunde.Ablaufdatum")));
+			updatePremiumkundeStatement.setString(2, String.valueOf(newData.get("Premiumkunde.E_Mail_Adresse")));
+			updatePremiumkundeStatement.setString(3, String.valueOf(oldData.get("Premiumkunde.E_Mail_Adresse")));
+			updatePremiumkundeStatement.executeUpdate();
 		}
 		
 		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
