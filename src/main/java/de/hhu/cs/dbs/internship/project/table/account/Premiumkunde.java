@@ -69,7 +69,21 @@ public class Premiumkunde extends Table {
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
 		// TODO Premiumkunde updateRowWithData implementieren
 		// TODO: Aktualisierung mit Bildern implementieren
-
+		
+		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
+		
+		PreparedStatement updatePremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Premiumkunde "
+				+ "SET Ablaufdatum = ?, Studierendenausweis = ?, E_Mail_Adresse = ? "
+				+ "WHERE E_Mail_Adresse = ?");
+		updatePremiumkundeStatement.setString(1, String.valueOf(newData.get("Premiumkunde.Ablaufdatum")));
+		updatePremiumkundeStatement.setObject(2, newData.get("Premiumkunde.Studierendenausweis"));
+		updatePremiumkundeStatement.setString(3, String.valueOf(newData.get("Premiumkunde.E_Mail_Adresse")));
+		updatePremiumkundeStatement.setString(4, String.valueOf(oldData.get("Premiumkunde.E_Mail_Adresse")));
+		updatePremiumkundeStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
+				String.valueOf(newData.get("Premiumkunde.E_Mail_Adresse")));
 	}
 
 	@Override
