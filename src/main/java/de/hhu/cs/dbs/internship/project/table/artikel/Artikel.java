@@ -81,7 +81,7 @@ public class Artikel extends Table {
 					+ "WHERE Artikel_ID = ?");
 			updateArtikelStatement.setString(1, String.valueOf(newData.get("Artikel.Bezeichnung")));
 			updateArtikelStatement.setString(2, String.valueOf(newData.get("Artikel.Beschreibung")));
-			updateArtikelStatement.setInt(3, Integer.valueOf(String.valueOf(oldData.get("Artikel.Artikel_ID")));
+			updateArtikelStatement.setInt(3, Integer.valueOf(String.valueOf(oldData.get("Artikel.Artikel_ID"))));
 			updateArtikelStatement.executeUpdate();
 		}
 		
