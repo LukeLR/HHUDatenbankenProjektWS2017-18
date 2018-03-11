@@ -47,7 +47,7 @@ public class Artikel extends Table {
 				+ "VALUES (?, ?, ?, NULL)");
 		insertArtikelStatement.setString(1, String.valueOf(data.get("Artikel.Bezeichnung")));
 		insertArtikelStatement.setString(2, String.valueOf(data.get("Artikel.Beschreibung")));
-		insertArtikelStatement.setObject(3, String.valueOf(data.get("Artikel.Bild"));
+		insertArtikelStatement.setObject(3, data.get("Artikel.Bild"));
 		insertArtikelStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Artikel.Bezeichnung")));
