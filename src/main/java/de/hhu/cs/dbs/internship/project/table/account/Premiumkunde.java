@@ -44,8 +44,7 @@ public class Premiumkunde extends Table {
 	public void insertRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
-		if (data.get("Premiumkunde.Studierendenausweis") != null &&
-		!data.get("Premiumkunde.Studierendenausweis").toString().isEmpty()) {
+		if (data.get("Premiumkunde.Studierendenausweis") != null) {
 			PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 					"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
 					+ "VALUES (?, ?, ?)");
