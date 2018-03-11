@@ -47,13 +47,13 @@ public class Premiumkunde extends Table {
 		if (data.get("Premiumkunde.Studierendenausweis") != null &&
 		!data.get("Premiumkunde.Studierendenausweis").toString().isEmpty()) {
 			//TODO: Einfügen von Bildern implementieren
-			/*PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
+			PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 					"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
 					+ "VALUES (?, ?, ?)");
 			insertPremiumkundeStatement.setString(1, String.valueOf(data.get("Premiumkunde.Ablaufdatum")));
-			insertPremiumkundeStatement.setString(2, String.valueOf(data.get("Premiumkunde.Studierendenausweis")));
+			insertPremiumkundeStatement.setObject(2, data.get("Premiumkunde.Studierendenausweis"));
 			insertPremiumkundeStatement.setString(3, String.valueOf(data.get("Premiumkunde.E_Mail_Adresse")));
-			insertPremiumkundeStatement.executeUpdate();*/
+			insertPremiumkundeStatement.executeUpdate();
 		} else {
 			PreparedStatement insertPremiumkundeStatement = Project.getInstance().getConnection().prepareStatement(
 					"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
