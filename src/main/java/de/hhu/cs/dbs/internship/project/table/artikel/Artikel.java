@@ -40,9 +40,11 @@ public class Artikel extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
+		Logger logger = Logger.getLogger(this.getClass().getName());
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
 		if (data.get("Artikel.Bild") != null) {
+			logger.info("Artikel.Bild is NOT NULL on insert!");
 			PreparedStatement insertArtikelStatement = Project.getInstance().getConnection().prepareStatement(
 					"INSERT INTO Artikel (Bezeichnung, Beschreibung, Bild, Artikel_ID) "
 					+ "VALUES (?, ?, ?, NULL)");
@@ -51,6 +53,7 @@ public class Artikel extends Table {
 			insertArtikelStatement.setObject(3, data.get("Artikel.Bild"));
 			insertArtikelStatement.executeUpdate();
 		} else {
+			logger.info("Artikel.Bild is NULL on insert!");
 			PreparedStatement insertArtikelStatement = Project.getInstance().getConnection().prepareStatement(
 					"INSERT INTO Artikel (Bezeichnung, Beschreibung, Bild, Artikel_ID) "
 					+ "VALUES (?, ?, NULL, NULL)");
@@ -64,9 +67,11 @@ public class Artikel extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
+		Logger logger = Logger.getLogger(this.getClass().getName());
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
 		if (newData.get("Artikel.Bild") != null) {
+			logger.info("Artikel.Bild is NOT NULL on update!");
 			PreparedStatement updateArtikelStatement = Project.getInstance().getConnection().prepareStatement(
 					"UPDATE Artikel SET Bezeichnung = ?, Beschreibung = ?, Bild = ? "
 					+ "WHERE Artikel_ID = ?");
@@ -76,6 +81,7 @@ public class Artikel extends Table {
 			updateArtikelStatement.setInt(4, (int) oldData.get("Artikel.Artikel_ID"));
 			updateArtikelStatement.executeUpdate();
 		} else {
+			logger.info("Artikel.Bild is NULL on update!");
 			PreparedStatement updateArtikelStatement = Project.getInstance().getConnection().prepareStatement(
 					"UPDATE Artikel SET Bezeichnung = ?, Beschreibung = ?, Bild = NULL "
 					+ "WHERE Artikel_ID = ?");
