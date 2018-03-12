@@ -23,12 +23,14 @@ public class MeineLieferabos extends Table {
 				+ "Lieferabo.Beginn, "
 				+ "Lieferabo.Ende "
 				+ "FROM Lieferabo "
-				+ "JOIN Warenkorb on Lieferabo.Warenkorb_ID = Warenkorb.Warenkorb_ID";
+				+ "JOIN Warenkorb on Lieferabo.Warenkorb_ID = Warenkorb.Warenkorb_ID "
+				+ "WHERE Warenkorb.E_Mail_Adresse = '"
+				+ String.valueOf(Project.getInstance().getData().get("email")) + "'";
 		
 		if (filter != null && !filter.isEmpty()) {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
-			selectQuery += " WHERE Warenkorb.E_Mail_Adresse LIKE '%" + filter + "%' OR"
-					+ " Lieferabo.Warenkorb_ID LIKE '%" + filter + "%'";
+			selectQuery += " AND (Warenkorb.E_Mail_Adresse LIKE '%" + filter + "%' OR"
+					+ " Lieferabo.Warenkorb_ID LIKE '%" + filter + "%')";
 		}
 		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
