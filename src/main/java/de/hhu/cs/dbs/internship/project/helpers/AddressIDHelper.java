@@ -41,9 +41,23 @@ public class AddressIDHelper {
 		addressRequestQuery.setString(4, city);
 
 		ResultSet addressResults = addressRequestQuery.executeQuery();
-		int addressID = addressResults.getInt("Adressen_ID");
-		logger.info("Address ID found: " + String.valueOf(addressID));
-		return addressID;
+		if (!addressResults.isClosed()) {
+			int addressID = addressResults.getInt("Adressen_ID");
+			logger.info("Address ID found: " + String.valueOf(addressID));
+			return addressID;
+		} else {
+			logger.info("Address not found! Inserting...");
+			PreparedStatement addressInsertQuery = con.prepareStatement(
+					"INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID) "
+					+ "VALUES (?, ?, ?, ?, NULL)");
+			addressInsertQuery.setString(1, street);
+			addressInsertQuery.setString(2, houseNumber);
+			addressInsertQuery.setInt(3, zipCode);
+			addressInsertQuery.setString(4, city);
+			addressInsertQuery.executeUpdate();
+			// Get the Adressen_ID of the just inserted address.
+			return getAddressIDByAddress(street, houseNumber, zipCode, city, con);
+		}
 	}
 	/**
 	 * Searches the database for an address id by given address. In this case, no database connection is given, so the default one is used.
