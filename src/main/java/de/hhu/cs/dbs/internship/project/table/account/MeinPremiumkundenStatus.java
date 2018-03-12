@@ -66,7 +66,7 @@ public class MeinPremiumkundenStatus extends Table {
 					"INSERT INTO Premiumkunde (Ablaufdatum, Studierendenausweis, E_Mail_Adresse) "
 					+ "VALUES (?, NULL, ?)");
 			insertPremiumkundeStatement.setString(1, String.valueOf(data.get("Premiumkunde.Ablaufdatum")));
-			insertPremiumkundeStatement.setString(2, String.valueOf(data.get("Premiumkunde.E_Mail_Adresse")));
+			insertPremiumkundeStatement.setString(2, String.valueOf(Project.getInstance().getData().get("email")));
 			insertPremiumkundeStatement.executeUpdate();
 		}
 		
