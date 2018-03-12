@@ -61,21 +61,22 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 			logger.info("User is at least of permission level read only.");
 			TreeItem<TableViewController> accounts = GUIHelpers.addTableOfClassToTree(new MeinAccount(), "Mein Account", treeItems);
 			
+			TreeItem<TableViewController> artikel = GUIHelpers.addTableOfClassToTree(new AlleArtikel(), "Artikel", treeItems);
+			GUIHelpers.addTableOfClassToTreeItem(new AlleAnbieter(), "Anbieter", artikel);
+			GUIHelpers.addTableOfClassToTreeItem(new AlleAngebote(), "Angebote", artikel);
+			GUIHelpers.addTableOfClassToTreeItem(new AlleAnbieterBietetAn(), "Anbieter bietet an", artikel);
+			GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelempfiehltArtikel(), "Artikelempfehlungen", artikel);
+			
+			GUIHelpers.addTableOfClassToTree(new AlleLieferdienste(), "Lieferdienste", treeItems);
+			
+			TreeItem<TableViewController> newsletter = GUIHelpers.addTableOfClassToTree(new AlleNewsletter(), "Newsletter", treeItems);
+			GUIHelpers.addTableOfClassToTreeItem(new MeineNewsletterabos(), "Meine Newsletterabos", newsletter);
+			GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelImNewsletter(), "Artikel im Newsletter", newsletter);
+			
+			TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new MeineWarenkoerbe(), "Meine Warenkörbe", treeItems);
+			
 			if (permissionLevel >= Permission.CUSTOMER) {
 				logger.info("User is at least of permission level customer.");
-				TreeItem<TableViewController> artikel = GUIHelpers.addTableOfClassToTree(new AlleArtikel(), "Artikel", treeItems);
-				GUIHelpers.addTableOfClassToTreeItem(new AlleAnbieter(), "Anbieter", artikel);
-				GUIHelpers.addTableOfClassToTreeItem(new AlleAngebote(), "Angebote", artikel);
-				GUIHelpers.addTableOfClassToTreeItem(new AlleAnbieterBietetAn(), "Anbieter bietet an", artikel);
-				GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelempfiehltArtikel(), "Artikelempfehlungen", artikel);
-				
-				GUIHelpers.addTableOfClassToTree(new AlleLieferdienste(), "Lieferdienste", treeItems);
-				
-				TreeItem<TableViewController> newsletter = GUIHelpers.addTableOfClassToTree(new AlleNewsletter(), "Newsletter", treeItems);
-				GUIHelpers.addTableOfClassToTreeItem(new MeineNewsletterabos(), "Meine Newsletterabos", newsletter);
-				GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelImNewsletter(), "Artikel im Newsletter", newsletter);
-				
-				TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new MeineWarenkoerbe(), "Meine Warenkörbe", treeItems);
 				
 				if (permissionLevel >= Permission.PREMIUM_CUSTOMER) {
 					logger.info("User is at least of permission level premium customer.");
