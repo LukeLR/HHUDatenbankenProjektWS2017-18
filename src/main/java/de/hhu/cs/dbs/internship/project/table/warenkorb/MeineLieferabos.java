@@ -92,20 +92,33 @@ public class MeineLieferabos extends Table {
 		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
-		PreparedStatement updateLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
-				"UPDATE Lieferabo SET Intervall = ?, Beginn = ?, Ende = ?, Warenkorb_ID = ? "
-				+ "WHERE Intervall = ? AND Beginn = ? AND Ende = ? AND Warenkorb_ID = ?");
-		updateLieferaboStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Lieferabo.Intervall"))));
-		updateLieferaboStatement.setString(2, String.valueOf(newData.get("Lieferabo.Beginn")));
-		updateLieferaboStatement.setString(3, String.valueOf(newData.get("Lieferabo.Ende")));
-		updateLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(newData.get("Lieferabo.Warenkorb_ID"))));
-		updateLieferaboStatement.setInt(5, Integer.valueOf(String.valueOf(oldData.get("Lieferabo.Intervall"))));
-		updateLieferaboStatement.setString(6, String.valueOf(oldData.get("Lieferabo.Beginn")));
-		updateLieferaboStatement.setString(7, String.valueOf(oldData.get("Lieferabo.Ende")));
-		updateLieferaboStatement.setInt(8, Integer.valueOf(String.valueOf(oldData.get("Lieferabo.Warenkorb_ID"))));
-		updateLieferaboStatement.executeUpdate();
-		
-		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Lieferabo.Warenkorb_ID")));
+		if (AccountDataHelper.currentUserHasWarenkorbWithID(
+				Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID"))))
+		) {
+			PreparedStatement updateLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
+					"UPDATE Lieferabo SET Intervall = ?, Beginn = ?, Ende = ?, Warenkorb_ID = ? "
+					+ "WHERE Intervall = ? AND Beginn = ? AND Ende = ? AND Warenkorb_ID = ?");
+			updateLieferaboStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Lieferabo.Intervall"))));
+			updateLieferaboStatement.setString(2, String.valueOf(newData.get("Lieferabo.Beginn")));
+			updateLieferaboStatement.setString(3, String.valueOf(newData.get("Lieferabo.Ende")));
+			updateLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(newData.get("Lieferabo.Warenkorb_ID"))));
+			updateLieferaboStatement.setInt(5, Integer.valueOf(String.valueOf(oldData.get("Lieferabo.Intervall"))));
+			updateLieferaboStatement.setString(6, String.valueOf(oldData.get("Lieferabo.Beginn")));
+			updateLieferaboStatement.setString(7, String.valueOf(oldData.get("Lieferabo.Ende")));
+			updateLieferaboStatement.setInt(8, Integer.valueOf(String.valueOf(oldData.get("Lieferabo.Warenkorb_ID"))));
+			updateLieferaboStatement.executeUpdate();
+			
+			UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Lieferabo.Warenkorb_ID")));
+		} else {
+			SQLException ex = new SQLException ("User has no Warenkorb with ID " +
+					String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to create Lieferabo of. Aborting!");
+			Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
+			logger.log(Level.WARNING, "User has no Warenkorb with ID " +
+					String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to create Lieferabo of. Aborting!", ex);
+			throw ex;
+		}
 	}
 
 	@Override
