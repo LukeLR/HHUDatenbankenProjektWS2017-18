@@ -16,6 +16,10 @@ public class MeinPremiumkundenStatus extends Table {
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		Permission.hasSufficientPermission(Permission.READ_ONLY, this.getClass().getName());
+		/* 
+		 * Ansehen schon ab "READ_ONLY" erlaubt, da auch ehemalige Premiumkunden ihren abgelaufenen
+		 * Status sehen können sollen.
+		 */
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
 		String selectQuery = "SELECT * FROM (SELECT Ablaufdatum, Studierendenausweis, Kunde.E_Mail_Adresse, "
