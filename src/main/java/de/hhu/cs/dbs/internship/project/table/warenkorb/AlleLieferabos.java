@@ -9,7 +9,7 @@ import com.alexanderthelen.applicationkit.database.Table;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
-public class Lieferabo extends Table {
+public class AlleLieferabos extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {

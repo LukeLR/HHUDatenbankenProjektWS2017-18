@@ -10,21 +10,21 @@ import de.hhu.cs.dbs.internship.project.table.account.AlleAdressen;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAngestellte;
 import de.hhu.cs.dbs.internship.project.table.account.AllePremiumkunden;
-import de.hhu.cs.dbs.internship.project.table.artikel.Anbieter;
-import de.hhu.cs.dbs.internship.project.table.artikel.AnbieterBietetAn;
-import de.hhu.cs.dbs.internship.project.table.artikel.Angebot;
-import de.hhu.cs.dbs.internship.project.table.artikel.Artikel;
-import de.hhu.cs.dbs.internship.project.table.artikel.ArtikelempfiehltArtikel;
-import de.hhu.cs.dbs.internship.project.table.lieferdienst.Lieferdienst;
-import de.hhu.cs.dbs.internship.project.table.newsletter.ArtikelImNewsletter;
-import de.hhu.cs.dbs.internship.project.table.newsletter.Newsletter;
+import de.hhu.cs.dbs.internship.project.table.artikel.AlleAnbieter;
+import de.hhu.cs.dbs.internship.project.table.artikel.AlleAnbieterBietetAn;
+import de.hhu.cs.dbs.internship.project.table.artikel.AlleAngebote;
+import de.hhu.cs.dbs.internship.project.table.artikel.AlleArtikel;
+import de.hhu.cs.dbs.internship.project.table.artikel.AlleArtikelempfiehltArtikel;
+import de.hhu.cs.dbs.internship.project.table.lieferdienst.AlleLieferdienste;
+import de.hhu.cs.dbs.internship.project.table.newsletter.AlleArtikelImNewsletter;
+import de.hhu.cs.dbs.internship.project.table.newsletter.AlleNewsletter;
 import de.hhu.cs.dbs.internship.project.table.newsletter.MeineNewsletterabos;
 import de.hhu.cs.dbs.internship.project.table.newsletter.AlleNewsletterabos;
-import de.hhu.cs.dbs.internship.project.table.schlagwort.ArtikelGehoertZuSchlagwort;
-import de.hhu.cs.dbs.internship.project.table.schlagwort.Schlagwort;
+import de.hhu.cs.dbs.internship.project.table.schlagwort.AlleArtikelGehoertZuSchlagwort;
+import de.hhu.cs.dbs.internship.project.table.schlagwort.AlleSchlagworte;
 import de.hhu.cs.dbs.internship.project.table.warenkorb.AlleWarenkoerbe;
 import de.hhu.cs.dbs.internship.project.table.warenkorb.AlleAngeboteImWarenkorb;
-import de.hhu.cs.dbs.internship.project.table.warenkorb.Lieferabo;
+import de.hhu.cs.dbs.internship.project.table.warenkorb.AlleLieferabos;
 import de.hhu.cs.dbs.internship.project.table.warenkorb.MeineWarenkoerbe;
 import javafx.scene.control.TreeItem;
 
@@ -63,24 +63,24 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 			
 			if (permissionLevel >= Permission.CUSTOMER) {
 				logger.info("User is at least of permission level customer.");
-				TreeItem<TableViewController> artikel = GUIHelpers.addTableOfClassToTree(new Artikel(), "Artikel", treeItems);
-				GUIHelpers.addTableOfClassToTreeItem(new Anbieter(), "Anbieter", artikel);
-				GUIHelpers.addTableOfClassToTreeItem(new Angebot(), "Angebote", artikel);
-				GUIHelpers.addTableOfClassToTreeItem(new AnbieterBietetAn(), "Anbieter bietet an", artikel);
-				GUIHelpers.addTableOfClassToTreeItem(new ArtikelempfiehltArtikel(), "Artikelempfehlungen", artikel);
+				TreeItem<TableViewController> artikel = GUIHelpers.addTableOfClassToTree(new AlleArtikel(), "Artikel", treeItems);
+				GUIHelpers.addTableOfClassToTreeItem(new AlleAnbieter(), "Anbieter", artikel);
+				GUIHelpers.addTableOfClassToTreeItem(new AlleAngebote(), "Angebote", artikel);
+				GUIHelpers.addTableOfClassToTreeItem(new AlleAnbieterBietetAn(), "Anbieter bietet an", artikel);
+				GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelempfiehltArtikel(), "Artikelempfehlungen", artikel);
 				
-				GUIHelpers.addTableOfClassToTree(new Lieferdienst(), "Lieferdienste", treeItems);
+				GUIHelpers.addTableOfClassToTree(new AlleLieferdienste(), "Lieferdienste", treeItems);
 				
-				TreeItem<TableViewController> newsletter = GUIHelpers.addTableOfClassToTree(new Newsletter(), "Newsletter", treeItems);
+				TreeItem<TableViewController> newsletter = GUIHelpers.addTableOfClassToTree(new AlleNewsletter(), "Newsletter", treeItems);
 				GUIHelpers.addTableOfClassToTreeItem(new MeineNewsletterabos(), "Meine Newsletterabos", newsletter);
-				GUIHelpers.addTableOfClassToTreeItem(new ArtikelImNewsletter(), "Artikel im Newsletter", newsletter);
+				GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelImNewsletter(), "Artikel im Newsletter", newsletter);
 				
 				TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new MeineWarenkoerbe(), "Meine Warenkörbe", treeItems);
 				
 				if (permissionLevel >= Permission.PREMIUM_CUSTOMER) {
 					logger.info("User is at least of permission level premium customer.");
 					
-					GUIHelpers.addTableOfClassToTreeItem(new Lieferabo(), "Lieferabos", warenkorb);
+					GUIHelpers.addTableOfClassToTreeItem(new AlleLieferabos(), "Lieferabos", warenkorb);
 					
 					if (permissionLevel >= Permission.SHOP_ASSISTANT) {
 						logger.info("User is at least of permission level shop assistant.");
@@ -93,8 +93,8 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 						
 						GUIHelpers.addTableOfClassToTreeItem(new AlleAngeboteImWarenkorb(), "Alle Angebote im Warenkorb", warenkorb);
 						
-						TreeItem<TableViewController> schlagwort = GUIHelpers.addTableOfClassToTree(new Schlagwort(), "Schlagworte", treeItems);
-						GUIHelpers.addTableOfClassToTreeItem(new ArtikelGehoertZuSchlagwort(), "Artikel hat Schlagwort", schlagwort);
+						TreeItem<TableViewController> schlagwort = GUIHelpers.addTableOfClassToTree(new AlleSchlagworte(), "Schlagworte", treeItems);
+						GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelGehoertZuSchlagwort(), "Artikel hat Schlagwort", schlagwort);
 						
 						GUIHelpers.addTableOfClassToTreeItem(new AlleWarenkoerbe(), "Alle Warenkörbe", warenkorb);
 					}

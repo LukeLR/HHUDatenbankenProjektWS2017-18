@@ -1,8 +1,7 @@
-package de.hhu.cs.dbs.internship.project.table.artikel;
+package de.hhu.cs.dbs.internship.project.table.schlagwort;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
@@ -11,17 +10,18 @@ import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
-public class Anbieter extends Table {
+public class AlleSchlagworte extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		Permission.hasSufficientPermission(Permission.READ_ONLY, this.getClass().getName());
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
-		String selectQuery = "SELECT Anbieterbezeichnung FROM Anbieter";
+		String selectQuery = "SELECT Schlagwort FROM Schlagwort";
+		
 		if (filter != null && !filter.isEmpty()) {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
-			selectQuery += " WHERE Anbieterbezeichnung LIKE '%" + filter + "%'";
+			selectQuery += " WHERE Schlagwort LIKE '%" + filter + "%'";
 		}
 		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
@@ -33,8 +33,9 @@ public class Anbieter extends Table {
 		Permission.hasSufficientPermission(Permission.READ_ONLY, this.getClass().getName());
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
-		String selectQuery = "SELECT * FROM Anbieter "
-				+ "WHERE Anbieterbezeichnung = '" +	String.valueOf(data.get("Anbieter.Anbieterbezeichnung")) + "'";
+		String selectQuery = "SELECT Schlagwort FROM Schlagwort "
+				+ "WHERE Schlagwort = '"
+				+ String.valueOf(data.get("Schlagwort.Schlagwort")) + "'";
 		
 		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
@@ -45,12 +46,12 @@ public class Anbieter extends Table {
 		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
-		PreparedStatement insertAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
-				"INSERT INTO Anbieter (Anbieterbezeichnung) VALUES (?);");
-		insertAnbieterStatement.setString(1, String.valueOf(data.get("Anbieter.Anbieterbezeichnung")));
-		insertAnbieterStatement.executeUpdate();
+		PreparedStatement insertSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Schlagwort (Schlagwort) VALUES (?)");
+		insertSchlagwortStatement.setString(1, String.valueOf(data.get("Schlagwort.Schlagwort")));
+		insertSchlagwortStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Anbieter.Anbieterbezeichnung")));
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Schlagwort.Schlagwort")));
 	}
 
 	@Override
@@ -58,13 +59,13 @@ public class Anbieter extends Table {
 		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
-		PreparedStatement updateAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
-				"UPDATE Anbieter SET Anbieterbezeichnung = ? WHERE Anbieterbezeichnung = ?");
-		updateAnbieterStatement.setString(1, String.valueOf(newData.get("Anbieter.Anbieterbezeichnung")));
-		updateAnbieterStatement.setString(2, String.valueOf(oldData.get("Anbieter.Anbieterbezeichnung")));
-		updateAnbieterStatement.executeUpdate();
+		PreparedStatement updateSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
+				"UPDATE Schlagwort SET Schlagwort = ? WHERE Schlagwort = ?");
+		updateSchlagwortStatement.setString(1, String.valueOf(newData.get("Schlagwort.Schlagwort")));
+		updateSchlagwortStatement.setString(2, String.valueOf(oldData.get("Schlagwort.Schlagwort")));
+		updateSchlagwortStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Anbieter.Anbieterbezeichnung")));
+		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Schlagwort.Schlagwort")));
 	}
 
 	@Override
@@ -72,12 +73,12 @@ public class Anbieter extends Table {
 		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
-		PreparedStatement deleteAnbieterStatement = Project.getInstance().getConnection().prepareStatement(
-				"DELETE FROM Anbieter WHERE Anbieterbezeichnung = ?");
-		deleteAnbieterStatement.setString(1, String.valueOf(data.get("Anbieter.Anbieterbezeichnung")));
-		deleteAnbieterStatement.executeUpdate();
+		PreparedStatement deleteSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
+				"DELETE FROM Schlagwort WHERE Schlagwort = ?");
+		deleteSchlagwortStatement.setString(1, String.valueOf(data.get("Schlagwort.Schlagwort")));
+		deleteSchlagwortStatement.executeUpdate();
 		
-		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Anbieter.Anbieterbezeichnung")));
+		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Schlagwort.Schlagwort")));
 	}
 
 }
