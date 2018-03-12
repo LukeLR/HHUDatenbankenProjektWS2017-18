@@ -358,9 +358,9 @@ END;
  */
 CREATE TRIGGER set_warenkorb_lieferdienst
 AFTER INSERT ON Warenkorb
-WHEN NEW.Lieferdienst IS NULL
+WHEN NEW.Lieferdienst_Bezeichnung IS NULL
 BEGIN
-    UPDATE Warenkorb SET Lieferdienst = 'DHL'
+    UPDATE Warenkorb SET Lieferdienst_Bezeichnung = 'DHL'
         WHERE Warenkorb_ID = NEW.Warenkorb_ID;
 END;
 
