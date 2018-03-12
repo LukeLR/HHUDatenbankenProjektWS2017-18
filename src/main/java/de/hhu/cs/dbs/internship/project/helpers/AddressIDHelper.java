@@ -22,6 +22,7 @@ public class AddressIDHelper {
 	 * @param zipCode The ZIP code of the address in question.
 	 * @param city The city of the address in question.
 	 * @param con The connection to use for searching. This is useful, if the search should include results for changes that have not been committed yet.
+	 * @param recurse If the function is allowed to recurse to search for the address just inserted.
 	 * @return The address id for the address found.
 	 * @throws SQLException If the statement is malformed, or no address is found.
 	 */
