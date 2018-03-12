@@ -87,7 +87,7 @@ public class MeinPremiumkundenStatus extends Table {
 				+ "WHERE E_Mail_Adresse = ?");
 			updatePremiumkundeStatement.setString(1, String.valueOf(newData.get("Premiumkunde.Ablaufdatum")));
 			updatePremiumkundeStatement.setObject(2, newData.get("Premiumkunde.Studierendenausweis"));
-			updatePremiumkundeStatement.setString(3, String.valueOf(newData.get("Premiumkunde.E_Mail_Adresse")));
+			updatePremiumkundeStatement.setString(3, String.valueOf(Project.getInstance().getData().get("email")));
 			updatePremiumkundeStatement.setString(4, String.valueOf(oldData.get("Premiumkunde.E_Mail_Adresse")));
 			updatePremiumkundeStatement.executeUpdate();
 		} else {
@@ -97,7 +97,7 @@ public class MeinPremiumkundenStatus extends Table {
 					+ "SET Ablaufdatum = ?, Studierendenausweis = NULL, E_Mail_Adresse = ? "
 					+ "WHERE E_Mail_Adresse = ?");
 			updatePremiumkundeStatement.setString(1, String.valueOf(newData.get("Premiumkunde.Ablaufdatum")));
-			updatePremiumkundeStatement.setString(2, String.valueOf(newData.get("Premiumkunde.E_Mail_Adresse")));
+			updatePremiumkundeStatement.setString(2, String.valueOf(Project.getInstance().getData().get("email")));
 			updatePremiumkundeStatement.setString(3, String.valueOf(oldData.get("Premiumkunde.E_Mail_Adresse")));
 			updatePremiumkundeStatement.executeUpdate();
 		}
