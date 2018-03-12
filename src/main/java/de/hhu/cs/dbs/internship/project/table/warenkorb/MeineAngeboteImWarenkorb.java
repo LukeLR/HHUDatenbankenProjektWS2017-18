@@ -104,26 +104,39 @@ public class MeineAngeboteImWarenkorb extends Table {
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
-		PreparedStatement updateAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
-				"UPDATE Angebot_im_Warenkorb "
-				+ "SET Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ? "
-				+ "WHERE Warenkorb_ID = ? AND Angebots_ID = ? AND Anbieterbezeichnung = ? AND Anzahl = ?");
-				
-		updateAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
-		updateAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID"))));
-		updateAngebotImWarenkorbStatement.setString(3, String.valueOf(newData.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
-		updateAngebotImWarenkorbStatement.setInt(4, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Anzahl"))));
-		updateAngebotImWarenkorbStatement.setInt(5, Integer.valueOf(String.valueOf(oldData.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
-		updateAngebotImWarenkorbStatement.setInt(6, Integer.valueOf(String.valueOf(oldData.get("Angebot_im_Warenkorb.Angebots_ID"))));
-		updateAngebotImWarenkorbStatement.setString(7, String.valueOf(oldData.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
-		updateAngebotImWarenkorbStatement.setInt(8, Integer.valueOf(String.valueOf(oldData.get("Angebot_im_Warenkorb.Anzahl"))));
-		updateAngebotImWarenkorbStatement.executeUpdate();
-		
-		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
-				String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID")) + "-"
-				+ String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID"))
-				+ String.valueOf(newData.get("Angebot_im_Warenkorb.Anbieterbezeichnung")) + "-"
-				+ String.valueOf(newData.get("Angebot_im_Warenkorb.Anzahl")));
+		if (AccountDataHelper.currentUserHasWarenkorbWithID(
+				Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID"))))
+		) {
+			PreparedStatement updateAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
+					"UPDATE Angebot_im_Warenkorb "
+					+ "SET Warenkorb_ID = ?, Angebots_ID = ?, Anbieterbezeichnung = ?, Anzahl = ? "
+					+ "WHERE Warenkorb_ID = ? AND Angebots_ID = ? AND Anbieterbezeichnung = ? AND Anzahl = ?");
+					
+			updateAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
+			updateAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID"))));
+			updateAngebotImWarenkorbStatement.setString(3, String.valueOf(newData.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
+			updateAngebotImWarenkorbStatement.setInt(4, Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Anzahl"))));
+			updateAngebotImWarenkorbStatement.setInt(5, Integer.valueOf(String.valueOf(oldData.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
+			updateAngebotImWarenkorbStatement.setInt(6, Integer.valueOf(String.valueOf(oldData.get("Angebot_im_Warenkorb.Angebots_ID"))));
+			updateAngebotImWarenkorbStatement.setString(7, String.valueOf(oldData.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
+			updateAngebotImWarenkorbStatement.setInt(8, Integer.valueOf(String.valueOf(oldData.get("Angebot_im_Warenkorb.Anzahl"))));
+			updateAngebotImWarenkorbStatement.executeUpdate();
+			
+			UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
+					String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID")) + "-"
+					+ String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID"))
+					+ String.valueOf(newData.get("Angebot_im_Warenkorb.Anbieterbezeichnung")) + "-"
+					+ String.valueOf(newData.get("Angebot_im_Warenkorb.Anzahl")));
+		} else {
+			SQLException ex = new SQLException ("User has no Warenkorb with ID " +
+					String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to insert Items in. Aborting!");
+			Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
+			logger.log(Level.WARNING, "User has no Warenkorb with ID " +
+					String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to insert Items in. Aborting!", ex);
+			throw ex;
+		}
 	}
 
 	@Override
