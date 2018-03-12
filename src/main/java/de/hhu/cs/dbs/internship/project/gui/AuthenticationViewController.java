@@ -97,9 +97,8 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 
 		try {
 
-			/* Getting the Adressen_ID of the just inserted address
-			 * and inserting it into the customer that is about to be
-			 * created.
+			/* Search for address, and insert it, if not found.
+			 * Always return the Adressen_ID (unless something fails).
 			 */
 
 			int addressID = AddressIDHelper.getAddressIDByAddress
