@@ -84,13 +84,14 @@ public class MeineWarenkoerbe extends Table {
 				"UPDATE Warenkorb SET "
 				+ "Bestelldatum = ?, Bestellstatus = ?, E_Mail_Adresse = ?, "
 				+ "Lieferdienst_Bezeichnung = ?, Lieferdatum = ? "
-				+ "WHERE Warenkorb_ID = ?");
+				+ "WHERE Warenkorb_ID = ? AND E_Mail_Adresse = ?");
 		updateWarenkoerbeStatement.setString(1, String.valueOf(newData.get("Warenkorb.Bestelldatum")));
 		updateWarenkoerbeStatement.setString(2, String.valueOf(newData.get("Warenkorb.Bestellstatus")));
-		updateWarenkoerbeStatement.setString(3, String.valueOf(newData.get("Warenkorb.E_Mail_Adresse")));
+		updateWarenkoerbeStatement.setString(3, String.valueOf(Project.getInstance().getData().get("email")));
 		updateWarenkoerbeStatement.setString(4, String.valueOf(newData.get("Warenkorb.Lieferdienst_Bezeichnung")));
 		updateWarenkoerbeStatement.setString(5, String.valueOf(newData.get("Warenkorb.Lieferdatum")));
 		updateWarenkoerbeStatement.setString(6, String.valueOf(oldData.get("Warenkorb.Warenkorb_ID")));
+		updateWarenkoerbeStatement.setString(7, String.valueOf(Project.getInstance().getData().get("email")));
 		updateWarenkoerbeStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(oldData.get("Warenkorb.Warenkorb_ID")));
