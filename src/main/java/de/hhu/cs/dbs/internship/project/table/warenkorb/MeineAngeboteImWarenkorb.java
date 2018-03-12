@@ -32,7 +32,9 @@ public class MeineAngeboteImWarenkorb extends Table {
 				+ "FROM Angebot_im_Warenkorb "
 				+ "JOIN Angebot on Angebot_im_Warenkorb.Angebots_ID = Angebot.Angebots_ID "
 				+ "JOIN Artikel on Angebot.Artikel_ID = Artikel.Artikel_ID "
-				+ "JOIN Warenkorb on Angebot_im_Warenkorb.Warenkorb_ID = Warenkorb.Warenkorb_ID";
+				+ "JOIN Warenkorb on Angebot_im_Warenkorb.Warenkorb_ID = Warenkorb.Warenkorb_ID "
+				+ "WHERE Warenkorb.E_Mail_Adresse = '"
+				+ String.valueOf(Project.getInstance().getData().get("email")) + "'";
 		
 		if (filter != null && !filter.isEmpty()) {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
