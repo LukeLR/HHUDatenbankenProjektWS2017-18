@@ -25,7 +25,7 @@ import de.hhu.cs.dbs.internship.project.table.schlagwort.Schlagwort;
 import de.hhu.cs.dbs.internship.project.table.warenkorb.AlleWarenkoerbe;
 import de.hhu.cs.dbs.internship.project.table.warenkorb.AlleAngeboteImWarenkorb;
 import de.hhu.cs.dbs.internship.project.table.warenkorb.Lieferabo;
-import de.hhu.cs.dbs.internship.project.table.warenkorb.Warenkoerbe;
+import de.hhu.cs.dbs.internship.project.table.warenkorb.MeineWarenkoerbe;
 import javafx.scene.control.TreeItem;
 
 import java.io.IOException;
@@ -75,7 +75,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 				GUIHelpers.addTableOfClassToTreeItem(new Newsletterabos(), "Newsletterabos", newsletter);
 				GUIHelpers.addTableOfClassToTreeItem(new ArtikelImNewsletter(), "Artikel im Newsletter", newsletter);
 				
-				TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new Warenkoerbe(), "Warenkörbe", treeItems);
+				TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new MeineWarenkoerbe(), "Warenkörbe", treeItems);
 				
 				if (permissionLevel >= Permission.PREMIUM_CUSTOMER) {
 					logger.info("User is at least of permission level premium customer.");
