@@ -95,24 +95,7 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 		Connection con = Project.getInstance().getConnection();
 		con.getRawConnection().setAutoCommit(false);
 
-		PreparedStatement addressInsertQuery = con.prepareStatement(
-				"INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID) "
-						+ "VALUES (?, ?, ?, ?, NULL)");
-		addressInsertQuery.setString(1, (String) data.get("street"));
-		addressInsertQuery.setString(2, (String) data.get("houseNumber"));
-		addressInsertQuery.setInt(3, Integer.valueOf((String) data.get("zipCode")));
-		addressInsertQuery.setString(4, (String) data.get("city"));
-
-		PreparedStatement customerInsertQuery = con.prepareStatement(
-				"INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID) "
-						+ "VALUES (?, ?, ?, ?, ?)");
-		customerInsertQuery.setString(1, (String) data.get("eMail"));
-		customerInsertQuery.setString(2, (String) data.get("firstName"));
-		customerInsertQuery.setString(3, (String) data.get("lastName"));
-		customerInsertQuery.setString(4, (String) data.get("password1"));
-
 		try {
-			addressInsertQuery.executeUpdate();
 
 			/* Getting the Adressen_ID of the just inserted address
 			 * and inserting it into the customer that is about to be
@@ -122,6 +105,14 @@ public class AuthenticationViewController extends com.alexanderthelen.applicatio
 			int addressID = AddressIDHelper.getAddressIDByAddress
 					((String) data.get("street"), (String) data.get("houseNumber"),
 							Integer.valueOf((String) data.get("zipCode")), (String) data.get("city"), con);
+			
+			PreparedStatement customerInsertQuery = con.prepareStatement(
+					"INSERT INTO Kunde (E_Mail_Adresse, Vorname, Nachname, Passwort, Adressen_ID) "
+							+ "VALUES (?, ?, ?, ?, ?)");
+			customerInsertQuery.setString(1, (String) data.get("eMail"));
+			customerInsertQuery.setString(2, (String) data.get("firstName"));
+			customerInsertQuery.setString(3, (String) data.get("lastName"));
+			customerInsertQuery.setString(4, (String) data.get("password1"));
 			customerInsertQuery.setInt(5, addressID);
 
 			customerInsertQuery.executeUpdate();
