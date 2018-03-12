@@ -3,6 +3,7 @@ package de.hhu.cs.dbs.internship.project.helpers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Connection;
@@ -14,6 +15,59 @@ import de.hhu.cs.dbs.internship.project.Project;
  *
  */
 public class AddressIDHelper {
+	/**
+	 * Searches the database for an address id by given address. If the address is not in the database, insert it.
+	 * @param street The street of the address in question.
+	 * @param houseNumber The housenumber of the address in question.
+	 * @param zipCode The ZIP code of the address in question.
+	 * @param city The city of the address in question.
+	 * @param con The connection to use for searching. This is useful, if the search should include results for changes that have not been committed yet.
+	 * @return The address id for the address found.
+	 * @throws SQLException If the statement is malformed, or no address is found.
+	 */
+	public static int getAddressIDByAddress
+	(String street, String houseNumber, int zipCode, String city, Connection con, boolean recurse) throws SQLException
+	{
+		Logger logger = Logger.getLogger(AddressIDHelper.class.getName());
+		logger.info("Searching for address ID for address: " + street
+				+ " " + houseNumber + ", " + zipCode + " " + city);
+
+		PreparedStatement addressRequestQuery = con.prepareStatement(
+				"SELECT Adressen_ID FROM Adresse "
+						+ "WHERE Strasse = ? AND Hausnummer = ? AND PLZ = ? AND Ort = ?");
+
+		addressRequestQuery.setString(1, street);
+		addressRequestQuery.setString(2, houseNumber);
+		addressRequestQuery.setInt(3, zipCode);
+		addressRequestQuery.setString(4, city);
+
+		ResultSet addressResults = addressRequestQuery.executeQuery();
+		if (!addressResults.isClosed()) {
+			int addressID = addressResults.getInt("Adressen_ID");
+			logger.info("Address ID found: " + String.valueOf(addressID));
+			return addressID;
+		} else {
+			if (recurse) {
+				logger.info("Address not found! Inserting...");
+				PreparedStatement addressInsertQuery = con.prepareStatement(
+						"INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID) "
+						+ "VALUES (?, ?, ?, ?, NULL)");
+				addressInsertQuery.setString(1, street);
+				addressInsertQuery.setString(2, houseNumber);
+				addressInsertQuery.setInt(3, zipCode);
+				addressInsertQuery.setString(4, city);
+				addressInsertQuery.executeUpdate();
+				// Get the Adressen_ID of the just inserted address.
+				return getAddressIDByAddress(street, houseNumber, zipCode, city, con);
+			} else {
+				// Not allowed to recurse
+				SQLException ex = new SQLException("Error on inserting Address!");
+				logger.log(Level.SEVERE, "Error on inserting Address!", ex);
+				throw ex;
+			}
+		}
+	}
+	
 	/**
 	 * Searches the database for an address id by given address. If the address is not in the database, insert it.
 	 * @param street The street of the address in question.
