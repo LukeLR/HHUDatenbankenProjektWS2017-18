@@ -68,6 +68,8 @@ public class MeineAngeboteImWarenkorb extends Table {
 	public void insertRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
+		
+		
 		PreparedStatement insertAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung, Warenkorb_ID, Anzahl) "
 				+ "VALUES (?, ?, ?, ?)");
