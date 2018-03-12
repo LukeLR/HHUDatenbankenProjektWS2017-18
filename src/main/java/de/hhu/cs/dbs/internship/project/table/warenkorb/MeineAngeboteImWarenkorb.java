@@ -143,20 +143,33 @@ public class MeineAngeboteImWarenkorb extends Table {
 	public void deleteRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
-		PreparedStatement deleteAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
-				"DELETE FROM Angebot_im_Warenkorb "
-				+ "WHERE Warenkorb_ID = ? AND Angebots_ID = ? AND Anbieterbezeichnung = ? AND Anzahl = ?");
-		deleteAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
-		deleteAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))));
-		deleteAngebotImWarenkorbStatement.setString(3, String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
-		deleteAngebotImWarenkorbStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl"))));
-		deleteAngebotImWarenkorbStatement.executeUpdate();
-		
-		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
-				String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID")) + "-"
-				+ String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))
-				+ String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")) + "-"
-				+ String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl")));
+		if (AccountDataHelper.currentUserHasWarenkorbWithID(
+				Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))))
+		) {
+			PreparedStatement deleteAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
+					"DELETE FROM Angebot_im_Warenkorb "
+					+ "WHERE Warenkorb_ID = ? AND Angebots_ID = ? AND Anbieterbezeichnung = ? AND Anzahl = ?");
+			deleteAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
+			deleteAngebotImWarenkorbStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))));
+			deleteAngebotImWarenkorbStatement.setString(3, String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
+			deleteAngebotImWarenkorbStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl"))));
+			deleteAngebotImWarenkorbStatement.executeUpdate();
+			
+			UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data,
+					String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID")) + "-"
+					+ String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))
+					+ String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")) + "-"
+					+ String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl")));
+		} else {
+			SQLException ex = new SQLException ("User has no Warenkorb with ID " +
+					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to insert Items in. Aborting!");
+			Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
+			logger.log(Level.WARNING, "User has no Warenkorb with ID " +
+					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to insert Items in. Aborting!", ex);
+			throw ex;
+		}
 	}
 
 }
