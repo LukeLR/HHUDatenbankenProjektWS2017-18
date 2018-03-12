@@ -29,7 +29,7 @@ public class AccountDataHelper {
 			PreparedStatement updateKundeStatement = con.prepareStatement(
 					"UPDATE Kunde SET E_Mail_Adresse = ?, Passwort = ?, Vorname = ?, Nachname = ?, Adressen_ID = ? "
 							+ "WHERE E_Mail_Adresse = ?");
-			updateKundeStatement.setString(1, String.valueOf(newData.get("Kunde.E_Mail_Adresse")));
+			updateKundeStatement.setString(1, String.valueOf(newData.get("Kunde.E-Mail-Adresse")));
 			updateKundeStatement.setString(2, String.valueOf(newData.get("Kunde.Passwort")));
 			updateKundeStatement.setString(3, String.valueOf(newData.get("Kunde.Vorname")));
 			updateKundeStatement.setString(4, String.valueOf(newData.get("Kunde.Nachname")));
@@ -78,7 +78,7 @@ public class AccountDataHelper {
 		deleteEntriesStatement.setString(1, eMail);
 		deleteEntriesStatement.executeUpdate();
 
-		logger.info("Deleting entries for E-Mail-Adress " + eMail + " in table " + tablename + " done!");
+		logger.info("Deleting entries for E-Mail-Adresse " + eMail + " in table " + tablename + " done!");
 	}
 
 	public static void updateEMailAddressInTable(String tablename, String eMailOld, String eMailNew, Connection con) throws SQLException {
