@@ -113,7 +113,7 @@ CREATE TABLE Warenkorb (
                 Bestelldatum IS NULL
             )
         ),
-    Bestellstatus VARCHAR(20) NOT NULL
+    Bestellstatus VARCHAR(20)
         DEFAULT 'In Bearbeitung'
         CONSTRAINT Bestellstatus CHECK (
         Bestellstatus IN (
@@ -124,9 +124,9 @@ CREATE TABLE Warenkorb (
     Warenkorb_ID INTEGER CONSTRAINT Warenkorb_Warenkorb_ID_Primary_Key
         PRIMARY KEY NOT NULL,
     E_Mail_Adresse VARCHAR(320) NOT NULL,
-    Lieferdienst_Bezeichnung VARCHAR(40) NOT NULL DEFAULT 'DHL',
+    Lieferdienst_Bezeichnung VARCHAR(40) DEFAULT 'DHL',
     Lieferdatum VARCHAR
-        --DEFAULT SELECT date('now', '+3 days')
+        --DEFAULT (SELECT date('now', '+3 days'))
         CONSTRAINT Lieferdatum CHECK (
             (
                 Lieferdatum IS NOT NULL AND
@@ -328,6 +328,39 @@ AFTER INSERT ON Warenkorb
 WHEN NEW.Lieferdatum IS NULL
 BEGIN
     UPDATE Warenkorb SET Lieferdatum = date('now', '+3 days')
+        WHERE Warenkorb_ID = NEW.Warenkorb_ID;
+END;
+
+/* Dieser Trigger setzt automatisch das Bestelldatum des Warenkorbes,
+ * sobald ein Warenkorb mit Bestelldatum "NULL" erstellt werden soll.
+ */
+CREATE TRIGGER set_warenkorb_bestelldatum
+AFTER INSERT ON Warenkorb
+WHEN NEW.Bestelldatum IS NULL
+BEGIN
+    UPDATE Warenkorb SET Bestelldatum = date('now')
+        WHERE Warenkorb_ID = NEW.Warenkorb_ID;
+END;
+
+/* Dieser Trigger setzt automatisch den Bestellstatus des Warenkorbes,
+ * sobald ein Warenkorb mit Bestellstatus "NULL" erstellt werden soll.
+ */
+CREATE TRIGGER set_warenkorb_bestellstatus
+AFTER INSERT ON Warenkorb
+WHEN NEW.Bestellstatus IS NULL
+BEGIN
+    UPDATE Warenkorb SET Bestellstatus = 'In Bearbeitung'
+        WHERE Warenkorb_ID = NEW.Warenkorb_ID;
+END;
+
+/* Dieser Trigger setzt automatisch den Lieferdienst des Warenkorbes,
+ * sobald ein Warenkorb mit Lieferdienst "NULL" erstellt werden soll.
+ */
+CREATE TRIGGER set_warenkorb_lieferdienst
+AFTER INSERT ON Warenkorb
+WHEN NEW.Lieferdienst IS NULL
+BEGIN
+    UPDATE Warenkorb SET Lieferdienst = 'DHL'
         WHERE Warenkorb_ID = NEW.Warenkorb_ID;
 END;
 
