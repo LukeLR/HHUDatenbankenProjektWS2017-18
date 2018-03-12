@@ -66,11 +66,11 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 			GUIHelpers.addTableOfClassToTreeItem(new AlleAnbieter(), "Anbieter", artikel);
 			GUIHelpers.addTableOfClassToTreeItem(new AlleAngebote(), "Angebote", artikel);
 			GUIHelpers.addTableOfClassToTreeItem(new AlleAnbieterBietetAn(), "Anbieter bietet an", artikel);
-			GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelempfiehltArtikel(), "Artikelempfehlungen", artikel);
+			GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelempfiehltArtikel(), "Alle Artikelempfehlungen", artikel);
 			
-			GUIHelpers.addTableOfClassToTree(new AlleLieferdienste(), "Lieferdienste", treeItems);
+			GUIHelpers.addTableOfClassToTree(new AlleLieferdienste(), "Alle Lieferdienste", treeItems);
 			
-			TreeItem<TableViewController> newsletter = GUIHelpers.addTableOfClassToTree(new AlleNewsletter(), "Newsletter", treeItems);
+			TreeItem<TableViewController> newsletter = GUIHelpers.addTableOfClassToTree(new AlleNewsletter(), "Alle Newsletter", treeItems);
 			GUIHelpers.addTableOfClassToTreeItem(new MeineNewsletterabos(), "Meine Newsletterabos", newsletter);
 			GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelImNewsletter(), "Artikel im Newsletter", newsletter);
 			
