@@ -83,6 +83,7 @@ public class AddressIDHelper {
 	{
 		return getAddressIDByAddress(street, houseNumber, zipCode, city, con, true);
 	}
+	
 	/**
 	 * Searches the database for an address id by given address. In this case, no database connection is given, so the default one is used.
 	 * @param street The street of the address in question.
