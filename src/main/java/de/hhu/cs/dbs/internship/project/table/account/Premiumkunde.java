@@ -12,7 +12,7 @@ import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class Premiumkunde extends Table {
-
+	//TODO: Kunde kann seinen eigenen Premiumkunden-Status sehen?
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
 		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
