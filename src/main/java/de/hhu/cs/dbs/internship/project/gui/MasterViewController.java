@@ -59,7 +59,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 		
 		if (permissionLevel >= Permission.READ_ONLY) {
 			logger.info("User is at least of permission level read only.");
-			TreeItem<TableViewController> accounts = GUIHelpers.addTableOfClassToTree(new MeinAccount(), "Account", treeItems);
+			TreeItem<TableViewController> accounts = GUIHelpers.addTableOfClassToTree(new MeinAccount(), "Mein Account", treeItems);
 			
 			if (permissionLevel >= Permission.CUSTOMER) {
 				logger.info("User is at least of permission level customer.");
@@ -72,10 +72,10 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 				GUIHelpers.addTableOfClassToTree(new Lieferdienst(), "Lieferdienste", treeItems);
 				
 				TreeItem<TableViewController> newsletter = GUIHelpers.addTableOfClassToTree(new Newsletter(), "Newsletter", treeItems);
-				GUIHelpers.addTableOfClassToTreeItem(new MeineNewsletterabos(), "Newsletterabos", newsletter);
+				GUIHelpers.addTableOfClassToTreeItem(new MeineNewsletterabos(), "Meine Newsletterabos", newsletter);
 				GUIHelpers.addTableOfClassToTreeItem(new ArtikelImNewsletter(), "Artikel im Newsletter", newsletter);
 				
-				TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new MeineWarenkoerbe(), "Warenkörbe", treeItems);
+				TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new MeineWarenkoerbe(), "Meine Warenkörbe", treeItems);
 				
 				if (permissionLevel >= Permission.PREMIUM_CUSTOMER) {
 					logger.info("User is at least of permission level premium customer.");
