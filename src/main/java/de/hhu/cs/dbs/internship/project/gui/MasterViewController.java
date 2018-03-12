@@ -18,6 +18,7 @@ import de.hhu.cs.dbs.internship.project.table.artikel.ArtikelempfiehltArtikel;
 import de.hhu.cs.dbs.internship.project.table.lieferdienst.Lieferdienst;
 import de.hhu.cs.dbs.internship.project.table.newsletter.ArtikelImNewsletter;
 import de.hhu.cs.dbs.internship.project.table.newsletter.Newsletter;
+import de.hhu.cs.dbs.internship.project.table.newsletter.Newsletterabos;
 import de.hhu.cs.dbs.internship.project.table.newsletter.AlleNewsletterabos;
 import de.hhu.cs.dbs.internship.project.table.schlagwort.ArtikelGehoertZuSchlagwort;
 import de.hhu.cs.dbs.internship.project.table.schlagwort.Schlagwort;
@@ -71,7 +72,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 				GUIHelpers.addTableOfClassToTree(new Lieferdienst(), "Lieferdienste", treeItems);
 				
 				TreeItem<TableViewController> newsletter = GUIHelpers.addTableOfClassToTree(new Newsletter(), "Newsletter", treeItems);
-				GUIHelpers.addTableOfClassToTreeItem(new AlleNewsletterabos(), "Newsletterabos", newsletter);
+				GUIHelpers.addTableOfClassToTreeItem(new Newsletterabos(), "Newsletterabos", newsletter);
 				GUIHelpers.addTableOfClassToTreeItem(new ArtikelImNewsletter(), "Artikel im Newsletter", newsletter);
 				
 				TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new Warenkoerbe(), "Warenkörbe", treeItems);
@@ -88,6 +89,8 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 						GUIHelpers.addTableOfClassToTreeItem(new Adressen(), "Adressen", accounts);
 						GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", accounts);
 						GUIHelpers.addTableOfClassToTreeItem(new Angestellter(), "Angestellte", accounts);
+						
+						GUIHelpers.addTableOfClassToTreeItem(new AlleNewsletterabos(), "Alle Newsletterabos", newsletter);
 						
 						TreeItem<TableViewController> schlagwort = GUIHelpers.addTableOfClassToTree(new Schlagwort(), "Schlagworte", treeItems);
 						GUIHelpers.addTableOfClassToTreeItem(new ArtikelGehoertZuSchlagwort(), "Artikel hat Schlagwort", schlagwort);
