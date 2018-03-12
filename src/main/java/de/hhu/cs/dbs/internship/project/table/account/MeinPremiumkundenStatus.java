@@ -25,7 +25,9 @@ public class MeinPremiumkundenStatus extends Table {
 		String selectQuery = "SELECT * FROM (SELECT Ablaufdatum, Studierendenausweis, Kunde.E_Mail_Adresse, "
 				+ "Vorname, Nachname, Passwort, Adressen_ID AS 'AID' FROM Premiumkunde "
 				+ "JOIN Kunde ON Premiumkunde.E_Mail_Adresse = Kunde.E_Mail_Adresse) "
-				+ "JOIN Adresse ON AID = Adresse.Adressen_ID";
+				+ "JOIN Adresse ON AID = Adresse.Adressen_ID "
+				+ "WHERE Kunde.E_Mail_Adresse = '"
+				+ String.valueOf(Project.getInstance().getData().get("email")) + "'";
 		if (filter != null && !filter.isEmpty()) {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
 			selectQuery += " AND E_Mail_Adresse LIKE '%" + filter + "%'";
