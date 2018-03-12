@@ -33,16 +33,16 @@ public class AddressIDHelper {
 		logger.info("Searching for address ID for address: " + street
 				+ " " + houseNumber + ", " + zipCode + " " + city);
 
-		PreparedStatement addressRequestQuery = con.prepareStatement(
+		PreparedStatement addressRequestStatement = con.prepareStatement(
 				"SELECT Adressen_ID FROM Adresse "
 						+ "WHERE Strasse = ? AND Hausnummer = ? AND PLZ = ? AND Ort = ?");
 
-		addressRequestQuery.setString(1, street);
-		addressRequestQuery.setString(2, houseNumber);
-		addressRequestQuery.setInt(3, zipCode);
-		addressRequestQuery.setString(4, city);
+		addressRequestStatement.setString(1, street);
+		addressRequestStatement.setString(2, houseNumber);
+		addressRequestStatement.setInt(3, zipCode);
+		addressRequestStatement.setString(4, city);
 
-		ResultSet addressResults = addressRequestQuery.executeQuery();
+		ResultSet addressResults = addressRequestStatement.executeQuery();
 		if (!addressResults.isClosed()) {
 			int addressID = addressResults.getInt("Adressen_ID");
 			logger.info("Address ID found: " + String.valueOf(addressID));
@@ -50,14 +50,14 @@ public class AddressIDHelper {
 		} else {
 			if (recurse) {
 				logger.info("Address not found! Inserting...");
-				PreparedStatement addressInsertQuery = con.prepareStatement(
+				PreparedStatement addressInsertStatement = con.prepareStatement(
 						"INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID) "
 						+ "VALUES (?, ?, ?, ?, NULL)");
-				addressInsertQuery.setString(1, street);
-				addressInsertQuery.setString(2, houseNumber);
-				addressInsertQuery.setInt(3, zipCode);
-				addressInsertQuery.setString(4, city);
-				addressInsertQuery.executeUpdate();
+				addressInsertStatement.setString(1, street);
+				addressInsertStatement.setString(2, houseNumber);
+				addressInsertStatement.setInt(3, zipCode);
+				addressInsertStatement.setString(4, city);
+				addressInsertStatement.executeUpdate();
 				// Get the Adressen_ID of the just inserted address.
 				return getAddressIDByAddress(street, houseNumber, zipCode, city, con, false);
 			} else {
