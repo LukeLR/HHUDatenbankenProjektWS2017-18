@@ -64,12 +64,8 @@ public class MeineWarenkoerbe extends Table {
 		PreparedStatement insertWarenkoerbeStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Warenkorb (Bestelldatum, Bestellstatus, Warenkorb_ID, "
 				+ "E_Mail_Adresse, Lieferdienst_Bezeichnung, Lieferdatum) "
-				+ "VALUES (?, ?, NULL, ?, ?, ?)");
-		insertWarenkoerbeStatement.setString(1, String.valueOf(data.get("Warenkorb.Bestelldatum")));
-		insertWarenkoerbeStatement.setString(2, String.valueOf(data.get("Warenkorb.Bestellstatus")));
-		insertWarenkoerbeStatement.setString(3, String.valueOf(Project.getInstance().getData().get("email")));
-		insertWarenkoerbeStatement.setString(4, String.valueOf(data.get("Warenkorb.Lieferdienst_Bezeichnung")));
-		insertWarenkoerbeStatement.setString(5, String.valueOf(data.get("Warenkorb.Lieferdatum")));
+				+ "VALUES (NULL, NULL, NULL, ?, NULL, NULL)"); // Create with default values
+		insertWarenkoerbeStatement.setString(1, String.valueOf(Project.getInstance().getData().get("email")));
 		insertWarenkoerbeStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Warenkorb.E_Mail_Adresse")));
