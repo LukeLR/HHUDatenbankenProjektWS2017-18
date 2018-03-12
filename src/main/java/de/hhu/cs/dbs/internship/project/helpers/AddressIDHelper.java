@@ -90,8 +90,7 @@ public class AddressIDHelper {
 					+ "\nhouseNumber: " + houseNumberOld + " -> " + houseNumberNew
 					+ "\nzipCode: " + zipCodeOld + " -> " + zipCodeNew
 					+ "\n city: " + cityOld + " -> " + cityNew);
-
-			//TODO: Maybe delete old address?
+			
 			PreparedStatement insertAddressStatement = con.prepareStatement(
 					"INSERT INTO Adresse (Strasse, Hausnummer, PLZ, Ort, Adressen_ID) "
 							+ "VALUES (?, ?, ?, ?, NULL)");
