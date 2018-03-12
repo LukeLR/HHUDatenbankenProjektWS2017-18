@@ -39,11 +39,7 @@ public class Account extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		if (Integer.valueOf(String.valueOf(Project.getInstance().getData().get("permission"))) >= Permission.SHOP_ASSISTANT) {
-			throw new SQLException("Es können keine weiteren Accounts für einen Kunden angelegt werden!");
-		} else {
-			throw new SQLException("Unzureichende Berechtigungen! Mindestens 'SHOP ASSISTANT' benötigt!");
-		}
+		throw new SQLException("Es können keine weiteren Accounts für einen Kunden angelegt werden!");
 	}
 
 	@Override
