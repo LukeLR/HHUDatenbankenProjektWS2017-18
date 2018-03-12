@@ -118,7 +118,7 @@ public class AccountDataHelper {
 		ResultSet getWarenkoerbeResults = getAllWarenkoerbeByEMailAddress(eMail);
 		if (!getWarenkoerbeResults.isClosed()) {
 			while (!getWarenkoerbeResults.isClosed()) {
-				if (warenkorbID == getWarenkoerbeResults.getInt("Warenkorb.Warebkorb_ID"))
+				if (warenkorbID == getWarenkoerbeResults.getInt("Warenkorb.Warenkorb_ID"))
 					logger.info("User " + eMail + " has Warenkorb with ID " + String.valueOf(warenkorbID));
 					return true;
 			}
