@@ -106,5 +106,19 @@ public class AccountDataHelper {
 		
 		return getWarenkoerbeResults;
 	}
-
+	
+	public static ResultSet getAllWarenkoerbeForCurrentUser() throws SQLException {
+		return getAllWarenkoerbeByEMailAddress(String.valueOf(Project.getInstance().getData().get("email")));
+	}
+	
+	public static boolean userWithEMailAddressHasWarenkorbWithID(String eMail, int warenkorbID) throws SQLException {
+		ResultSet getWarenkoerbeResults = getAllWarenkoerbeByEMailAddress(eMail);
+		if (!getWarenkoerbeResults.isClosed()) {
+			while (!getWarenkoerbeResults.isLast()) {
+				if (warenkorbID == getWarenkoerbeResults.getInt("Warenkorb.Warebkorb_ID"))
+					return true;
+			}
+		}
+		return false;
+	}
 }
