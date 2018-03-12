@@ -58,7 +58,7 @@ public class MeinPremiumkundenStatus extends Table {
 					+ "VALUES (?, ?, ?)");
 			insertPremiumkundeStatement.setString(1, String.valueOf(data.get("Premiumkunde.Ablaufdatum")));
 			insertPremiumkundeStatement.setObject(2, data.get("Premiumkunde.Studierendenausweis"));
-			insertPremiumkundeStatement.setString(3, String.valueOf(data.get("Premiumkunde.E_Mail_Adresse")));
+			insertPremiumkundeStatement.setString(3, String.valueOf(Project.getInstance().getData().get("email")));
 			insertPremiumkundeStatement.executeUpdate();
 		} else {
 			logger.info("Premiumkunde.Studierendenausweis is NULL on insert.");
