@@ -63,7 +63,7 @@ public class MeineLieferabos extends Table {
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
 		if (AccountDataHelper.currentUserHasWarenkorbWithID(
-				Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))))
+				Integer.valueOf(String.valueOf(data.get("Lieferabo.Warenkorb_ID"))))
 		) {
 			PreparedStatement insertLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
 					"INSERT INTO Lieferabo (Intervall, Beginn, Ende, Warenkorb_ID) "
@@ -77,11 +77,11 @@ public class MeineLieferabos extends Table {
 			UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Lieferabo.Warenkorb_ID")));
 		} else {
 			SQLException ex = new SQLException ("User has no Warenkorb with ID " +
-					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					String.valueOf(data.get("Lieferabo.Angebots_ID")) +
 					" to create Lieferabo of. Aborting!");
 			Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
 			logger.log(Level.WARNING, "User has no Warenkorb with ID " +
-					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					String.valueOf(data.get("Lieferabo.Angebots_ID")) +
 					" to create Lieferabo of. Aborting!", ex);
 			throw ex;
 		}
@@ -93,7 +93,7 @@ public class MeineLieferabos extends Table {
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
 		if (AccountDataHelper.currentUserHasWarenkorbWithID(
-				Integer.valueOf(String.valueOf(newData.get("Angebot_im_Warenkorb.Warenkorb_ID"))))
+				Integer.valueOf(String.valueOf(newData.get("Lieferabo.Warenkorb_ID"))))
 		) {
 			PreparedStatement updateLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
 					"UPDATE Lieferabo SET Intervall = ?, Beginn = ?, Ende = ?, Warenkorb_ID = ? "
@@ -111,11 +111,11 @@ public class MeineLieferabos extends Table {
 			UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData, String.valueOf(newData.get("Lieferabo.Warenkorb_ID")));
 		} else {
 			SQLException ex = new SQLException ("User has no Warenkorb with ID " +
-					String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					String.valueOf(newData.get("Lieferabo.Angebots_ID")) +
 					" to create Lieferabo of. Aborting!");
 			Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
 			logger.log(Level.WARNING, "User has no Warenkorb with ID " +
-					String.valueOf(newData.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					String.valueOf(newData.get("Lieferabo.Angebots_ID")) +
 					" to create Lieferabo of. Aborting!", ex);
 			throw ex;
 		}
@@ -127,7 +127,7 @@ public class MeineLieferabos extends Table {
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
 		if (AccountDataHelper.currentUserHasWarenkorbWithID(
-				Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))))
+				Integer.valueOf(String.valueOf(data.get("Lieferabo.Warenkorb_ID"))))
 		) {
 			PreparedStatement deleteLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
 					"DELETE FROM Lieferabo "
@@ -141,11 +141,11 @@ public class MeineLieferabos extends Table {
 			UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Lieferabo.Warenkorb_ID")));
 		} else {
 			SQLException ex = new SQLException ("User has no Warenkorb with ID " +
-					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					String.valueOf(data.get("Lieferabo.Angebots_ID")) +
 					" to create Lieferabo of. Aborting!");
 			Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
 			logger.log(Level.WARNING, "User has no Warenkorb with ID " +
-					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					String.valueOf(data.get("Lieferabo.Angebots_ID")) +
 					" to create Lieferabo of. Aborting!", ex);
 			throw ex;
 		}
