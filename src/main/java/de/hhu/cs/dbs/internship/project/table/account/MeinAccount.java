@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Account extends Table {
+public class MeinAccount extends Table {
 	@Override
 	public String getSelectQueryForTableWithFilter(String s) throws SQLException {
 		Permission.hasSufficientPermission(Permission.READ_ONLY, this.getClass().getName());

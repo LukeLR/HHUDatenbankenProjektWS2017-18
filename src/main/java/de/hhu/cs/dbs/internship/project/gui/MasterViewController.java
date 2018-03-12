@@ -5,7 +5,7 @@ import com.alexanderthelen.applicationkit.gui.TableViewController;
 import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.GUIHelpers;
-import de.hhu.cs.dbs.internship.project.table.account.Account;
+import de.hhu.cs.dbs.internship.project.table.account.MeinAccount;
 import de.hhu.cs.dbs.internship.project.table.account.Adressen;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import de.hhu.cs.dbs.internship.project.table.account.Angestellter;
@@ -59,7 +59,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 		
 		if (permissionLevel >= Permission.READ_ONLY) {
 			logger.info("User is at least of permission level read only.");
-			TreeItem<TableViewController> accounts = GUIHelpers.addTableOfClassToTree(new Account(), "Account", treeItems);
+			TreeItem<TableViewController> accounts = GUIHelpers.addTableOfClassToTree(new MeinAccount(), "Account", treeItems);
 			
 			if (permissionLevel >= Permission.CUSTOMER) {
 				logger.info("User is at least of permission level customer.");
