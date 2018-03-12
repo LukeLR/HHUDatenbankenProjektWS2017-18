@@ -45,7 +45,8 @@ public class AlleLieferabos extends Table {
 				+ "Lieferabo.Beginn, "
 				+ "Lieferabo.Ende "
 				+ "FROM Lieferabo "
-				+ "WHERE Lieferabo.Warenkorb_ID = '" + String.valueOf(data.get("Lieferabo.Warenkorb_ID")) + "'";
+				+ "WHERE Lieferabo.Warenkorb_ID = '"
+				+ String.valueOf(data.get("Lieferabo.Warenkorb_ID")) + "'";
 		
 		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
