@@ -1,6 +1,7 @@
 package de.hhu.cs.dbs.internship.project.helpers;
 
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Logger;
 
@@ -92,6 +93,18 @@ public class AccountDataHelper {
 		updateEMailStatement.executeUpdate();
 
 		logger.info("Changing E-Mail-Addresses done!");
+	}
+	
+	public static ResultSet getAllWarenkoerbeByEMailAddress(String eMail) throws SQLException {
+		Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
+		logger.info("Searching for all Warenkoerbe by user " + eMail + "!");
+		
+		PreparedStatement getWarenkoerbeStatement = Project.getInstance().getConnection().prepareStatement(
+				"SELECT Warenkorb_ID FROM Warenkorb "
+				+ "WHERE E_Mail_Adresse = '" + eMail + "'");
+		ResultSet getWarenkoerbeResults = getWarenkoerbeStatement.executeQuery();
+		
+		return getWarenkoerbeResults;
 	}
 
 }
