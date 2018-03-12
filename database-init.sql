@@ -104,7 +104,7 @@ CREATE TABLE Lieferdienst(
 
 CREATE TABLE Warenkorb (
     Bestelldatum VARCHAR
-        DEFAULT CURRENT_DATE
+        --DEFAULT CURRENT_DATE
         CONSTRAINT Bestelldatum CHECK (
             (
                 Bestelldatum IS NOT NULL AND
@@ -114,7 +114,7 @@ CREATE TABLE Warenkorb (
             )
         ),
     Bestellstatus VARCHAR(20)
-        DEFAULT 'In Bearbeitung'
+        --DEFAULT 'In Bearbeitung'
         CONSTRAINT Bestellstatus CHECK (
         Bestellstatus IN (
             'In Bearbeitung', 'Storniert', 'Bezahlt', 'Versandfertig',
@@ -124,7 +124,7 @@ CREATE TABLE Warenkorb (
     Warenkorb_ID INTEGER CONSTRAINT Warenkorb_Warenkorb_ID_Primary_Key
         PRIMARY KEY NOT NULL,
     E_Mail_Adresse VARCHAR(320) NOT NULL,
-    Lieferdienst_Bezeichnung VARCHAR(40) DEFAULT 'DHL',
+    Lieferdienst_Bezeichnung VARCHAR(40), --DEFAULT 'DHL',
     Lieferdatum VARCHAR
         --DEFAULT (SELECT date('now', '+3 days'))
         CONSTRAINT Lieferdatum CHECK (
