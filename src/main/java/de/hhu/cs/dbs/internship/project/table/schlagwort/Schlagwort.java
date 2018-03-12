@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
@@ -13,6 +14,7 @@ public class Schlagwort extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
+		Permission.hasSufficientPermission(Permission.READ_ONLY, this.getClass().getName());
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
 		String selectQuery = "SELECT Schlagwort FROM Schlagwort";
@@ -28,6 +30,7 @@ public class Schlagwort extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
+		Permission.hasSufficientPermission(Permission.READ_ONLY, this.getClass().getName());
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
 		String selectQuery = "SELECT Schlagwort FROM Schlagwort "
@@ -40,6 +43,7 @@ public class Schlagwort extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
+		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
 		PreparedStatement insertSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
@@ -52,6 +56,7 @@ public class Schlagwort extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
+		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
 		PreparedStatement updateSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
@@ -65,6 +70,7 @@ public class Schlagwort extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
+		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
 		PreparedStatement deleteSchlagwortStatement = Project.getInstance().getConnection().prepareStatement(
