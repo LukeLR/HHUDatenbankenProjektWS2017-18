@@ -8,6 +8,7 @@ import java.util.logging.Logger;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.AccountDataHelper;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
@@ -16,6 +17,7 @@ public class MeineAngeboteImWarenkorb extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
+		Permission.hasSufficientPermission(Permission.READ_ONLY, this.getClass().getName());
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
 		String selectQuery = "SELECT Angebot_im_Warenkorb.Warenkorb_ID, "
@@ -51,6 +53,7 @@ public class MeineAngeboteImWarenkorb extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
+		Permission.hasSufficientPermission(Permission.READ_ONLY, this.getClass().getName());
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
 		String selectQuery = "SELECT Angebot_im_Warenkorb.Warenkorb_ID, "
@@ -69,6 +72,7 @@ public class MeineAngeboteImWarenkorb extends Table {
 	
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
+		Permission.hasSufficientPermission(Permission.CUSTOMER, this.getClass().getName());
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
 		if (AccountDataHelper.currentUserHasWarenkorbWithID(
@@ -102,6 +106,7 @@ public class MeineAngeboteImWarenkorb extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
+		Permission.hasSufficientPermission(Permission.CUSTOMER, this.getClass().getName());
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
 		if (AccountDataHelper.currentUserHasWarenkorbWithID(
@@ -141,6 +146,7 @@ public class MeineAngeboteImWarenkorb extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
+		Permission.hasSufficientPermission(Permission.CUSTOMER, this.getClass().getName());
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
 		if (AccountDataHelper.currentUserHasWarenkorbWithID(
