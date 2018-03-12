@@ -1,6 +1,4 @@
 # Anleitung zur Programmierung des Projekts für das DBS Programmierpraktikum
-
-
 ## Vorbereitung
 
 Wir empfehlen IntelliJ oder Eclipse als IDE mit der Java-Version 1.8 (genauer 1.8.0\_152). Um den gesamten Ablauf, Integrität, Deployment etc. einfach zu halten, werden wir das Build-Management-Automatisierungs-Tool [Gradle](https://gradle.org) in unserer IDE verwenden. Gradle selbst muss nicht installiert werden, da der Gradle Wrapper benutzt wird, der dem Projekt beiliegt.
