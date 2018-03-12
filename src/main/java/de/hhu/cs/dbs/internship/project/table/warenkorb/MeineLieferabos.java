@@ -17,7 +17,7 @@ public class MeineLieferabos extends Table {
 
 	@Override
 	public String getSelectQueryForTableWithFilter(String filter) throws SQLException {
-		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
+		Permission.hasSufficientPermission(Permission.PREMIUM_CUSTOMER, this.getClass().getName());
 		UnifiedLoggingHelper.logShow(this.getClass().getName());
 		
 		String selectQuery = "SELECT Warenkorb.E_Mail_Adresse, "
@@ -42,7 +42,7 @@ public class MeineLieferabos extends Table {
 
 	@Override
 	public String getSelectQueryForRowWithData(Data data) throws SQLException {
-		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
+		Permission.hasSufficientPermission(Permission.PREMIUM_CUSTOMER, this.getClass().getName());
 		UnifiedLoggingHelper.logSelect(this.getClass().getName(), data);
 		
 		String selectQuery = "SELECT Lieferabo.Warenkorb_ID, "
@@ -59,7 +59,7 @@ public class MeineLieferabos extends Table {
 
 	@Override
 	public void insertRowWithData(Data data) throws SQLException {
-		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
+		Permission.hasSufficientPermission(Permission.PREMIUM_CUSTOMER, this.getClass().getName());
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
 		if (AccountDataHelper.currentUserHasWarenkorbWithID(
@@ -89,7 +89,7 @@ public class MeineLieferabos extends Table {
 
 	@Override
 	public void updateRowWithData(Data oldData, Data newData) throws SQLException {
-		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
+		Permission.hasSufficientPermission(Permission.PREMIUM_CUSTOMER, this.getClass().getName());
 		UnifiedLoggingHelper.logUpdate(this.getClass().getName(), oldData, newData);
 		
 		if (AccountDataHelper.currentUserHasWarenkorbWithID(
@@ -123,7 +123,7 @@ public class MeineLieferabos extends Table {
 
 	@Override
 	public void deleteRowWithData(Data data) throws SQLException {
-		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
+		Permission.hasSufficientPermission(Permission.PREMIUM_CUSTOMER, this.getClass().getName());
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
 		if (AccountDataHelper.currentUserHasWarenkorbWithID(
