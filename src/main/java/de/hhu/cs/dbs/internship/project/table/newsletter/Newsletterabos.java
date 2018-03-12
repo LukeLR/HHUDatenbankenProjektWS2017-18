@@ -27,7 +27,7 @@ public class Newsletterabos extends Table {
 				+ "JOIN Newsletter "
 				+ "ON Newsletterabo.Newsletter_ID = Newsletter.Newsletter_ID "
 				+ "WHERE Newsletterabo.E_Mail_Adresse = '"
-				+ Project.getInstance().getData().get("email") + "'";
+				+ String.valueOf(Project.getInstance().getData().get("email")) + "'";
 		
 		if (filter != null && !filter.isEmpty()) {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
