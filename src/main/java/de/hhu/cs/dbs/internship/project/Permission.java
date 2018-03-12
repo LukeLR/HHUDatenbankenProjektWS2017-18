@@ -4,8 +4,6 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import de.hhu.cs.dbs.internship.project.helpers.MiscHelpers;
-
 public class Permission {
 	public static final int UNAUTHORIZED = 0;
 	public static final int READ_ONLY = 1;
@@ -25,10 +23,10 @@ public class Permission {
 	}
 
 	public static boolean hasSufficientPermission (int requiredPermissionLevel, String parentClass) throws SQLException {
-		Logger logger = Logger.getLogger(MiscHelpers.class.getName());
+		Logger logger = Logger.getLogger(Permission.class.getName() + " for parent class: " + parentClass);
 		int currentPermissionLevel = Integer.valueOf(String.valueOf(Project.getInstance().getData().get("permission")));
 		if (currentPermissionLevel >= requiredPermissionLevel) {
-			logger.info("Permissions ok for " + parentClass + ". Required: " + 
+			logger.info("Permissions ok" + parentClass + ". Required: " + 
 					Permission.permissionLevelToString(requiredPermissionLevel) + " (" +
 					String.valueOf(requiredPermissionLevel) + "), user has: " + 
 					Permission.permissionLevelToString(currentPermissionLevel) + " (" + 
