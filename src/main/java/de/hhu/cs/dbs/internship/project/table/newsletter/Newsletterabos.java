@@ -78,14 +78,12 @@ public class Newsletterabos extends Table {
 		
 		PreparedStatement updateNewsletteraboStatement = Project.getInstance().getConnection().prepareStatement(
 				"UPDATE Newsletterabo "
-				+ "SET E_Mail_Adresse = ?, "
-					+ "Newsletter_ID = ? "
+				+ "SET Newsletter_ID = ? "
 				+ "WHERE E_Mail_Adresse = ? AND "
 					+ "Newsletter_ID = ?");
-		updateNewsletteraboStatement.setString(1, String.valueOf(newData.get("Newsletterabo.E_Mail_Adresse")));
-		updateNewsletteraboStatement.setInt(2, Integer.valueOf(String.valueOf(newData.get("Newsletterabo.Newsletter_ID"))));
-		updateNewsletteraboStatement.setString(3, String.valueOf(oldData.get("Newsletterabo.E_Mail_Adresse")));
-		updateNewsletteraboStatement.setInt(4, Integer.valueOf(String.valueOf(oldData.get("Newsletterabo.Newsletter_ID"))));
+		updateNewsletteraboStatement.setInt(1, Integer.valueOf(String.valueOf(newData.get("Newsletterabo.Newsletter_ID"))));
+		updateNewsletteraboStatement.setString(2, String.valueOf(Project.getInstance().getData().get("email")));
+		updateNewsletteraboStatement.setInt(3, Integer.valueOf(String.valueOf(oldData.get("Newsletterabo.Newsletter_ID"))));
 		updateNewsletteraboStatement.executeUpdate();
 		
 		UnifiedLoggingHelper.logUpdateDone(this.getClass().getName(), oldData, newData,
