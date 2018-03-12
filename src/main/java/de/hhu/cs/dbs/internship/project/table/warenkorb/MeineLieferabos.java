@@ -2,12 +2,15 @@ package de.hhu.cs.dbs.internship.project.table.warenkorb;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
 import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
+import de.hhu.cs.dbs.internship.project.helpers.AccountDataHelper;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class MeineLieferabos extends Table {
@@ -59,16 +62,29 @@ public class MeineLieferabos extends Table {
 		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
-		PreparedStatement insertLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
-				"INSERT INTO Lieferabo (Intervall, Beginn, Ende, Warenkorb_ID) "
-				+ "VALUES (?, ?, ?, ?)");
-		insertLieferaboStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Lieferabo.Intervall"))));
-		insertLieferaboStatement.setString(2, String.valueOf(data.get("Lieferabo.Beginn")));
-		insertLieferaboStatement.setString(3, String.valueOf(data.get("Lieferabo.Ende")));
-		insertLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Lieferabo.Warenkorb_ID"))));
-		insertLieferaboStatement.executeUpdate();
-		
-		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Lieferabo.Warenkorb_ID")));
+		if (AccountDataHelper.currentUserHasWarenkorbWithID(
+				Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))))
+		) {
+			PreparedStatement insertLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
+					"INSERT INTO Lieferabo (Intervall, Beginn, Ende, Warenkorb_ID) "
+					+ "VALUES (?, ?, ?, ?)");
+			insertLieferaboStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Lieferabo.Intervall"))));
+			insertLieferaboStatement.setString(2, String.valueOf(data.get("Lieferabo.Beginn")));
+			insertLieferaboStatement.setString(3, String.valueOf(data.get("Lieferabo.Ende")));
+			insertLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Lieferabo.Warenkorb_ID"))));
+			insertLieferaboStatement.executeUpdate();
+			
+			UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Lieferabo.Warenkorb_ID")));
+		} else {
+			SQLException ex = new SQLException ("User has no Warenkorb with ID " +
+					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to create Lieferabo of. Aborting!");
+			Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
+			logger.log(Level.WARNING, "User has no Warenkorb with ID " +
+					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to create Lieferabo of. Aborting!", ex);
+			throw ex;
+		}
 	}
 
 	@Override
