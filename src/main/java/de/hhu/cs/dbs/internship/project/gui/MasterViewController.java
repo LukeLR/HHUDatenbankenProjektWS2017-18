@@ -23,6 +23,7 @@ import de.hhu.cs.dbs.internship.project.table.newsletter.AlleNewsletterabos;
 import de.hhu.cs.dbs.internship.project.table.schlagwort.AlleArtikelGehoertZuSchlagwort;
 import de.hhu.cs.dbs.internship.project.table.schlagwort.AlleSchlagworte;
 import de.hhu.cs.dbs.internship.project.table.warenkorb.AlleWarenkoerbe;
+import de.hhu.cs.dbs.internship.project.table.warenkorb.MeineLieferabos;
 import de.hhu.cs.dbs.internship.project.table.warenkorb.AlleAngeboteImWarenkorb;
 import de.hhu.cs.dbs.internship.project.table.warenkorb.AlleLieferabos;
 import de.hhu.cs.dbs.internship.project.table.warenkorb.MeineWarenkoerbe;
@@ -81,7 +82,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 				if (permissionLevel >= Permission.PREMIUM_CUSTOMER) {
 					logger.info("User is at least of permission level premium customer.");
 					
-					GUIHelpers.addTableOfClassToTreeItem(new AlleLieferabos(), "Lieferabos", warenkorb);
+					GUIHelpers.addTableOfClassToTreeItem(new MeineLieferabos(), "Meine Lieferabos", warenkorb)
 					
 					if (permissionLevel >= Permission.SHOP_ASSISTANT) {
 						logger.info("User is at least of permission level shop assistant.");
@@ -98,6 +99,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 						GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelGehoertZuSchlagwort(), "Artikel hat Schlagwort", schlagwort);
 						
 						GUIHelpers.addTableOfClassToTreeItem(new AlleWarenkoerbe(), "Alle Warenkörbe", warenkorb);
+						GUIHelpers.addTableOfClassToTreeItem(new AlleLieferabos(), "Meine Lieferabos", warenkorb);
 					}
 				}
 			}
