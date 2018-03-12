@@ -9,7 +9,7 @@ import de.hhu.cs.dbs.internship.project.table.account.MeinAccount;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAdressen;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAngestellte;
-import de.hhu.cs.dbs.internship.project.table.account.Premiumkunde;
+import de.hhu.cs.dbs.internship.project.table.account.AllePremiumkunden;
 import de.hhu.cs.dbs.internship.project.table.artikel.Anbieter;
 import de.hhu.cs.dbs.internship.project.table.artikel.AnbieterBietetAn;
 import de.hhu.cs.dbs.internship.project.table.artikel.Angebot;
@@ -86,7 +86,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 						logger.info("User is at least of permission level shop assistant.");
 						GUIHelpers.addTableOfClassToTreeItem(new AlleAccounts(), "Alle Accounts", accounts);
 						GUIHelpers.addTableOfClassToTreeItem(new AlleAdressen(), "Adressen", accounts);
-						GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", accounts);
+						GUIHelpers.addTableOfClassToTreeItem(new AllePremiumkunden(), "Premiumkunden", accounts);
 						GUIHelpers.addTableOfClassToTreeItem(new AlleAngestellte(), "Angestellte", accounts);
 						
 						GUIHelpers.addTableOfClassToTreeItem(new AlleNewsletterabos(), "Alle Newsletterabos", newsletter);
