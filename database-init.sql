@@ -323,46 +323,46 @@ SELECT '';
 /* Dieser Trigger setzt automatisch das Lieferdatum des Warenkorbes,
  * sobald ein Warenkorb mit Lieferdatum "NULL" erstellt werden soll.
  */
-CREATE TRIGGER set_warenkorb_lieferdatum
+/*CREATE TRIGGER set_warenkorb_lieferdatum
 AFTER INSERT ON Warenkorb
 WHEN NEW.Lieferdatum IS NULL
 BEGIN
     UPDATE Warenkorb SET Lieferdatum = date('now', '+3 days')
         WHERE Warenkorb_ID = NEW.Warenkorb_ID;
-END;
+END;*/
 
 /* Dieser Trigger setzt automatisch das Bestelldatum des Warenkorbes,
  * sobald ein Warenkorb mit Bestelldatum "NULL" erstellt werden soll.
  */
-CREATE TRIGGER set_warenkorb_bestelldatum
+/*CREATE TRIGGER set_warenkorb_bestelldatum
 AFTER INSERT ON Warenkorb
 WHEN NEW.Bestelldatum IS NULL
 BEGIN
     UPDATE Warenkorb SET Bestelldatum = date('now')
         WHERE Warenkorb_ID = NEW.Warenkorb_ID;
-END;
+END;*/
 
 /* Dieser Trigger setzt automatisch den Bestellstatus des Warenkorbes,
  * sobald ein Warenkorb mit Bestellstatus "NULL" erstellt werden soll.
  */
-CREATE TRIGGER set_warenkorb_bestellstatus
+/*CREATE TRIGGER set_warenkorb_bestellstatus
 AFTER INSERT ON Warenkorb
 WHEN NEW.Bestellstatus IS NULL
 BEGIN
     UPDATE Warenkorb SET Bestellstatus = 'In Bearbeitung'
         WHERE Warenkorb_ID = NEW.Warenkorb_ID;
-END;
+END;*/
 
 /* Dieser Trigger setzt automatisch den Lieferdienst des Warenkorbes,
  * sobald ein Warenkorb mit Lieferdienst "NULL" erstellt werden soll.
  */
-CREATE TRIGGER set_warenkorb_lieferdienst
+/*CREATE TRIGGER set_warenkorb_lieferdienst
 AFTER INSERT ON Warenkorb
 WHEN NEW.Lieferdienst_Bezeichnung IS NULL
 BEGIN
     UPDATE Warenkorb SET Lieferdienst_Bezeichnung = 'DHL'
         WHERE Warenkorb_ID = NEW.Warenkorb_ID;
-END;
+END;*/
 
 /* Dieser Trigger aktualisiert das Datum des Newsletters, sobald eine
  * Veränderung in einem Newsletter vorgenommen wurde (entspricht dem
