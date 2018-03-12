@@ -23,12 +23,14 @@ public class MeineWarenkoerbe extends Table {
 				+ "Warenkorb.Bestellstatus, "
 				+ "Warenkorb.Lieferdienst_Bezeichnung, "
 				+ "Warenkorb.Lieferdatum "
-				+ "FROM Warenkorb";
+				+ "FROM Warenkorb "
+				+ "WHERE Warenkorb.E_Mail_Adresse = '"
+				+ String.valueOf(Project.getInstance().getData().get("email")) + "'";
 		
 		if (filter != null && !filter.isEmpty()) {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
-			selectQuery += " WHERE Warenkorb.E_Mail_Adresse LIKE '%" + filter + "%' OR "
-					+ "Warenkorb.Warenkorb_ID LIKE '%" + filter + "%'";
+			selectQuery += " AND (Warenkorb.E_Mail_Adresse LIKE '%" + filter + "%' OR "
+					+ "Warenkorb.Warenkorb_ID LIKE '%" + filter + "%')";
 		}
 		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
@@ -47,7 +49,8 @@ public class MeineWarenkoerbe extends Table {
 				+ "Warenkorb.Lieferdienst_Bezeichnung, "
 				+ "Warenkorb.Lieferdatum "
 				+ "FROM Warenkorb "
-				+ "WHERE Warenkorb.Warenkorb_ID = '" + String.valueOf(data.get("Warenkorb.Warenkorb_ID")) + "'";
+				+ "WHERE Warenkorb.Warenkorb_ID = '"
+				+ String.valueOf(data.get("Warenkorb.Warenkorb_ID")) + "'";
 		
 		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
