@@ -47,6 +47,19 @@ public class AlleWarenkoerbe extends Table {
 	public void insertRowWithData(Data data) throws SQLException {
 		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
+		
+		PreparedStatement insertWarenkoerbeStatement = Project.getInstance().getConnection().prepareStatement(
+				"INSERT INTO Warenkorb (Bestelldatum, Bestellstatus, Warenkorb_ID, "
+				+ "E_Mail_Adresse, Lieferdienst_Bezeichnung, Lieferdatum) "
+				+ "VALUES (?, ?, NULL, ?, ?, ?)");
+		insertWarenkoerbeStatement.setString(1, String.valueOf(data.get("Warenkorb.Bestelldatum")));
+		insertWarenkoerbeStatement.setString(2, String.valueOf(data.get("Warenkorb.Bestellstatus")));
+		insertWarenkoerbeStatement.setString(3, String.valueOf(data.get("Warenkorb.E_Mail_Adresse")));
+		insertWarenkoerbeStatement.setString(4, String.valueOf(data.get("Warenkorb.Lieferdienst_Bezeichnung")));
+		insertWarenkoerbeStatement.setString(5, String.valueOf(data.get("Warenkorb.Lieferdatum")));
+		insertWarenkoerbeStatement.executeUpdate();
+		
+		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data, String.valueOf(data.get("Warenkorb.E_Mail_Adresse")));
 	}
 
 	@Override
