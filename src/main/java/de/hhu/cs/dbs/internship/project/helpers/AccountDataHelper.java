@@ -130,4 +130,8 @@ public class AccountDataHelper {
 		}
 		return false;
 	}
+	
+	public static boolean currendUserHasWarenkorbWithID(int warenkorbID) throws SQLException {
+		return userWithEMailAddressHasWarenkorbWithID(String.valueOf(Project.getInstance().getData().get("email")), warenkorbID);
+	}
 }
