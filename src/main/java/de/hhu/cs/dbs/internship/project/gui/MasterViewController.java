@@ -6,7 +6,7 @@ import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.GUIHelpers;
 import de.hhu.cs.dbs.internship.project.table.account.MeinAccount;
-import de.hhu.cs.dbs.internship.project.table.account.Adressen;
+import de.hhu.cs.dbs.internship.project.table.account.AlleAdressen;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import de.hhu.cs.dbs.internship.project.table.account.Angestellter;
 import de.hhu.cs.dbs.internship.project.table.account.Premiumkunde;
@@ -85,7 +85,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 					if (permissionLevel >= Permission.SHOP_ASSISTANT) {
 						logger.info("User is at least of permission level shop assistant.");
 						GUIHelpers.addTableOfClassToTreeItem(new AlleAccounts(), "Alle Accounts", accounts);
-						GUIHelpers.addTableOfClassToTreeItem(new Adressen(), "Adressen", accounts);
+						GUIHelpers.addTableOfClassToTreeItem(new AlleAdressen(), "Adressen", accounts);
 						GUIHelpers.addTableOfClassToTreeItem(new Premiumkunde(), "Premiumkunden", accounts);
 						GUIHelpers.addTableOfClassToTreeItem(new Angestellter(), "Angestellte", accounts);
 						
