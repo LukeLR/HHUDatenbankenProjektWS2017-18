@@ -100,7 +100,7 @@ public class Newsletterabos extends Table {
 				"DELETE FROM Newsletterabo "
 				+ "WHERE E_Mail_Adresse = ? AND "
 					+ "Newsletter_ID = ?");
-		deleteNewsletteraboStatement.setString(1, String.valueOf(data.get("Newsletterabo.Abonnent")));
+		deleteNewsletteraboStatement.setString(1, String.valueOf(Project.getInstance().getData().get("email")));
 		deleteNewsletteraboStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Newsletterabo.Newsletter_ID"))));
 		deleteNewsletteraboStatement.executeUpdate();
 		
