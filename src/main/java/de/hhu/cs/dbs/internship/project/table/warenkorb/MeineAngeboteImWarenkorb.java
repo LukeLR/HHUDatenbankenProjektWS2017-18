@@ -2,6 +2,8 @@ package de.hhu.cs.dbs.internship.project.table.warenkorb;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
@@ -69,23 +71,33 @@ public class MeineAngeboteImWarenkorb extends Table {
 	public void insertRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
-		if (AccountDataHelper.currentUserHasWarenkorbWithID
-				(Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID")))));
-		
-		PreparedStatement insertAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
-				"INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung, Warenkorb_ID, Anzahl) "
-				+ "VALUES (?, ?, ?, ?)");
-		insertAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))));
-		insertAngebotImWarenkorbStatement.setString(2, String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
-		insertAngebotImWarenkorbStatement.setInt(3, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
-		insertAngebotImWarenkorbStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl"))));
-		insertAngebotImWarenkorbStatement.executeUpdate();
-		
-		UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data,
-				String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID")) + "-"
-				+ String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))
-				+ String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")) + "-"
-				+ String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl")));
+		if (AccountDataHelper.currentUserHasWarenkorbWithID(
+				Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))))
+		) {
+			PreparedStatement insertAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
+					"INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung, Warenkorb_ID, Anzahl) "
+					+ "VALUES (?, ?, ?, ?)");
+			insertAngebotImWarenkorbStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))));
+			insertAngebotImWarenkorbStatement.setString(2, String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")));
+			insertAngebotImWarenkorbStatement.setInt(3, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))));
+			insertAngebotImWarenkorbStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl"))));
+			insertAngebotImWarenkorbStatement.executeUpdate();
+			
+			UnifiedLoggingHelper.logInsertDone(this.getClass().getName(), data,
+					String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID")) + "-"
+					+ String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID"))
+					+ String.valueOf(data.get("Angebot_im_Warenkorb.Anbieterbezeichnung")) + "-"
+					+ String.valueOf(data.get("Angebot_im_Warenkorb.Anzahl")));
+		} else {
+			SQLException ex = new SQLException ("User has no Warenkorb with ID " +
+					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to insert Items in. Aborting!");
+			Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
+			logger.log(Level.WARNING, "User has no Warenkorb with ID " +
+					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to insert Items in. Aborting!", ex);
+			throw ex;
+		}
 	}
 
 	@Override
