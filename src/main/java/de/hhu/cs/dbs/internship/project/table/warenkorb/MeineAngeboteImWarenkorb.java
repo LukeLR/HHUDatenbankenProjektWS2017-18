@@ -43,8 +43,8 @@ public class MeineAngeboteImWarenkorb extends Table {
 		
 		if (filter != null && !filter.isEmpty()) {
 			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
-			selectQuery += " AND Warenkorb.E_Mail_Adresse LIKE '%" + filter + "%' OR "
-					+ "Artikel.Bezeichnung LIKE '%" + filter + "%'";
+			selectQuery += " AND (Warenkorb.E_Mail_Adresse LIKE '%" + filter + "%' OR "
+					+ "Artikel.Bezeichnung LIKE '%" + filter + "%')";
 		}
 		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
