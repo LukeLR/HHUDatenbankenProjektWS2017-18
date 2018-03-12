@@ -3,6 +3,7 @@ package de.hhu.cs.dbs.internship.project.helpers;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.alexanderthelen.applicationkit.database.Connection;
@@ -112,12 +113,20 @@ public class AccountDataHelper {
 	}
 	
 	public static boolean userWithEMailAddressHasWarenkorbWithID(String eMail, int warenkorbID) throws SQLException {
+		Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
+		logger.info("Checking if user " + eMail + " has Warenkorb with ID " + String.valueOf(warenkorbID) + ".");
 		ResultSet getWarenkoerbeResults = getAllWarenkoerbeByEMailAddress(eMail);
 		if (!getWarenkoerbeResults.isClosed()) {
 			while (!getWarenkoerbeResults.isLast()) {
 				if (warenkorbID == getWarenkoerbeResults.getInt("Warenkorb.Warebkorb_ID"))
+					logger.info("User " + eMail + " has Warenkorb with ID " + String.valueOf(warenkorbID));
 					return true;
 			}
+			logger.info("Reached last Warenkorb for user with E_Mail_Adresse " + eMail);
+		} else {
+			SQLException ex = new SQLException ("Results for Warenkoerbe by E_Mail_Adresse " + eMail + " empty!");
+			logger.log(Level.WARNING, "Results for Warenkoerbe by E_Mail_Adresse " + eMail + " empty!", ex);
+			throw ex;
 		}
 		return false;
 	}
