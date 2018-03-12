@@ -6,6 +6,7 @@ import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.GUIHelpers;
 import de.hhu.cs.dbs.internship.project.table.account.MeinAccount;
+import de.hhu.cs.dbs.internship.project.table.account.MeinPremiumkundenStatus;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAdressen;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAccounts;
 import de.hhu.cs.dbs.internship.project.table.account.AlleAngestellte;
@@ -83,6 +84,8 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 				
 				if (permissionLevel >= Permission.PREMIUM_CUSTOMER) {
 					logger.info("User is at least of permission level premium customer.");
+					
+					GUIHelpers.addTableOfClassToTreeItem(new MeinPremiumkundenStatus(), "Mein Premiumkunden-Status", accounts);
 					
 					GUIHelpers.addTableOfClassToTreeItem(new MeineLieferabos(), "Meine Lieferabos", warenkorb);
 					
