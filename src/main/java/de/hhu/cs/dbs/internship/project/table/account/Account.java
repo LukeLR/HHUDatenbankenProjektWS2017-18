@@ -21,7 +21,7 @@ public class Account extends Table {
 		String selectQuery = "SELECT E_Mail_Adresse AS 'E-Mail-Adresse', Vorname, Nachname, "
 				+ "Strasse AS 'Straße', Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
 				+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '" 
-				+ Project.getInstance().getData().get("email") + "'";
+				+ String.valueOf(Project.getInstance().getData().get("email")) + "'";
 		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
@@ -34,7 +34,7 @@ public class Account extends Table {
 		String selectQuery = "SELECT E_Mail_Adresse AS 'E-Mail-Adresse', Passwort, Vorname,"
 				+ "Nachname, Strasse AS 'Straße', Hausnummer, PLZ, Ort FROM Kunde JOIN Adresse "
 				+ "ON Kunde.Adressen_ID = Adresse.Adressen_ID WHERE E_Mail_Adresse = '" 
-				+ data.get("Kunde.E-Mail-Adresse") + "'";
+				+ String.valueOf(data.get("Kunde.E-Mail-Adresse")) + "'";
 		
 		UnifiedLoggingHelper.logSelectDone(this.getClass().getName(), data, selectQuery);
 		return selectQuery;
