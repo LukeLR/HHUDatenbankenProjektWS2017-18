@@ -7,6 +7,7 @@ import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
 import de.hhu.cs.dbs.internship.project.Project;
+import de.hhu.cs.dbs.internship.project.helpers.AccountDataHelper;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
 
 public class MeineAngeboteImWarenkorb extends Table {
@@ -68,7 +69,8 @@ public class MeineAngeboteImWarenkorb extends Table {
 	public void insertRowWithData(Data data) throws SQLException {
 		UnifiedLoggingHelper.logInsert(this.getClass().getName(), data);
 		
-		
+		if (AccountDataHelper.currentUserHasWarenkorbWithID
+				(Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID")))));
 		
 		PreparedStatement insertAngebotImWarenkorbStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Angebot_im_Warenkorb (Angebots_ID, Anbieterbezeichnung, Warenkorb_ID, Anzahl) "
