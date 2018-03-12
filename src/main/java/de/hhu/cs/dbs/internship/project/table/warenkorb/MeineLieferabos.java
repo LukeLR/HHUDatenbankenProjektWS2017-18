@@ -126,16 +126,29 @@ public class MeineLieferabos extends Table {
 		Permission.hasSufficientPermission(Permission.SHOP_ASSISTANT, this.getClass().getName());
 		UnifiedLoggingHelper.logDelete(this.getClass().getName(), data);
 		
-		PreparedStatement deleteLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
-				"DELETE FROM Lieferabo "
-				+ "WHERE Intervall = ? AND Beginn = ? AND Ende = ? AND Warenkorb_ID = ?");
-		deleteLieferaboStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Lieferabo.Intervall"))));
-		deleteLieferaboStatement.setString(2, String.valueOf(data.get("Lieferabo.Beginn")));
-		deleteLieferaboStatement.setString(3, String.valueOf(data.get("Lieferabo.Ende")));
-		deleteLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Lieferabo.Warenkorb_ID"))));
-		deleteLieferaboStatement.executeUpdate();
-		
-		UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Lieferabo.Warenkorb_ID")));
+		if (AccountDataHelper.currentUserHasWarenkorbWithID(
+				Integer.valueOf(String.valueOf(data.get("Angebot_im_Warenkorb.Warenkorb_ID"))))
+		) {
+			PreparedStatement deleteLieferaboStatement = Project.getInstance().getConnection().prepareStatement(
+					"DELETE FROM Lieferabo "
+					+ "WHERE Intervall = ? AND Beginn = ? AND Ende = ? AND Warenkorb_ID = ?");
+			deleteLieferaboStatement.setInt(1, Integer.valueOf(String.valueOf(data.get("Lieferabo.Intervall"))));
+			deleteLieferaboStatement.setString(2, String.valueOf(data.get("Lieferabo.Beginn")));
+			deleteLieferaboStatement.setString(3, String.valueOf(data.get("Lieferabo.Ende")));
+			deleteLieferaboStatement.setInt(4, Integer.valueOf(String.valueOf(data.get("Lieferabo.Warenkorb_ID"))));
+			deleteLieferaboStatement.executeUpdate();
+			
+			UnifiedLoggingHelper.logDeleteDone(this.getClass().getName(), data, String.valueOf(data.get("Lieferabo.Warenkorb_ID")));
+		} else {
+			SQLException ex = new SQLException ("User has no Warenkorb with ID " +
+					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to create Lieferabo of. Aborting!");
+			Logger logger = Logger.getLogger(AccountDataHelper.class.getName());
+			logger.log(Level.WARNING, "User has no Warenkorb with ID " +
+					String.valueOf(data.get("Angebot_im_Warenkorb.Angebots_ID")) +
+					" to create Lieferabo of. Aborting!", ex);
+			throw ex;
+		}
 	}
 
 }
