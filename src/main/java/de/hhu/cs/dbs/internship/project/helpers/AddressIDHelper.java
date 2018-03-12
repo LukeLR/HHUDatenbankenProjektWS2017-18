@@ -58,7 +58,7 @@ public class AddressIDHelper {
 				addressInsertQuery.setString(4, city);
 				addressInsertQuery.executeUpdate();
 				// Get the Adressen_ID of the just inserted address.
-				return getAddressIDByAddress(street, houseNumber, zipCode, city, con);
+				return getAddressIDByAddress(street, houseNumber, zipCode, city, con, false);
 			} else {
 				// Not allowed to recurse
 				SQLException ex = new SQLException("Error on inserting Address!");
