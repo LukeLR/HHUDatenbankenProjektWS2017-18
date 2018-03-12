@@ -3,6 +3,7 @@ package de.hhu.cs.dbs.internship.project.table.account;
 import com.alexanderthelen.applicationkit.database.Data;
 import com.alexanderthelen.applicationkit.database.Table;
 
+import de.hhu.cs.dbs.internship.project.Permission;
 import de.hhu.cs.dbs.internship.project.Project;
 import de.hhu.cs.dbs.internship.project.helpers.AccountDataHelper;
 import de.hhu.cs.dbs.internship.project.helpers.UnifiedLoggingHelper;
@@ -37,9 +38,12 @@ public class Account extends Table {
 	}
 
 	@Override
-	//TODO: Enforce privileges
 	public void insertRowWithData(Data data) throws SQLException {
-		throw new SQLException("Es können keine weiteren Accounts für einen Kunden angelegt werden!");
+		if (Integer.valueOf(String.valueOf(Project.getInstance().getData().get("permission"))) >= Permission.SHOP_ASSISTANT) {
+			throw new SQLException("Es können keine weiteren Accounts für einen Kunden angelegt werden!");
+		} else {
+			throw new SQLException("Unzureichende Berechtigungen! Mindestens 'SHOP ASSISTANT' benötigt!");
+		}
 	}
 
 	@Override
