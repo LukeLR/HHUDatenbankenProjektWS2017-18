@@ -128,6 +128,7 @@ public class AccountDataHelper {
 			logger.log(Level.WARNING, "Results for Warenkoerbe by E_Mail_Adresse " + eMail + " empty!", ex);
 			throw ex;
 		}
+		logger.warning("User " + eMail + " has no Warenkorb with ID " + String.valueOf(warenkorbID) + "!");
 		return false;
 	}
 	
