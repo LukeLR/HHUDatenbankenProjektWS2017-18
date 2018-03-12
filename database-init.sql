@@ -397,6 +397,7 @@ CREATE TRIGGER artikel_empfiehlt_zu_viele_artikel
 BEFORE INSERT ON Artikel_empfiehlt_Artikel
 WHEN EXISTS (
     SELECT COUNT(*) FROM Artikel_empfiehlt_Artikel
+    WHERE Artikel_empfiehlt_Artikel.Artikel_ID1 = NEW.Artikel_ID1
     GROUP BY Artikel_empfiehlt_Artikel.Artikel_ID1
     HAVING COUNT(*) >= 3
 )
