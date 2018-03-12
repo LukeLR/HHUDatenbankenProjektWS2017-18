@@ -126,7 +126,7 @@ CREATE TABLE Warenkorb (
     E_Mail_Adresse VARCHAR(320) NOT NULL,
     Lieferdienst_Bezeichnung VARCHAR(40) NOT NULL DEFAULT 'DHL',
     Lieferdatum VARCHAR
-        DEFAULT date('now', '+3 days')
+        --DEFAULT SELECT date('now', '+3 days')
         CONSTRAINT Lieferdatum CHECK (
             (
                 Lieferdatum IS NOT NULL AND
@@ -319,6 +319,17 @@ SELECT '==========================================';
 SELECT '================ TRIGGER =================';
 SELECT '==========================================';
 SELECT '';
+
+/* Dieser Trigger setzt automatisch das Lieferdatum des Warenkorbes,
+ * sobald ein Warenkorb mit Lieferdatum "NULL" erstellt werden soll.
+ */
+CREATE TRIGGER set_warenkorb_lieferdatum
+AFTER INSERT ON Warenkorb
+WHEN NEW.Lieferdatum IS NULL
+BEGIN
+    UPDATE Warenkorb SET Lieferdatum = date('now', '+3 days')
+        WHERE Warenkorb_ID = NEW.Warenkorb_ID;
+END;
 
 /* Dieser Trigger aktualisiert das Datum des Newsletters, sobald eine
  * Veränderung in einem Newsletter vorgenommen wurde (entspricht dem
