@@ -87,9 +87,9 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 					if (permissionLevel >= Permission.SHOP_ASSISTANT) {
 						logger.info("User is at least of permission level shop assistant.");
 						GUIHelpers.addTableOfClassToTreeItem(new AlleAccounts(), "Alle Accounts", accounts);
-						GUIHelpers.addTableOfClassToTreeItem(new AlleAdressen(), "Adressen", accounts);
-						GUIHelpers.addTableOfClassToTreeItem(new AllePremiumkunden(), "Premiumkunden", accounts);
-						GUIHelpers.addTableOfClassToTreeItem(new AlleAngestellte(), "Angestellte", accounts);
+						GUIHelpers.addTableOfClassToTreeItem(new AlleAdressen(), "Alle Adressen", accounts);
+						GUIHelpers.addTableOfClassToTreeItem(new AllePremiumkunden(), "Alle Premiumkunden", accounts);
+						GUIHelpers.addTableOfClassToTreeItem(new AlleAngestellte(), "Alle Angestellte", accounts);
 						
 						GUIHelpers.addTableOfClassToTreeItem(new AlleNewsletterabos(), "Alle Newsletterabos", newsletter);
 						
@@ -99,7 +99,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 						GUIHelpers.addTableOfClassToTreeItem(new AlleArtikelGehoertZuSchlagwort(), "Artikel hat Schlagwort", schlagwort);
 						
 						GUIHelpers.addTableOfClassToTreeItem(new AlleWarenkoerbe(), "Alle Warenkörbe", warenkorb);
-						GUIHelpers.addTableOfClassToTreeItem(new AlleLieferabos(), "Meine Lieferabos", warenkorb);
+						GUIHelpers.addTableOfClassToTreeItem(new AlleLieferabos(), "Alle Lieferabos", warenkorb);
 					}
 				}
 			}
