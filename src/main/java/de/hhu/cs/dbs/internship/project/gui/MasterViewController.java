@@ -82,7 +82,7 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 				if (permissionLevel >= Permission.PREMIUM_CUSTOMER) {
 					logger.info("User is at least of permission level premium customer.");
 					
-					GUIHelpers.addTableOfClassToTreeItem(new MeineLieferabos(), "Meine Lieferabos", warenkorb)
+					GUIHelpers.addTableOfClassToTreeItem(new MeineLieferabos(), "Meine Lieferabos", warenkorb);
 					
 					if (permissionLevel >= Permission.SHOP_ASSISTANT) {
 						logger.info("User is at least of permission level shop assistant.");
