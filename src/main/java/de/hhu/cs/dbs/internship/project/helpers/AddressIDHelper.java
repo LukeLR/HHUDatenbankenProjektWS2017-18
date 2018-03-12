@@ -15,7 +15,7 @@ import de.hhu.cs.dbs.internship.project.Project;
  */
 public class AddressIDHelper {
 	/**
-	 * Searches the database for an address id by given address.
+	 * Searches the database for an address id by given address. If the address is not in the database, insert it.
 	 * @param street The street of the address in question.
 	 * @param houseNumber The housenumber of the address in question.
 	 * @param zipCode The ZIP code of the address in question.
