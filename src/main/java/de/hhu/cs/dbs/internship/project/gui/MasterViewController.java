@@ -76,7 +76,6 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 				GUIHelpers.addTableOfClassToTreeItem(new ArtikelImNewsletter(), "Artikel im Newsletter", newsletter);
 				
 				TreeItem<TableViewController> warenkorb = GUIHelpers.addTableOfClassToTree(new Warenkoerbe(), "Warenkörbe", treeItems);
-				GUIHelpers.addTableOfClassToTreeItem(new AlleAngeboteImWarenkorb(), "Angebote im Warenkorb", warenkorb);
 				
 				if (permissionLevel >= Permission.PREMIUM_CUSTOMER) {
 					logger.info("User is at least of permission level premium customer.");
@@ -91,6 +90,8 @@ public class MasterViewController extends com.alexanderthelen.applicationkit.gui
 						GUIHelpers.addTableOfClassToTreeItem(new Angestellter(), "Angestellte", accounts);
 						
 						GUIHelpers.addTableOfClassToTreeItem(new AlleNewsletterabos(), "Alle Newsletterabos", newsletter);
+						
+						GUIHelpers.addTableOfClassToTreeItem(new AlleAngeboteImWarenkorb(), "Alle Angebote im Warenkorb", warenkorb);
 						
 						TreeItem<TableViewController> schlagwort = GUIHelpers.addTableOfClassToTree(new Schlagwort(), "Schlagworte", treeItems);
 						GUIHelpers.addTableOfClassToTreeItem(new ArtikelGehoertZuSchlagwort(), "Artikel hat Schlagwort", schlagwort);
