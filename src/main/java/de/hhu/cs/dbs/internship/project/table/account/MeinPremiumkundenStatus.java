@@ -28,10 +28,6 @@ public class MeinPremiumkundenStatus extends Table {
 				+ "JOIN Adresse ON AID = Adresse.Adressen_ID "
 				+ "WHERE Kunde.E_Mail_Adresse = '"
 				+ String.valueOf(Project.getInstance().getData().get("email")) + "'";
-		if (filter != null && !filter.isEmpty()) {
-			UnifiedLoggingHelper.logFilter(this.getClass().getName(), filter);
-			selectQuery += " AND E_Mail_Adresse LIKE '%" + filter + "%'";
-		}
 		
 		UnifiedLoggingHelper.logShowDone(this.getClass().getName(), selectQuery);
 		return selectQuery;
