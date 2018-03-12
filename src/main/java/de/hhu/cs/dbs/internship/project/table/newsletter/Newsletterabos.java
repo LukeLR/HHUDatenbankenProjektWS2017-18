@@ -62,7 +62,7 @@ public class Newsletterabos extends Table {
 		PreparedStatement insertNewsletteraboStatement = Project.getInstance().getConnection().prepareStatement(
 				"INSERT INTO Newsletterabo (E_Mail_Adresse, Newsletter_ID) "
 				+ "VALUES (?, ?)");
-		insertNewsletteraboStatement.setString(1, String.valueOf(data.get("Newsletterabo.E_Mail_Adresse")));
+		insertNewsletteraboStatement.setString(1, String.valueOf(Project.getInstance().getData().get("email")));
 		insertNewsletteraboStatement.setInt(2, Integer.valueOf(String.valueOf(data.get("Newsletterabo.Newsletter_ID"))));
 		insertNewsletteraboStatement.executeUpdate();
 		
